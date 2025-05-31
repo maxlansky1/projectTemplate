@@ -1,9 +1,23 @@
 # src/main.py
-from configs.config import config
+import sys
+print("sys.path[0]:", sys.path[0])
+import configs.config
+print("Import worked")
+
+from utils.logger import get_logger
+
+# Настраиваем логирование
+logger = get_logger(__name__)
 
 def main():
-    print(f"Starting {config.APP_NAME} in {config.ENV} mode")
-    print(f"Server will run on port {config.PORT}")
+    # Тестируем логгер
+    logger.debug("А")
+    logger.info("Б")
+    logger.warning("В")
+    logger.error("Г")
+    logger.critical("Д")
+
+    print("Это обычный print()")
 
 if __name__ == "__main__":
     main()

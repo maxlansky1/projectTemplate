@@ -6,9 +6,6 @@ env.read_env()  # читает из .env и системных переменн�
 class Config:
     # --- Общие настройки ---
     APP_NAME: str = env.str("APP_NAME", "MyApp")
-    ENV: str = env.str("ENV", "development")  # development, staging, production
-    DEBUG: bool = env.bool("DEBUG", True)
-    PORT: int = env.int("PORT", 8000)
 
     # --- Секреты и ключи (обязательные) ---
     SECRET_KEY: str = env.str("SECRET_KEY")
@@ -36,7 +33,7 @@ class Config:
     TELEGRAM_BOT_TOKEN: str = env.str("TELEGRAM_BOT_TOKEN", None)
     TELEGRAM_CHAT_ID: str = env.str("TELEGRAM_CHAT_ID", None)
     TELEGRAM_ADMIN_IDS: list[int] = [int(x) for x in env.list("TELEGRAM_ADMIN_IDS", [])]
-    
+
     # --- Google API ---
     GOOGLE_API_KEY: str = env.str("GOOGLE_API_KEY", None)
     GOOGLE_CLIENT_ID: str = env.str("GOOGLE_CLIENT_ID", None)

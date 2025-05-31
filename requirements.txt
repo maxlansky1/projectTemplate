@@ -1,1 +1,2 @@
-environs
+environs # работа с .env
+colorama # для вывода цветных логов
