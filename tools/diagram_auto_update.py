@@ -1,3 +1,5 @@
+#tools/diagram_auto_update.py
+
 import subprocess
 from pathlib import Path
 
@@ -127,6 +129,9 @@ def write_temp_puml(defines, boundaries):
         boundaries (dict): Иерархическая структура папок и файлов.
     """
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+        # Начало диаграммы
+        f.write("@startuml\n\n")
+
         # Вставляем !define ссылки
         for line in defines:
             f.write(line + "\n")
@@ -135,6 +140,9 @@ def write_temp_puml(defines, boundaries):
         f.write("\nContainer_Boundary(src, \"src (исходный код)\", $tags=\"code\") {\n")
         write_container_block(f, "src", boundaries, indent=4)
         f.write("}\n")
+
+        # Конец диаграммы
+        f.write("\n@enduml\n")
 
 
 if __name__ == "__main__":
