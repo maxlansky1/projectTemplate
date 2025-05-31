@@ -1,0 +1,71 @@
+name: Render PlantUML diagrams
+
+on:
+  push:
+    branches:
+      - main
+      - '**'   # Можно запускать на любых ветках (опционально)
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository (branch main)
+      uses: actions/checkout@v3
+      with:
+        persist-credentials: false
+        ref: main
+
+    - name: Install Java and Graphviz
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y default-jre graphviz
+
+    - name: Download latest PlantUML jar
+      run: |
+        echo "Downloading latest PlantUML.jar"
+        wget -q https://github.com/plantuml/plantuml/releases/latest/download/plantuml.jar -O plantuml.jar
+        java -jar plantuml.jar -version
+
+    - name: List all .puml files (excluding C4_Context.puml and C4_Container.puml)
+      run: |
+        echo "=== Found .puml files ==="
+        find . -name '*.puml' ! -name 'C4_Context.puml' ! -name 'C4_Container.puml'
+
+    - name: Render PlantUML diagrams to PNG with verbose logging
+      run: |
+        echo "=== Rendering diagrams ==="
+        find diagrams -name '*.puml' | while read file; do
+          echo "Rendering $file"
+          java -jar plantuml.jar -tsvg -verbose "$file" || { echo "Error rendering $file"; exit 1; }
+        done
+        echo "=== Rendered PNG files ==="
+        find . -name '*.svg'
+
+    - name: Git config and commit rendered images
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        echo "=== Git status before adding ==="
+        git status
+
+        # Добавляем все SVG-файлы
+        git add $(find diagrams -name '*.svg' 2>/dev/null || echo "")
+
+        if git diff --cached --quiet; then
+          echo "No changes to commit"
+        else
+          echo "Changes detected, committing..."
+          git commit -m "Auto-render PlantUML diagrams"
+          echo "Committed!"
+        fi
+
+        echo "=== Git status after commit attempt ==="
+        git status
+
+    - name: Push changes to branch main
+      uses: ad-m/github-push-action@v0.6.0
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: main
