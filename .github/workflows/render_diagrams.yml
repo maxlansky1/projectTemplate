@@ -37,7 +37,7 @@ jobs:
         echo "=== Rendering diagrams ==="
         find diagrams -name '*.puml' | while read file; do
           echo "Rendering $file"
-          java -jar plantuml.jar -tsvg -verbose "$file" || { echo "Error rendering $file"; exit 1; }
+          java -jar plantuml.jar -tsvg -scale 2.0 -verbose "$file" || { echo "Error rendering $file"; exit 1; }
         done
         echo "=== Rendered PNG files ==="
         find . -name '*.svg'
