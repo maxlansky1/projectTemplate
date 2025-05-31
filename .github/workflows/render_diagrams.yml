@@ -19,10 +19,10 @@ jobs:
         ref: main
 
     # 🧱 2. Генерация временной диаграммы temp_containers.puml с новыми файлами
-    # Использует tools/diagrams_auto_update.py, который сканирует git и создает C4-контейнеры
+    # Использует tools/diagram_auto_update.py, который сканирует git и создает C4-контейнеры
     - name: Generate temp_containers.puml from new files
       run: |
-        python3 tools/diagrams_auto_update.py
+        python3 tools/diagram_auto_update.py
 
     # ☕ 3. Устанавливаем зависимости: Java (для PlantUML) и Graphviz (для поддержки рендера)
     - name: Install Java and Graphviz
