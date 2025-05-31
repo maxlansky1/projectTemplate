@@ -1,37 +1,49 @@
 name: Render PlantUML diagrams
 
+# 📌 Триггер: запускать workflow при push на ветку main или любую другую ветку
 on:
   push:
     branches:
       - main
-      - '**'   # Можно запускать на любых ветках (опционально)
+      - '**'  # Поддержка всех веток — удобно для тестов на фиче-ветках
 
 jobs:
   render:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # ☁️ Используем виртуальную машину Ubuntu для выполнения CI
 
     steps:
+    # 🔽 1. Клонируем репозиторий (по умолчанию только одну ветку)
     - name: Checkout repository (branch main)
       uses: actions/checkout@v3
       with:
         ref: main
 
+    # 🧱 2. Генерация временной диаграммы temp_containers.puml с новыми файлами
+    # Использует tools/diagrams_auto_update.py, который сканирует git и создает C4-контейнеры
+    - name: Generate temp_containers.puml from new files
+      run: |
+        python3 tools/diagrams_auto_update.py
+
+    # ☕ 3. Устанавливаем зависимости: Java (для PlantUML) и Graphviz (для поддержки рендера)
     - name: Install Java and Graphviz
       run: |
         sudo apt-get update
         sudo apt-get install -y default-jre graphviz
 
+    # 📥 4. Скачиваем последнюю версию PlantUML
     - name: Download latest PlantUML jar
       run: |
         echo "Downloading latest PlantUML.jar"
         wget -q https://github.com/plantuml/plantuml/releases/latest/download/plantuml.jar -O plantuml.jar
         java -jar plantuml.jar -version
 
+    # 🔎 5. Показываем найденные .puml файлы (исключая базовые шаблоны C4-моделей)
     - name: List all .puml files (excluding C4_Context.puml and C4_Container.puml)
       run: |
         echo "=== Found .puml files ==="
         find . -name '*.puml' ! -name 'C4_Context.puml' ! -name 'C4_Container.puml'
 
+    # 🖼️ 6. Рендерим все .puml в .svg (в папке diagrams) с масштабом и логами
     - name: Render PlantUML diagrams to PNG with verbose logging
       run: |
         echo "=== Rendering diagrams ==="
@@ -42,6 +54,7 @@ jobs:
         echo "=== Rendered PNG files ==="
         find . -name '*.svg'
 
+    # 💾 7. Git-конфигурация и коммит всех новых или изменённых .svg (если есть)
     - name: Git config and commit rendered images
       run: |
         git config user.name "github-actions[bot]"
@@ -49,7 +62,8 @@ jobs:
         echo "=== Git status before adding ==="
         git status
 
-        # Добавляем все SVG-файлы
+        # Добавляем все отрендеренные SVG-файлы и временную диаграмму
+        git add diagrams/temp_containers.puml
         git add $(find diagrams -name '*.svg' 2>/dev/null || echo "")
 
         if git diff --cached --quiet; then
@@ -63,6 +77,7 @@ jobs:
         echo "=== Git status after commit attempt ==="
         git status
 
+    # 🚀 8. Пушим изменения обратно в ветку main
     - name: Push changes to branch main
       uses: ad-m/github-push-action@v0.6.0
       with:
