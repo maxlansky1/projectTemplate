@@ -36,4 +36,4 @@ ENV TZ=Europe/Moscow
 RUN chmod +x ./src/main.py
 
 # ✅ Команда по умолчанию для запуска приложения
-CMD ["python", "src/main.py"]
+CMD ["python", "-m", "src.main"]
