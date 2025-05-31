@@ -28,9 +28,9 @@ RUN pip install --upgrade pip && \
 # ✅ Копируем оставшиеся файлы проекта внутрь контейнера
 COPY . .
 
-# ✅ Переменные окружения
-ENV PYTHONUNBUFFERED=1        # отключает буферизацию stdout/stderr, чтобы логи сразу появлялись
-ENV TZ=Europe/Moscow          # локальное время (можно изменить)
+# ✅ Переменные окружения - отключает буферизацию stdout/stderr, чтобы логи сразу появлялись. задает локальное время
+ENV PYTHONUNBUFFERED=1
+ENV TZ=Europe/Moscow
 
 # ✅ (Опционально) делаем основной файл исполняемым
 RUN chmod +x ./src/main.py
