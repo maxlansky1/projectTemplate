@@ -6,7 +6,7 @@ SERVICE ?= app
 
 # 📦 Собрать и запустить контейнеры (в фоновом режиме)
 up:
-    docker-compose -f $(COMPOSE_FILE) up -d --build
+	docker-compose -f $(COMPOSE_FILE) up -d --build
 
 # 🔨 Только сборка (без запуска)
 build:
@@ -22,8 +22,7 @@ clean:
 
 # Удалить всё, что связано с этим проектом: контейнеры, образы, тома
 purge:
-    docker-compose -f $(COMPOSE_FILE) down -v --rmi local
-    # Удалить "висящие" (dangling) образы, оставшиеся после сборки
+	docker-compose -f $(COMPOSE_FILE) down -v --rmi local
     docker images -f "dangling=true" -q | xargs --no-run-if-empty docker rmi
 
 # 🔍 Просмотреть логи всех сервисов
