@@ -13,11 +13,7 @@ WORKDIR /install
 # libjpeg-dev, zlib1g-dev — библиотеки для Pillow (работа с изображениями)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
-    # libglib2.0-0 \
-    # libgl1 \
-    # libxml2-dev libxslt1-dev \
-    # libjpeg-dev zlib1g-dev && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Копируем только requirements.txt на этапе сборки — это позволяет использовать кеш, если deps не изменились
 COPY requirements.txt .
