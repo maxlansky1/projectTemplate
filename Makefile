@@ -23,7 +23,7 @@ clean:
 # Удалить всё, что связано с этим проектом: контейнеры, образы, тома
 purge:
 	docker-compose -f $(COMPOSE_FILE) down -v --rmi local
-    docker images -f "dangling=true" -q | xargs --no-run-if-empty docker rmi
+	docker images -f "dangling=true" -q | xargs --no-run-if-empty docker rmi
 
 # 🔍 Просмотреть логи всех сервисов
 logs:
