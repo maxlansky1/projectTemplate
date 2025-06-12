@@ -20,6 +20,12 @@ down:
 clean:
     docker-compose -f $(COMPOSE_FILE) down -v
 
+# Удалить всё, что связано с этим проектом: контейнеры, образы, тома
+purge:
+    docker-compose -f $(COMPOSE_FILE) down -v --rmi local
+    # Удалить "висящие" (dangling) образы, оставшиеся после сборки
+    docker images -f "dangling=true" -q | xargs --no-run-if-empty docker rmi
+
 # 🔍 Просмотреть логи всех сервисов
 logs:
     docker-compose -f $(COMPOSE_FILE) logs -f
