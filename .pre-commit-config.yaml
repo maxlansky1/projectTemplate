@@ -9,8 +9,6 @@ repos:
     -   id: detect-private-key
     -   id: check-docstring-first
     -   id: check-symlinks
-    -   id: end-of-file-fixer
-        exclude: '\.txt$'
     -   id: trailing-whitespace
         exclude: '\.txt$'
     -   id: check-json
