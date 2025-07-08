@@ -18,7 +18,7 @@ repos:
     rev: v3.20.0
     hooks:
     -   id: pyupgrade
-    
+
 -   repo: https://github.com/PyCQA/isort
     rev: 5.12.0
     hooks:
@@ -40,3 +40,10 @@ repos:
     rev: 1.7.5
     hooks:
     -   id: bandit
+
+-   repo: https://github.com/econchick/interrogate
+    rev: 1.7.0
+    hooks:
+    -   id: interrogate
+        args: [--quiet, --fail-under=95]
+        pass_filenames: false
