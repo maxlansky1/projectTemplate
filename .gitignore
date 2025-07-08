@@ -1,21 +1,31 @@
-# Byte-compiled / optimized / DLL files
+# ---------------------------
+# 🧹 Временные файлы Python
+# ---------------------------
+
+# Кэшированные файлы Python (__pycache__, *.pyc и т.д.)
 __pycache__/
 *.py[cod]
 *$py.class
 
-# C extensions
+# Расширения C (скомпилированные модули)
 *.so
 
-# Distribution / packaging
-.Python
+
+# ---------------------------
+# 📦 Установка и пакетирование
+# ---------------------------
+
+# Виртуальные окружения
 env/
 venv/
 .venv/
 ENV/
+
+# Сборки проекта
 build/
-develop-eggs/
 dist/
-downloads/
+develop-eggs/
+distribute_scratch/
 eggs/
 .eggs/
 lib/
@@ -28,11 +38,16 @@ wheels/
 .installed.cfg
 *.egg
 
-# Installer logs
+# Логи установки pip
 pip-log.txt
 pip-delete-this-directory.txt
 
-# Unit test / coverage reports
+
+# ---------------------------
+# 🧪 Тесты и покрытие кода
+# ---------------------------
+
+# Результаты тестов и покрытия
 htmlcov/
 .tox/
 .pytest_cache/
@@ -43,65 +58,96 @@ nosetests.xml
 coverage.xml
 *.cover
 
-# Sphinx documentation
+
+# ---------------------------
+# 📚 Документация Sphinx
+# ---------------------------
+
+# Генерируемая документация
 docs/_build/
 
-# Virtual environment folders
-.env/
-.envrc
 
-# VS Code settings
+# ---------------------------
+# 🧑‍💻 IDE и редакторы
+# ---------------------------
+
+# VS Code
 .vscode/
 
-# JetBrains IDEs
+# JetBrains (PyCharm, IntelliJ и др.)
 .idea/
 
-# macOS system files
+
+# ---------------------------
+# 🖥️ Системные файлы ОС
+# ---------------------------
+
+# macOS
 .DS_Store
 
-# Windows system files
+# Windows
 Thumbs.db
 ehthumbs.db
 
-# Docker files
+
+# ---------------------------
+# 🐳 Docker и логи
+# ---------------------------
+
+# Логи контейнеров
 *.log
+
+# Переопределение для Docker Compose
 docker-compose.override.yml
 
-# Pyenv
+
+# ---------------------------
+# 🔧 Инструменты разработки
+# ---------------------------
+
+# Настройки Pyenv
 .python-version
 
-# Jupyter Notebook checkpoints
+# Точки останова Jupyter Notebook
 .ipynb_checkpoints/
 
-# mypy cache
+# mypy (статический анализ типов)
 .mypy_cache/
 
-# Pyre type checker
+# Pyre (анализатор типов от Facebook)
 .pyre/
 
-# profiling data
+# Profiling data (например, cProfile)
 .prof
 
-# Celery beat schedule file
+# Расписание задач Celery Beat
 celerybeat-schedule
 
-# dotenv environment variables file
+# Переменные окружения из .env
 .env
 
-# Logs and databases
+
+# ---------------------------
+# 📂 Логи и пользовательские данные
+# ---------------------------
+
+# Логи приложений
 *.log
 logs/
+
+# Базы данных SQLite
 *.sqlite3
 
-# Coverage reports
-.coverage
-.coverage.*
 
-# Python Wheels
+# ---------------------------
+# 📦 Пакеты и кэши
+# ---------------------------
+
+# Wheel-файлы Python
 *.whl
 
 # pytest cache
 .pytest_cache/
 
-# C extensions
+# C-расширения
 *.so

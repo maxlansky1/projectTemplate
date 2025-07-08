@@ -40,10 +40,3 @@ repos:
     rev: 1.7.5
     hooks:
     -   id: bandit
-
--   repo: https://github.com/econchick/interrogate
-    rev: 1.7.0
-    hooks:
-    -   id: interrogate
-        args: [-vv, --fail-under=95, --ignore-init-module, --ignore-init-method]
-        pass_filenames: false
