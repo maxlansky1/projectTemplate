@@ -11,7 +11,9 @@ repos:
     -   id: check-symlinks
     -   id: double-quote-string-fixer
     -   id: end-of-file-fixer
+        exclude: '\.txt$'
     -   id: trailing-whitespace
+        exclude: '\.txt$'
     -   id: check-json
     -   id: check-toml
     -   id: check-yaml
