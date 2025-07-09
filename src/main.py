@@ -1,16 +1,22 @@
-# src/main.py
-import sys
-print("sys.path[0]:", sys.path[0])
-import configs.config
-print("Import worked")
+"""
+Точка входа — главный запуск приложения.
 
-from utils.logger import get_logger
+Этот модуль содержит точку входа в приложение и вызывает основную функцию main().
+"""
+
+from src.utils.logger import get_logger
 
 # Настраиваем логирование
 logger = get_logger(__name__)
 
+
 def main():
-    # Тестируем логгер
+    """
+    Запускает приложение.
+
+    Логирует сообщения разных уровней и выводит тестовый текст через print().
+    """
+
     logger.debug("А")
     logger.info("Б")
     logger.warning("В")
@@ -18,6 +24,7 @@ def main():
     logger.critical("Д")
 
     print("Это обычный print()")
+
 
 if __name__ == "__main__":
     main()

@@ -1,9 +1,18 @@
+"""
+Модуль конфигурации
+"""
+
 from environs import Env
 
 env = Env()
 env.read_env()  # читает из .env и системных переменных
 
+
 class Config:
+    """
+    Класс для конфига
+    """
+
     # --- Общие настройки ---
     APP_NAME: str = env.str("APP_NAME", "MyApp")
 

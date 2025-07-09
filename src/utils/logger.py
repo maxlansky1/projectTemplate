@@ -1,13 +1,18 @@
-#src/utils/logger.py
-"""
-Модуль для настройки кастомного логгера с цветным выводом в консоль и записью в файлы.
+"""Модуль для настройки кастомного логгера.
+
+Обеспечивает цветной вывод в консоль и запись логов в файлы.
+
+Attributes:
+    LOGS_DIR (str): Путь к директории, где будут сохраняться лог-файлы.
+    LOG_FORMAT (str): Формат строки лога.
+    DATE_FORMAT (str): Формат даты и времени в логах.
 """
 
 import logging
 import os
 from datetime import datetime
 
-from colorama import Fore, Back, Style, init
+from colorama import Back, Fore, Style, init
 
 # Инициализация colorama для Windows/Linux/macOS
 init(autoreset=True)
@@ -22,8 +27,14 @@ DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 
 
 class ColoredFormatter(logging.Formatter):
-    """
-    Цветной форматтер для вывода логов в консоль.
+    """Цветной форматтер для вывода логов в консоль.
+
+    Класс расширяет стандартный `logging.Formatter`, добавляя цветовое оформление
+    в зависимости от уровня логирования. Поддерживаются уровни DEBUG, INFO,
+    WARNING, ERROR и CRITICAL.
+
+    Attributes:
+        COLORS (dict): Сопоставление уровней логирования с цветами из библиотеки colorama.
     """
 
     COLORS = {
@@ -35,6 +46,17 @@ class ColoredFormatter(logging.Formatter):
     }
 
     def format(self, record):
+        """Форматирует запись лога, применяя цвет в зависимости от уровня.
+
+        Цвет устанавливается перед вызовом базового метода `format()` родительского класса.
+
+        Args:
+            record (logging.LogRecord): Объект записи лога.
+
+        Returns:
+            str: Отформатированная строка лога с цветовым выделением.
+        """
+
         log_level = record.levelname
         color = self.COLORS.get(log_level, "")
         self._style._fmt = f"{color}{LOG_FORMAT}{Style.RESET_ALL}"
@@ -42,12 +64,19 @@ class ColoredFormatter(logging.Formatter):
 
 
 def get_logger(name=None):
-    """
-    Возвращает настроенный логгер с указанным именем.
+    """Возвращает настроенный логгер с указанным именем.
 
-    Пример:
-        logger = get_logger(__name__)
+    Создаёт и настраивает логгер, который выводит сообщения в консоль с цветовой
+    индикацией уровня логирования и записывает информационные и более серьёзные
+    сообщения в файл.
+
+    Args:
+        name (str, optional): Имя логгера. Если не указано, возвращается корневой логгер.
+
+    Returns:
+        logging.Logger: Настроенный экземпляр логгера.
     """
+
     # Настройка корневого логгера
     logger = logging.getLogger(name)
     logger.setLevel(logging.DEBUG)  # Минимальный уровень логирования
