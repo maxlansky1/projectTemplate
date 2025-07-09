@@ -43,6 +43,7 @@ extensions = [
     "sphinx.ext.ifconfig",  # условные директивы в документации
     "sphinx_copybutton",  # добавляет кнопку скопировать код в документацию
     "sphinxcontrib.plantuml",  # добавляет поддержку plantuml
+    "sphinx_rtd_theme",  # переключает на красивую тему
 ]
 
 autodoc_default_options = {
