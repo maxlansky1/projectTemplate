@@ -24,9 +24,9 @@ release = "0.1"
 
 
 # Настройки для работы с PlantUML и рендеринга UML-диаграмм.
-# В GitHub Actions используется путь "/home/runner/plantuml/plantuml.jar", а для Windows — "C:\\plantuml\\plantuml.jar".
+# В GitHub Actions используется путь /usr/local/bin/plantuml/plantuml.jar, а для Windows — C:\\plantuml\\plantuml.jar.
 if "GITHUB_ACTIONS" in os.environ:
-    plantuml = "java -jar /home/runner/plantuml/plantuml.jar"
+    plantuml = "java -jar /usr/local/bin/plantuml/plantuml.jar"
 elif os.name == "nt":  # Для Windows
     plantuml = r"java -jar C:\plantuml\plantuml.jar"
 else:

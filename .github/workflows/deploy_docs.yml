@@ -22,8 +22,9 @@ jobs:
 
       - name: 🌿 Скачиваем PlantUML
         run: |
-          mkdir -p ~/plantuml
-          wget -O ~/plantuml/plantuml.jar https://github.com/plantuml/plantuml/releases/download/v1.2023.12/plantuml.jar 
+          # Создаем папку для PlantUML в /usr/local/bin, чтобы она была доступна глобально
+          sudo mkdir -p /usr/local/bin/plantuml
+          sudo wget -O /usr/local/bin/plantuml/plantuml.jar https://github.com/plantuml/plantuml/releases/download/v1.2023.12/plantuml.jar 
 
       - name: 🐍 Настраиваем Python
         uses: actions/setup-python@v4
