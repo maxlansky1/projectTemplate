@@ -13,3 +13,4 @@ pre-commit
 # для автоматической генерации документации
 sphinx
 sphinx-autodoc-typehints
+sphinx-copybutton
