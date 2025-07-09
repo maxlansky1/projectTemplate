@@ -2,7 +2,7 @@
 #
 
 # Variables
-SPHINXOPTS    ?=
+SPHINXOPTS    ?= 
 SPHINXBUILD   ?= sphinx-build
 SOURCEDIR     = .
 BUILDDIR      = _build
@@ -15,15 +15,15 @@ BUILDDIR      = _build
 .PHONY: help clean livehtml html
 
 help:
-    @$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS)
+	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS)
 
 clean:
-    @$(SPHINXBUILD) -M clean "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS)
+	@$(SPHINXBUILD) -M clean "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS)
 
 html:
-    @$(SPHINXBUILD) -M html "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS)
-    @echo
-    @echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
+	@$(SPHINXBUILD) -M html "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS)
+	@echo
+	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 
 livehtml:
-    sphinx-autobuild "$(SOURCEDIR)" "$(BUILDDIR)/html" --open-browser --poll
+	sphinx-autobuild "$(SOURCEDIR)" "$(BUILDDIR)/html" --open-browser --poll
