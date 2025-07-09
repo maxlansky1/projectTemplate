@@ -56,12 +56,6 @@ tools/print_structure.py
 📁 tests/
 ---------
 
-tests/pre_commit_test.py
-^^^^^^^^^^^^^^^^^^^^^^^^
-.. automodule:: tests.pre_commit_test
-   :members:
-   :undoc-members:
-   :show-inheritance:
 
 🛠 Конфигурационные файлы
 ==========================
