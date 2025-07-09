@@ -1,4 +1,4 @@
-name: Build and Deploy Docs with PlantUML
+name: Build and Deploy Documentation
 
 on:
   push:
@@ -15,85 +15,26 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 🧱 2. Генерация временной диаграммы temp_containers.puml
-      - name: Generate temp_containers.puml from new files (if script exists)
-        if: success() && github.ref != 'refs/heads/main'
-        run: |
-          if [ -f tools/diagram_auto_update.py ]; then
-            python3 tools/diagram_auto_update.py
-          else
-            echo "tools/diagram_auto_update.py not found, skipping diagram generation"
-          fi
-
-      # ☕ 3. Устанавливаем Java и Graphviz
-      - name: Install Java and Graphviz
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y default-jre graphviz
-
-      # 📥 4. Скачиваем PlantUML
-      - name: Download latest PlantUML jar
-        run: |
-          wget -q https://github.com/plantuml/plantuml/releases/latest/download/plantuml.jar  -O plantuml.jar
-          java -jar plantuml.jar -version
-
-      # 🖼️ 5. Рендерим все .puml в .svg (в папке diagrams)
-      - name: Render PlantUML diagrams to SVG
-        run: |
-          echo "=== Rendering PlantUML diagrams ==="
-          find diagrams -name '*.puml' | while read file; do
-            echo "Rendering $file"
-            java -jar plantuml.jar -tsvg -scale 2.0 "$file" || { echo "Error rendering $file"; exit 1; }
-          done
-          echo "=== Rendered SVG files ==="
-          find diagrams -name '*.svg'
-
-      # 💾 6. Git-конфигурация и коммит новых/изменённых svg
-      - name: Commit rendered images
-        id: git_commit
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add diagrams/*.svg diagrams/temp_containers.puml
-
-          if git diff --cached --quiet; then
-            echo "No changes to commit"
-            echo "::set-output name=changes::false"
-          else
-            echo "Changes detected, committing..."
-            git commit -m "Auto-render PlantUML diagrams"
-            echo "::set-output name=changes::true"
-          fi
-
-      # 🚀 7. Пушим изменения обратно (если были обновления)
-      - name: Push changes to branch
-        if: steps.git_commit.outputs.changes == 'true'
-        uses: ad-m/github-push-action@v0.6.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
-
-      # 🐍 8. Установка Python и зависимостей
+      # 🐍 2. Установка Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
+      # 📦 3. Установка зависимостей
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
           pip install sphinxcontrib-plantuml
 
-      # 📘 9. Сборка документации
+      # 📘 4. Сборка документации
       - name: Build documentation
         run: |
           cd docs && make html
 
-      # 🌐 10. Публикация на GitHub Pages
+      # 🌐 5. Публикация на GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/_build/html
-          
