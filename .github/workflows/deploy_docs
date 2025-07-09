@@ -1,0 +1,67 @@
+name: Build and Deploy Documentation
+
+on:
+  push:
+    branches:
+      - main
+      - '**'  # Поддержка всех веток
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📁 Клонируем репозиторий
+        uses: actions/checkout@v3
+
+      - name: ☕ Устанавливаем Java (нужна для PlantUML)
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: 🌿 Скачиваем PlantUML
+        run: |
+          mkdir -p ~/plantuml
+          wget -O ~/plantuml/plantuml.jar https://github.com/plantuml/plantuml/releases/download/v1.2023.12/plantuml.jar 
+
+      - name: 🐍 Настраиваем Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: 🔧 Устанавливаем зависимости
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install sphinxcontrib-plantuml sphinx-rtd-theme
+
+      - name: 📄 Проверяем конфигурацию Sphinx
+        run: |
+          echo "Текущая конфигурация conf.py:"
+          cat docs/conf.py
+
+      - name: 📊 Собираем документацию
+        env:
+          PLANTUML_JAR_PATH: ~/plantuml/plantuml.jar
+        run: |
+          cd docs
+          
+          # Очищаем старый билд
+          make clean
+
+          # Передаём путь к plantuml через переменную окружения, а не правим conf.py
+          make html SPHINXOPTS="-D plantuml=java\ -jar\ $PLANTUML_JAR_PATH"
+
+          # Добавляем .nojekyll чтобы GitHub Pages не обрабатывал файлы как Jekyll-сайт
+          touch _build/html/.nojekyll
+
+      - name: 🖼️ Проверяем, собран ли HTML
+        run: |
+          ls -la docs/_build/html/
+
+      - name: 🚀 Деплоим документацию на GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/_build/html
