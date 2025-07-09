@@ -1,36 +1,42 @@
-# Configuration file for the Sphinx documentation builder.
-#
-# For the full list of built-in configuration values, see the documentation:
-# https://www.sphinx-doc.org/en/master/usage/configuration.html
+"""
+Конфигурационный файл для сборщика документации Sphinx.
 
-# -- Project information -----------------------------------------------------
-# https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
+Этот файл содержит все настройки, необходимые для кастомизации входных и выходных данных Sphinx.
+Он выполняется как код на Python во время сборки, при этом текущая директория устанавливается как директория конфигурации.
+
+Для полного списка встроенных значений конфигурации смотрите:
+https://www.sphinx-doc.org/en/master/usage/configuration.html
+"""
 
 import os
 import sys
 
+# Добавляет родительскую директорию в системный путь, чтобы Sphinx мог найти исходные модули
+# для автодокументации. Это позволяет Sphinx импортировать модули проекта из корневой директории.
 sys.path.insert(0, os.path.abspath(".."))
 
-# Проверяем, запущено ли приложение в GitHub Actions
-if "GITHUB_ACTIONS" in os.environ:  # Это переменная окружения в GitHub Actions
+
+# Информация о проекте для документации
+project = "projectTemplate"
+copyright = "2025, gleb"
+author = "gleb"
+release = "0.1"
+
+
+# Настройки для работы с PlantUML и рендеринга UML-диаграмм.
+# В GitHub Actions используется путь "/home/runner/plantuml/plantuml.jar", а для Windows — "C:\\plantuml\\plantuml.jar".
+if "GITHUB_ACTIONS" in os.environ:
     plantuml = "java -jar /home/runner/plantuml/plantuml.jar"
 elif os.name == "nt":  # Для Windows
     plantuml = r"java -jar C:\plantuml\plantuml.jar"
 else:
     raise OSError("Unsupported OS")
 
-# Настройка вывода изображений
 plantuml_output_format = "svg"
 plantuml_latex_output_format = "svg"
 
-project = "projectTemplate"
-copyright = "2025, gleb"
-author = "gleb"
-release = "0.1"
 
-# -- General configuration ---------------------------------------------------
-# https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
-
+# Список расширений Sphinx, которые активируют различные функции в документации
 extensions = [
     "sphinx.ext.autodoc",  # автодока из docstring'ов
     "sphinx.ext.viewcode",  # ссылки на исходники
@@ -46,6 +52,7 @@ extensions = [
     "sphinx_rtd_theme",  # переключает на красивую тему
 ]
 
+# Настройки по умолчанию для расширения autodoc, которое автоматически извлекает docstring'и
 autodoc_default_options = {
     "members": True,
     "undoc-members": False,  # Не показывать недокументированные члены
@@ -55,6 +62,7 @@ autodoc_default_options = {
     "show-inheritance": True,  # Показывать иерархию наследования
 }
 
+# Настройки для обработки исходных файлов, шаблонов, исключений и вывода HTML
 source_suffix = {
     ".rst": "restructuredtext",
     ".md": "markdown",
@@ -64,9 +72,6 @@ templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 language = "ru"
-
-# -- Options for HTML output -------------------------------------------------
-# https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = "sphinx_rtd_theme"
 html_static_path = ["_static"]
