@@ -19,13 +19,15 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y default-jre graphviz
 
-      - name: 🌿 Скачиваем последнюю версию PlantUML
+      - name: 🌿 Скачиваем последнюю версию PlantUML, проверяем работу Graphviz и Dot
         run: |
           # Создаем папку для PlantUML в /usr/local/bin, скачиваем PlantUML
           sudo mkdir -p /usr/local/bin/plantuml
           sudo wget -q https://github.com/plantuml/plantuml/releases/latest/download/plantuml.jar -O /usr/local/bin/plantuml/plantuml.jar
-          # Проверяем версию PlantUML
+          # Проверяем версию PlantUML, Graphviz, Dot
           java -jar /usr/local/bin/plantuml/plantuml.jar -version
+          dot -V
+          java -jar /usr/local/bin/plantuml/plantuml.jar -testdot
 
       - name: 🐍 Настраиваем Python
         uses: actions/setup-python@v4
