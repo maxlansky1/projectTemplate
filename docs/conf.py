@@ -11,11 +11,11 @@ import sys
 
 sys.path.insert(0, os.path.abspath(".."))
 
-# Проверяем, какая операционная система
-if os.name == "nt":  # Для Windows
-    plantuml = r"java -jar C:\plantuml\plantuml.jar"
-elif os.name == "posix":  # Для github workflows
+# Проверяем, запущено ли приложение в GitHub Actions
+if "GITHUB_ACTIONS" in os.environ:  # Это переменная окружения в GitHub Actions
     plantuml = "java -jar /home/runner/plantuml/plantuml.jar"
+elif os.name == "nt":  # Для Windows
+    plantuml = r"java -jar C:\plantuml\plantuml.jar"
 else:
     raise OSError("Unsupported OS")
 
