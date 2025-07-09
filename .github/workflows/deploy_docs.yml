@@ -14,17 +14,18 @@ jobs:
       - name: 📁 Клонируем репозиторий
         uses: actions/checkout@v3
 
-      - name: ☕ Устанавливаем Java (нужна для PlantUML)
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      - name: 🌿 Скачиваем PlantUML
+      - name: ☕ Устанавливаем Java и Graphviz (нужна для PlantUML)
         run: |
-          # Создаем папку для PlantUML в /usr/local/bin, чтобы она была доступна глобально
+          sudo apt-get update
+          sudo apt-get install -y default-jre graphviz
+
+      - name: 🌿 Скачиваем последнюю версию PlantUML
+        run: |
+          # Создаем папку для PlantUML в /usr/local/bin, скачиваем PlantUML
           sudo mkdir -p /usr/local/bin/plantuml
-          sudo wget -O /usr/local/bin/plantuml/plantuml.jar https://github.com/plantuml/plantuml/releases/download/v1.2023.12/plantuml.jar 
+          sudo wget -q https://github.com/plantuml/plantuml/releases/latest/download/plantuml.jar -O /usr/local/bin/plantuml/plantuml.jar
+          # Проверяем версию PlantUML
+          java -jar /usr/local/bin/plantuml/plantuml.jar -version
 
       - name: 🐍 Настраиваем Python
         uses: actions/setup-python@v4
