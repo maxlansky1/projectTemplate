@@ -44,7 +44,7 @@ jobs:
 
       - name: 📊 Собираем документацию
         env:
-          PLANTUML_JAR_PATH: ~/plantuml/plantuml.jar
+          PLANTUML_JAR_PATH: /usr/local/bin/plantuml/plantuml.jar
         run: |
           cd docs
           
