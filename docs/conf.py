@@ -11,8 +11,13 @@ import sys
 
 sys.path.insert(0, os.path.abspath(".."))
 
-# Настройки для интеграции с plantuml
-plantuml = r"java -jar C:\plantuml\plantuml.jar"
+# Проверяем, какая операционная система
+if os.name == "nt":  # Для Windows
+    plantuml = r"java -jar C:\plantuml\plantuml.jar"
+elif os.name == "posix":  # Для Linux или macOS
+    plantuml = "java -jar /path/to/plantuml/plantuml.jar"
+else:
+    raise OSError("Unsupported OS")
 
 # Настройка вывода изображений
 plantuml_output_format = "svg"
