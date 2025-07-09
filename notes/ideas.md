@@ -6,6 +6,18 @@
 
 3. EditorConfig - настройки для текстовых редакторов. Пока необязательно, в будущем может быть полезно
 
+4. Улучшить pre-commit
+- доделать CI/CD
+- доделать линтеры Make, Docker, GitHub
+    - Hadolint (docker)
+
+5. Доделать Sphinx
+- внедрить plantuml?
+- сделать красивое оформление Make и Docker в документации
+- посмотреть примеры топ компаний
+
+6. Сделать тесты и покрытие 
+
 
 # MUST HAVE
 Полезная статья на будущее 
@@ -16,20 +28,18 @@ https://habr.com/ru/companies/otus/articles/713992/
 - unittest
 - pytest
 - тесты на покрытие
+
 2. CI 
 - Github Actions
 - GitlabCI
+
 3. Pre-commit - проверка коммитов перед отправкой
-4. Стиль кода и форматирование
-- Black
-- autopep8
-- isort
-5. Линтинг
-- flake8
-- pylint
+- Стиль кода и форматирование
+black
+- Линтинг
 - ruff
 - Bandit (линтер безопасности)
-6. Документация
-- interrogate
+
+4. Документация
 - Sphinx
 - autodoc
