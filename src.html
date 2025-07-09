@@ -122,6 +122,158 @@
              
   <section id="id1">
 <h1>Исходный код<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h1>
+<p class="plantuml">
+<object data="_images/plantuml-6d741b30843eac65ea86a6cce80290b14ecc10fc.svg" type="image/svg+xml" style="width:308px;height:479px;background:#FFFFFF;">
+<img src="_images/plantuml-6d741b30843eac65ea86a6cce80290b14ecc10fc.png" alt="&#64;startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml    
+
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/main/icons/devicons    
+!define ICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5    
+!include DEVICONS/python.puml
+!include DEVICONS/docker.puml
+!include ICONS/file.puml
+!include ICONS/github.puml
+!include ICONS/folder.puml
+
+skinparam defaultFontName &quot;Source Code Pro&quot;
+
+!define ENV &quot;vscode://file/C:/gleb/projects/projectTemplate/.env&quot;
+!define WORKFLOWS &quot;vscode://file/C:/gleb/projects/projectTemplate/.github/workflows&quot;
+!define GITIGNORE &quot;vscode://file/C:/gleb/projects/projectTemplate/.gitignore&quot;
+!define DOCKERFILE &quot;vscode://file/C:/gleb/projects/projectTemplate/Dockerfile&quot;
+!define MAKEFILE &quot;vscode://file/C:/gleb/projects/projectTemplate/Makefile&quot;
+!define README_MD &quot;vscode://file/C:/gleb/projects/projectTemplate/README.md&quot;
+!define CONFIG_PY &quot;vscode://file/C:/gleb/projects/projectTemplate/configs/config.py&quot;
+!define PROJECT_STRUCTURE_PUML &quot;vscode://file/C:/gleb/projects/projectTemplate/diagrams/project_structure.puml&quot;
+!define DOCKER_COMPOSE_YAML &quot;vscode://file/C:/gleb/projects/projectTemplate/docker-compose.yaml&quot;
+!define INDEX_MD &quot;vscode://file/C:/gleb/projects/projectTemplate/docs/index.md&quot;
+!define IDEAS_MD &quot;vscode://file/C:/gleb/projects/projectTemplate/notes/ideas.md&quot;
+!define REQUIREMENTS_TXT &quot;vscode://file/C:/gleb/projects/projectTemplate/requirements.txt&quot;
+
+!define CLIENT_PY &quot;vscode://file/C:/gleb/projects/projectTemplate/src/api/client.py&quot;
+!define ACCESS_PY &quot;vscode://file/C:/gleb/projects/projectTemplate/src/db/access.py&quot;
+!define MODELS_PY &quot;vscode://file/C:/gleb/projects/projectTemplate/src/db/models.py&quot;
+!define MAIN_PY &quot;vscode://file/C:/gleb/projects/projectTemplate/src/main.py&quot;
+!define LOGGER_PY &quot;vscode://file/C:/gleb/projects/projectTemplate/src/utils/logger.py&quot;
+
+!define TEST_MAIN_PY &quot;vscode://file/C:/gleb/projects/projectTemplate/tests/test_main.py&quot;
+
+!define PRINT_STRUCTURE_PY &quot;vscode://file/C:/gleb/projects/projectTemplate/tools/print_structure.py&quot;
+
+
+' --- Стили контейнеров ---
+AddElementTag(&quot;config&quot;, $bgColor=&quot;#ced4da&quot;, $fontColor=&quot;black&quot;, $borderColor=&quot;#adb5bd&quot;)
+AddElementTag(&quot;code&quot;, $bgColor=&quot;#bce3cc&quot;, $fontColor=&quot;black&quot;, $borderColor=&quot;#77c29e&quot;)
+AddElementTag(&quot;utils&quot;, $bgColor=&quot;#f8c2c2&quot;, $fontColor=&quot;black&quot;, $borderColor=&quot;#e27a7a&quot;)
+AddElementTag(&quot;docs&quot;, $bgColor=&quot;#ffd8b2&quot;, $fontColor=&quot;black&quot;, $borderColor=&quot;#fca55d&quot;)
+AddElementTag(&quot;tests&quot;, $bgColor=&quot;#f8c2c2&quot;, $fontColor=&quot;black&quot;, $borderColor=&quot;#e27a7a&quot;)
+AddElementTag(&quot;ci&quot;, $bgColor=&quot;#b3d4fc&quot;, $fontColor=&quot;black&quot;, $borderColor=&quot;#6ea8fe&quot;)
+AddElementTag(&quot;docker&quot;, $bgColor=&quot;#f5e0b7&quot;, $fontColor=&quot;black&quot;, $borderColor=&quot;#d6b656&quot;)
+
+' --- Стили стрелок ---
+AddRelTag(&quot;flow&quot;, $lineColor=&quot;#0d6efd&quot;, $lineStyle=DashedLine(), $textColor=&quot;#0d6efd&quot;, $lineThickness=2)
+AddRelTag(&quot;data&quot;, $lineColor=&quot;#20c997&quot;, $lineStyle=DashedLine(), $textColor=&quot;#20c997&quot;, $lineThickness=2)
+AddRelTag(&quot;infra&quot;, $lineColor=&quot;#ffc107&quot;, $lineStyle=DashedLine(), $textColor=&quot;#ffc107&quot;, $lineThickness=2) 
+AddRelTag(&quot;test&quot;, $lineColor=&quot;#dc3545&quot;, $lineStyle=DashedLine(), $textColor=&quot;#dc3545&quot;, $lineThickness=1)
+AddRelTag(&quot;doc&quot;, $lineColor=&quot;#adb5bd&quot;, $lineStyle=DashedLine(), $textColor=&quot;#adb5bd&quot;, $lineThickness=1)
+
+
+LAYOUT_TOP_DOWN()
+
+Container_Boundary(projectTemplate, &quot;projectTemplate&quot;) {
+
+  Container_Boundary(configs, &quot;config&quot;, $tags=&quot;config&quot;) {
+    Container(config_folder, &quot;configs/&quot;, &quot;Каталог&quot;, &quot;Модули с конфигурацией&quot;, $tags=&quot;config&quot;, $sprite=&quot;folder&quot;, $link=CONFIG_PY)
+    Container(env_example, &quot;.env&quot;, &quot;Файл&quot;, &quot;Переменные окружения&quot;, $tags=&quot;config&quot;, $sprite=&quot;file&quot;, $link=ENV)
+    Container(gitignore, &quot;.gitignore&quot;, &quot;Файл&quot;, &quot;Git-игнор&quot;, $tags=&quot;config&quot;, $sprite=&quot;file&quot;, $link=GITIGNORE)
+    Container(requirements_txt, &quot;requirements.txt&quot;, &quot;Файл&quot;, &quot;Python-зависимости&quot;, $tags=&quot;config&quot;, $sprite=&quot;file&quot;, $link=REQUIREMENTS_TXT)
+  }
+
+  Container_Boundary(ci, &quot;.github (CI)&quot;, $tags=&quot;ci&quot;) {
+    Container(github_workflows, &quot;workflows/&quot;, &quot;Каталог&quot;, &quot;CI workflow-файлы&quot;, $tags=&quot;ci&quot;, $sprite=&quot;folder&quot;, $link=WORKFLOWS)
+    Container(makefile, &quot;Makefile&quot;, &quot;Файл&quot;, &quot;Автоматизация задач&quot;, $tags=&quot;ci&quot;, $sprite=&quot;file&quot;, $link=MAKEFILE)
+  }
+
+  Container_Boundary(docker, &quot;docker&quot;, $tags=&quot;docker&quot;) {
+    Container(dockerfile, &quot;Dockerfile&quot;, &quot;Docker&quot;, &quot;Сборка образа приложения&quot;, $tags=&quot;docker&quot;, $sprite=&quot;docker&quot;, $link=DOCKERFILE)
+    Container(docker_compose, &quot;docker-compose.yaml&quot;, &quot;Docker Compose&quot;, &quot;Оркестрация контейнеров&quot;, $tags=&quot;docker&quot;, $sprite=&quot;docker&quot;, $link=DOCKER_COMPOSE_YAML)
+  }
+  
+  Container_Boundary(documentation, &quot;Документация&quot;, $tags=&quot;docs&quot;) {
+    Container(readme_md, &quot;README.md&quot;, &quot;Markdown&quot;, &quot;Описание проекта&quot;, $tags=&quot;docs&quot;, $sprite=&quot;file&quot;, $link=README_MD)
+    Container(index_md, &quot;docs/&quot;, &quot;Directory&quot;, &quot;Документация&quot;, $tags=&quot;docs&quot;, $sprite=&quot;folder&quot;, $link=INDEX_MD)
+    Container(project_structure_puml, &quot;diagrams/&quot;, &quot;PlantUML&quot;, &quot;Диаграмма структуры&quot;, $tags=&quot;docs&quot;, $sprite=&quot;folder&quot;, $link=PROJECT_STRUCTURE_PUML)
+    Container(ideas_md, &quot;notes/&quot;, &quot;Папка&quot;, &quot;Заметки&quot;, $tags=&quot;docs&quot;, $sprite=&quot;folder&quot;, $link=IDEAS_MD)
+  }
+
+  Container_Boundary(logs, &quot;logs&quot;, $tags=&quot;utils&quot;) {
+    Container(logs_folder, &quot;logs/&quot;, &quot;Каталог&quot;, &quot;Логи приложения&quot;, $tags=&quot;utils&quot;, $sprite=&quot;folder&quot;)
+  }
+
+  Container_Boundary(src, &quot;src (исходный код)&quot;, $tags=&quot;code&quot;) {
+    Container(main_py, &quot;main.py&quot;, &quot;Python&quot;, &quot;Точка входа&quot;, $tags=&quot;code&quot;, $sprite=&quot;python&quot;, $link=MAIN_PY)
+
+    Container_Boundary(utils, &quot;utils&quot;, $tags=&quot;utils&quot;) {
+      Container(logger_py, &quot;logger.py&quot;, &quot;Python&quot;, &quot;Логгер&quot;, $tags=&quot;utils&quot;, $sprite=&quot;python&quot;, $link=LOGGER_PY)
+    }
+
+    Container_Boundary(db, &quot;db&quot;, $tags=&quot;code&quot;) {
+      Container(db_models_py, &quot;models.py&quot;, &quot;Python&quot;, &quot;ORM-модели&quot;, $tags=&quot;code&quot;, $sprite=&quot;python&quot;, $link=MODELS_PY)
+      Container(db_access_py, &quot;access.py&quot;, &quot;Python&quot;, &quot;Доступ к данным&quot;, $tags=&quot;code&quot;, $sprite=&quot;python&quot;, $link=ACCESS_PY)
+    }
+
+    Container_Boundary(api, &quot;api&quot;, $tags=&quot;code&quot;) {
+      Container(client_py, &quot;client.py&quot;, &quot;Python&quot;, &quot;Клиент внешнего API&quot;, $tags=&quot;code&quot;, $sprite=&quot;python&quot;, $link=CLIENT_PY)
+    }
+}
+
+  Container_Boundary(tests, &quot;tests&quot;, $tags=&quot;tests&quot;) {
+    Container(test_main_py, &quot;test_main.py&quot;, &quot;Python&quot;, &quot;Тесты main.py&quot;, $tags=&quot;tests&quot;, $sprite=&quot;python&quot;, $link=TEST_MAIN_PY)
+  }
+
+  Container_Boundary(tools, &quot;tools&quot;, $tags=&quot;utils&quot;) {
+    Container(print_structure_py, &quot;print_structure.py&quot;, &quot;Python&quot;, &quot;Вывод структуры проекта&quot;, $tags=&quot;utils&quot;, $sprite=&quot;python&quot;, $link=PRINT_STRUCTURE_PY)
+  }
+}
+
+Container_Ext(git_repo, &quot;Git Hub&quot;, &quot;VCS&quot;, &quot;Хранение кода&quot;, $tags=&quot;external&quot;, $sprite=&quot;github&quot;)
+Container_Ext(github_actions, &quot;GitHub Actions&quot;, &quot;CI/CD&quot;, &quot;Платформа автоматизации&quot;, $tags=&quot;external&quot;, $sprite=&quot;github&quot;)
+
+Container_Boundary(vps, &quot;VPS&quot;, $tags=&quot;external&quot;) {
+  Container_Boundary(vps_docker, &quot;Docker&quot;, $tags=&quot;docker&quot;) {
+    Container(app_1, &quot;app_1&quot;, &quot;Docker Container&quot;, $tags=&quot;docker&quot;, $sprite=docker)
+  }
+}
+
+
+' --- Связи со стилями ---
+Rel(main_py, config_folder, &quot;Импортирует конфиги&quot;, $tags=&quot;data&quot;)
+Rel(main_py, db, &quot;Работает с БД&quot;, $tags=&quot;data&quot;)
+Rel(main_py, api, &quot;Работает с API&quot;, $tags=&quot;flow&quot;)
+
+Rel(config_folder, env_example, &quot;Читает переменные окружения&quot;, $tags=&quot;data&quot;)
+Rel(main_py, logger_py, &quot;Использует логгер&quot;, $tags=&quot;data&quot;)
+Rel(logger_py, logs, &quot;Сохраняет логи&quot;, $tags=&quot;data&quot;)
+
+Rel(test_main_py, main_py, &quot;Тестирует&quot;, $tags=&quot;test&quot;)
+
+Rel(github_actions, git_repo, &quot;Запускается при push/pull request&quot;, $tags=&quot;infra&quot;)
+Rel(github_actions, github_workflows, &quot;Читает workflow-файлы&quot;, $tags=&quot;infra&quot;)
+Rel(github_workflows, makefile, &quot;Вызывает команды&quot;, $tags=&quot;infra&quot;)
+Rel(docker_compose, dockerfile, &quot;Использует&quot;, $tags=&quot;infra&quot;)
+Rel(dockerfile, requirements_txt, &quot;Использует зависимости&quot;, $tags=&quot;infra&quot;)
+Rel(git_repo, github_actions, &quot;Запускает Workflows&quot;, $tags=&quot;infra&quot;)
+
+Rel(github_actions, vps, &quot;SSH-доступ&quot;, $tags=&quot;infra&quot;)
+Rel(github_actions, docker, &quot;Собирает образ&quot;, $tags=&quot;infra&quot;)
+
+SHOW_LEGEND()
+skinparam legendBackgroundColor #f8f9fa
+skinparam legendBorderColor #ced4da
+&#64;enduml
+"/>
+
+</object></p>
 <section id="module-src.main">
 <span id="src-main-py"></span><h2>src/main.py<a class="headerlink" href="#module-src.main" title="Ссылка на этот заголовок"></a></h2>
 <p>Точка входа — главный запуск приложения.</p>
