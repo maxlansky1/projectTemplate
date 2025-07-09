@@ -38,8 +38,8 @@ jobs:
       - name: Build documentation
         run: |
           cd docs
-          echo "plantuml = 'java -jar ~/plantuml/plantuml.jar'" >> source/conf.py
-          echo "html_theme = 'sphinx_rtd_theme'" >> source/conf.py
+          echo "plantuml = 'java -jar ~/plantuml/plantuml.jar'" >> conf.py
+          echo "html_theme = 'sphinx_rtd_theme'" >> conf.py
           make clean
           make html
           touch _build/html/.nojekyll  # Важно!
