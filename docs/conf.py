@@ -35,6 +35,7 @@ extensions = [
     "sphinx.ext.autodoc",  # автодока из docstring'ов
     "sphinx.ext.viewcode",  # ссылки на исходники
     "sphinx.ext.napoleon",  # Google/NumPy стиль docstring'ов
+    "sphinx.ext.githubpages",  # позволяет использовать стили sphinx при хостинге доков на github pages
     "sphinx_autodoc_typehints",  # type hints в сигнатурах
     "myst_parser",  # поддержка Markdown (.md)
     "sphinx.ext.todo",  # поддержка TODO
