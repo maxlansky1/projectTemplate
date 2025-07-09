@@ -10,7 +10,9 @@ myst-parser
 # для проверки кода перед коммитом (линтеры, форматирование итд)
 pre-commit
 
-# для автоматической генерации документации
+# для автоматической генерации документации при помощи sphinx
 sphinx
 sphinx-autodoc-typehints
 sphinx-copybutton
+sphinx-intl
+sphinxcontrib-plantuml
