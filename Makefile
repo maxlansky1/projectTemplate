@@ -9,7 +9,7 @@ COMPOSE_FILE=docker-compose.yaml
 SERVICE ?= app
 
 # Список всех доступных задач
-.PHONY: help up down restart build rebuild logs bash prune
+.PHONY: help up down restart build rebuild logs bash prune docs-clean docs-html
 
 # =============================================
 # 📌 ОСНОВНЫЕ КОМАНДЫ
@@ -53,6 +53,14 @@ bash:
 # 🗑️ Очистка: удаление остановленных контейнеров и старых образов этого проекта
 prune:
 	docker-compose -f $(COMPOSE_FILE) down --rmi local --volumes
+
+# Очистка сгенерированной документации
+docs-clean:
+	.\docs\make.bat clean
+
+# Сборка HTML-документации
+docs-html:
+	.\docs\make.bat html
 
 # =============================================
 # 💡 ПАМЯТКА: Какие команды когда использовать
