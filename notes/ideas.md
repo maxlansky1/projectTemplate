@@ -37,8 +37,8 @@ https://habr.com/ru/companies/otus/articles/713992/
 - Стиль кода и форматирование
 black
 - Линтинг
-- ruff
-- Bandit (линтер безопасности)
+ruff
+Bandit (линтер безопасности)
 
 4. Документация
 - Sphinx
