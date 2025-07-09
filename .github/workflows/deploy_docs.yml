@@ -4,35 +4,46 @@ on:
   push:
     branches:
       - main
-      - '**'  # Поддержка всех веток — удобно для тестов на фиче-ветках
+      - '**'  # Поддержка всех веток
 
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # 🔽 1. Клонируем репозиторий
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 🐍 2. Установка Python
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Download PlantUML
+        run: |
+          mkdir -p ~/plantuml
+          wget -O ~/plantuml/plantuml.jar https://github.com/plantuml/plantuml/releases/download/v1.2023.12/plantuml.jar
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
-      # 📦 3. Установка зависимостей
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install sphinxcontrib-plantuml
+          pip install sphinxcontrib-plantuml sphinx-rtd-theme
 
-      # 📘 4. Сборка документации
       - name: Build documentation
         run: |
-          cd docs && make clean && make html
+          cd docs
+          echo "plantuml = 'java -jar ~/plantuml/plantuml.jar'" >> source/conf.py
+          echo "html_theme = 'sphinx_rtd_theme'" >> source/conf.py
+          make clean
+          make html
+          touch _build/html/.nojekyll  # Важно!
 
-      # 🌐 5. Публикация на GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
