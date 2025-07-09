@@ -30,7 +30,7 @@ jobs:
       # 📘 4. Сборка документации
       - name: Build documentation
         run: |
-          cd docs && make html
+          cd docs && make clean && make html
 
       # 🌐 5. Публикация на GitHub Pages
       - name: Deploy to GitHub Pages
