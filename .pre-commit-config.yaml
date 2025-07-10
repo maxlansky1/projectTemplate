@@ -1,5 +1,6 @@
 repos:
--   repo: https://github.com/pre-commit/pre-commit-hooks
+# 1. Базовые проверки
+-   repo: https://github.com/pre-commit/pre-commit-hooks   
     rev: v5.0.0
     hooks:
     -   id: check-added-large-files
@@ -13,30 +14,41 @@ repos:
     -   id: check-toml
     -   id: check-yaml
 
--   repo: https://github.com/asottile/pyupgrade
+# 2. Поиск секретов
+-   repo: https://github.com/Yelp/detect-secrets   
+    rev: v1.5.0
+    hooks:
+    -   id: detect-secrets
+
+# 3. Обновление синтаксиса
+-   repo: https://github.com/asottile/pyupgrade   
     rev: v3.20.0
     hooks:
     -   id: pyupgrade
 
--   repo: https://github.com/PyCQA/isort
+# 4. Сортировка импортов
+-   repo: https://github.com/PyCQA/isort   
     rev: 5.12.0
     hooks:
     -   id: isort
         args: ["--profile", "black", "--filter-files"]
 
--   repo: https://github.com/psf/black-pre-commit-mirror
+# 5. Форматирование кода
+-   repo: https://github.com/psf/black-pre-commit-mirror   
     rev: 25.1.0
     hooks:
     -   id: black
 
--   repo: https://github.com/astral-sh/ruff-pre-commit
+# 6. Линтинг через ruff
+-   repo: https://github.com/astral-sh/ruff-pre-commit   
     rev: v0.12.2
     hooks:
+    -   id: ruff-format
     -   id: ruff-check
         args: [--fix]
-    -   id: ruff-format
 
--   repo: https://github.com/PyCQA/bandit
+# 7. Статический анализ безопасности
+-   repo: https://github.com/PyCQA/bandit   
     rev: 1.7.5
     hooks:
     -   id: bandit
