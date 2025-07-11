@@ -35,7 +35,7 @@ plantuml_output_format = "svg"
 plantuml_latex_output_format = "svg"
 
 
-# Список расширений Sphinx, которые активируют различные функции в документации
+# Список расширений Sphinx
 extensions = [
     "sphinx.ext.autodoc",  # автодока из docstring'ов
     "sphinx.ext.viewcode",  # ссылки на исходники
@@ -49,6 +49,7 @@ extensions = [
     "sphinx_copybutton",  # добавляет кнопку скопировать код в документацию
     "sphinxcontrib.plantuml",  # добавляет поддержку plantuml
     "sphinx_rtd_theme",  # переключает на красивую тему
+    "sphinx_togglebutton",  # позволяет создавать разворачиваемые списки
 ]
 
 # Настройки по умолчанию для расширения autodoc, которое автоматически извлекает docstring'и
@@ -73,4 +74,10 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 language = "ru"
 
 html_theme = "sphinx_rtd_theme"
+html_theme_options = {
+    "version_selector": True,  # Показать версию документации
+}
+
 html_static_path = ["_static"]
+
+plantuml_output_format = "svg_img"
