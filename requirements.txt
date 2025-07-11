@@ -18,3 +18,5 @@ sphinx-intl
 sphinxcontrib-plantuml
 sphinx-rtd-theme
 
+# Библиотека для управления проектами
+copier
