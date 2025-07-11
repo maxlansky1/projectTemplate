@@ -17,6 +17,7 @@ sphinx-copybutton
 sphinx-intl
 sphinxcontrib-plantuml
 sphinx-rtd-theme
+sphinx-togglebutton
 
 # Библиотека для управления проектами
 copier
