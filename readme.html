@@ -85,11 +85,41 @@
 </section>
 <section id="id2">
 <h1>Установка<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h1>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
-<span class="nb">source</span><span class="w"> </span>.venv/bin/activate
-pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
-</pre></div>
-</div>
+<ol class="arabic simple">
+<li><p>Создайте новый проект на GitHub</p></li>
+</ol>
+<ul class="simple">
+<li><p>без README</p></li>
+<li><p>без .gitignore
+Все эти файлы уже есть в шаблоне</p></li>
+</ul>
+<p>Скопируйте ссылку на новый репозиторий (она пригодится вам на 5 шаге)</p>
+<ol class="arabic simple" start="2">
+<li><p>Клонируйте репозиторий на свой ПК</p></li>
+<li><p>Запустите новое виртуальное окружение
+python -m venv venv</p></li>
+<li><p>Активируйте виртуальное окружение установите все пакеты
+venv\Scripts\activate
+pip install -r requirements.txt</p></li>
+<li><p>Создайте файл .env в корне проекта и заполните его своими значениями в соответствии
+с .env.example</p></li>
+<li><p>Инициализируйте git в папке с проектом
+git init</p></li>
+<li><p>Удалите связи со старым репозиторием (шаблон) и добавьте связи с новым
+git remote remove origin</p></li>
+</ol>
+<p>git remote add origin https://github.com/maxlansky1/copier-test.git</p>
+<ol class="arabic simple" start="6">
+<li><p>Создайте ветку main и переключитесь на нее
+git branch -M main</p></li>
+<li><p>Влючите хуки pre-commit для проверки коммитов перед пушем</p></li>
+<li><p>Создайте первый коммит и сделайте пуш на гитхаб. Не забывайте следовать руководству по коммитам
+git add .
+git commit -m «build: загрузка кода приложения на гитхаб»
+git push -u origin main</p></li>
+<li><p>После первого пуша зайдите в settings - pages - source - deploy from a branch</p></li>
+</ol>
+<p>Выберите gh-pages /root, нажмите save. Теперь вся документация по вашему проекту будет доступна на Github Pages</p>
 </section>
 
 
