@@ -1,10 +1,1 @@
-# projectTemplate
-
-## Описание
-Краткое описание проекта.
-
-## Установка
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+Документация по проекту доступна по адресу https://maxlansky1.github.io/projectTemplate/index.html#
