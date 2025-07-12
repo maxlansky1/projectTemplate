@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>projectTemplate documentation &mdash; документация projectTemplate 0.1</title>
+  <title>projectTemplate &mdash; документация projectTemplate 0.1</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
@@ -29,7 +29,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Алфавитный указатель" href="genindex.html" />
     <link rel="search" title="Поиск" href="search.html" />
-    <link rel="next" title="Описание" href="readme.html" /> 
+    <link rel="next" title="📜 Overview: Обзор шаблона" href="introduction.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -53,11 +53,11 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="readme.html">Описание</a></li>
-<li class="toctree-l1"><a class="reference internal" href="readme.html#id2">Установка</a></li>
-<li class="toctree-l1"><a class="reference internal" href="src.html">Исходный код</a></li>
-<li class="toctree-l1"><a class="reference internal" href="src.html#id2">🛠 Конфигурационные файлы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">📜 Overview: Обзор шаблона</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">⚙️ Getting started: Установка и настройка шаблона</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basics.html">🗺️ Roadmap: как работать с шаблоном</a></li>
 <li class="toctree-l1"><a class="reference internal" href="commit_style_guide.html">Руководство по написанию коммитов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="myst_basics.html">Основы работы с MyST Markdown</a></li>
 </ul>
 
         </div>
@@ -74,7 +74,7 @@
           <div role="navigation" aria-label="Навигация по страницам">
   <ul class="wy-breadcrumbs">
       <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">projectTemplate documentation</li>
+      <li class="breadcrumb-item active">projectTemplate</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/index.rst.txt" rel="nofollow"> Просмотреть исходный код страницы</a>
       </li>
@@ -84,31 +84,44 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="projecttemplate-documentation">
-<h1>projectTemplate documentation<a class="headerlink" href="#projecttemplate-documentation" title="Ссылка на этот заголовок"></a></h1>
-<p>Add your content using <code class="docutils literal notranslate"><span class="pre">reStructuredText</span></code> syntax. See the
-<a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html">reStructuredText</a>
-documentation for details.</p>
+  <section id="projecttemplate">
+<h1>projectTemplate<a class="headerlink" href="#projecttemplate" title="Ссылка на этот заголовок"></a></h1>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="readme.html">Описание</a></li>
-<li class="toctree-l1"><a class="reference internal" href="readme.html#id2">Установка</a></li>
-<li class="toctree-l1"><a class="reference internal" href="src.html">Исходный код</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="src.html#module-src.main">src/main.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src.html#module-src.utils.logger">src/utils/logger.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src.html#configs-config-py">configs/config.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src.html#module-configs.path_manager">configs/path_manager.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src.html#module-tools.diagram_auto_update">tools/diagram_auto_update.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src.html#module-tools.print_structure">tools/print_structure.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">📜 Overview: Обзор шаблона</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">⚙️ Getting started: Установка и настройка шаблона</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#visual-studio-code">💻 Установка Visual Studio Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#git-github">🔄 Git и Github</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#notepad">Notepad++</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#copier">📐 Copier</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#id3">⚙️ Виртуальное окружение</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#pre-commit">🕵️‍♂️ Подключение pre-commit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#id10">📚 Работа с документацией</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#id12">✅ Резюме</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="src.html#id2">🛠 Конфигурационные файлы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basics.html">🗺️ Roadmap: как работать с шаблоном</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="basics.html#id1">🗂️ Структура проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics.html#vs-code-vscode">💻 Настройки VS Code (.vscode/)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics.html#id3">⚙️ Конфигурация</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics.html#src">🧱 Исходный код (src/)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics.html#tools">🛠️ Инструменты (tools/)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics.html#tests">🧪 Тестирование (tests/)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics.html#docs">📚 Документация (docs/)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics.html#docker">🐳 Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics.html#ci-cd-github-actions">🔄 CI/CD (GitHub Actions)</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="commit_style_guide.html">Руководство по написанию коммитов</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="commit_style_guide.html#id2">🎯 Зачем нужны хорошие коммиты?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="commit_style_guide.html#id3">🔤 Формат сообщения коммита</a></li>
 <li class="toctree-l2"><a class="reference internal" href="commit_style_guide.html#id7">💡 Полезные практики</a></li>
 <li class="toctree-l2"><a class="reference internal" href="commit_style_guide.html#id8">✅ Чек-лист: хороший ли твой коммит?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="myst_basics.html">Основы работы с MyST Markdown</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="myst_basics.html#id1">Адмониции</a></li>
 </ul>
 </li>
 </ul>
@@ -119,7 +132,7 @@ documentation for details.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
-        <a href="readme.html" class="btn btn-neutral float-right" title="Описание" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="introduction.html" class="btn btn-neutral float-right" title="📜 Overview: Обзор шаблона" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
