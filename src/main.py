@@ -24,6 +24,7 @@ def main():
     logger.critical("Д")
 
     print("Это обычный print()")
+    print("Это необычный print")
 
 
 if __name__ == "__main__":
