@@ -13,5 +13,4 @@ projectTemplate
    introduction
    installation
    basics
-   commit_style_guide
-   myst_basics
+   recommendations

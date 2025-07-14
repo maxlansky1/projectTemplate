@@ -1,39 +1,38 @@
-@startuml
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml    
+@startuml name projectTemplate
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml 
 
-!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/main/icons/devicons    
-!define ICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5    
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/main/icons/devicons 
+!define ICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5 
+
 !include DEVICONS/python.puml
 !include DEVICONS/docker.puml
-!include ICONS/file.puml
 !include ICONS/github.puml
 !include ICONS/folder.puml
+!include ICONS/file.puml
 
 skinparam defaultFontName "Source Code Pro"
 
-!define ENV "vscode://file/C:/gleb/projects/projectTemplate/.env"
+' --- Ссылки на файлы ---
+!define ENV_EXAMPLE "vscode://file/C:/gleb/projects/projectTemplate/.env.example"
 !define WORKFLOWS "vscode://file/C:/gleb/projects/projectTemplate/.github/workflows"
 !define GITIGNORE "vscode://file/C:/gleb/projects/projectTemplate/.gitignore"
+!define DOCKER_IGNORE "vscode://file/C:/gleb/projects/projectTemplate/.dockerignore"
 !define DOCKERFILE "vscode://file/C:/gleb/projects/projectTemplate/Dockerfile"
+!define DOCKER_COMPOSE_YAML "vscode://file/C:/gleb/projects/projectTemplate/docker-compose.yaml"
 !define MAKEFILE "vscode://file/C:/gleb/projects/projectTemplate/Makefile"
 !define README_MD "vscode://file/C:/gleb/projects/projectTemplate/README.md"
 !define CONFIG_PY "vscode://file/C:/gleb/projects/projectTemplate/configs/config.py"
+!define PATH_MANAGER_PY "vscode://file/C:/gleb/projects/projectTemplate/configs/path_manager.py"
 !define PROJECT_STRUCTURE_PUML "vscode://file/C:/gleb/projects/projectTemplate/diagrams/project_structure.puml"
-!define DOCKER_COMPOSE_YAML "vscode://file/C:/gleb/projects/projectTemplate/docker-compose.yaml"
-!define INDEX_MD "vscode://file/C:/gleb/projects/projectTemplate/docs/index.md"
-!define IDEAS_MD "vscode://file/C:/gleb/projects/projectTemplate/notes/ideas.md"
+!define TEMP_CONTAINERS_PUML "vscode://file/C:/gleb/projects/projectTemplate/diagrams/temp_containers.puml"
+!define INDEX_RST "vscode://file/C:/gleb/projects/projectTemplate/docs/index.rst"
 !define REQUIREMENTS_TXT "vscode://file/C:/gleb/projects/projectTemplate/requirements.txt"
-
-!define CLIENT_PY "vscode://file/C:/gleb/projects/projectTemplate/src/api/client.py"
-!define ACCESS_PY "vscode://file/C:/gleb/projects/projectTemplate/src/db/access.py"
-!define MODELS_PY "vscode://file/C:/gleb/projects/projectTemplate/src/db/models.py"
+!define PRE_COMMIT_CONFIG_YAML "vscode://file/C:/gleb/projects/projectTemplate/.pre-commit-config.yaml"
+!define COPIER_YAML "vscode://file/C:/gleb/projects/projectTemplate/copier.yaml"
 !define MAIN_PY "vscode://file/C:/gleb/projects/projectTemplate/src/main.py"
 !define LOGGER_PY "vscode://file/C:/gleb/projects/projectTemplate/src/utils/logger.py"
-
-!define TEST_MAIN_PY "vscode://file/C:/gleb/projects/projectTemplate/tests/test_main.py"
-
-!define PRINT_STRUCTURE_PY "vscode://file/C:/gleb/projects/projectTemplate/tools/print_structure.py"
-
+!define VSCODE_SETTINGS "vscode://file/C:/gleb/projects/projectTemplate/.vscode/settings.json"
+!define DEPLOY_DOCS_YML "vscode://file/C:/gleb/projects/projectTemplate/.github/workflows/deploy_docs.yml"
 
 ' --- Стили контейнеров ---
 AddElementTag("config", $bgColor="#ced4da", $fontColor="black", $borderColor="#adb5bd")
@@ -43,102 +42,73 @@ AddElementTag("docs", $bgColor="#ffd8b2", $fontColor="black", $borderColor="#fca
 AddElementTag("tests", $bgColor="#f8c2c2", $fontColor="black", $borderColor="#e27a7a")
 AddElementTag("ci", $bgColor="#b3d4fc", $fontColor="black", $borderColor="#6ea8fe")
 AddElementTag("docker", $bgColor="#f5e0b7", $fontColor="black", $borderColor="#d6b656")
+AddElementTag("misc", $bgColor="#e9ecef", $fontColor="black", $borderColor="#dee2e6")
 
-' --- Стили стрелок ---
-AddRelTag("flow", $lineColor="#0d6efd", $lineStyle=DashedLine(), $textColor="#0d6efd", $lineThickness=2)
-AddRelTag("data", $lineColor="#20c997", $lineStyle=DashedLine(), $textColor="#20c997", $lineThickness=2)
-AddRelTag("infra", $lineColor="#ffc107", $lineStyle=DashedLine(), $textColor="#ffc107", $lineThickness=2) 
-AddRelTag("test", $lineColor="#dc3545", $lineStyle=DashedLine(), $textColor="#dc3545", $lineThickness=1)
-AddRelTag("doc", $lineColor="#adb5bd", $lineStyle=DashedLine(), $textColor="#adb5bd", $lineThickness=1)
-
-
-LAYOUT_TOP_DOWN()
+LAYOUT_LEFT_RIGHT()
 
 Container_Boundary(projectTemplate, "projectTemplate") {
 
-  Container_Boundary(configs, "config", $tags="config") {
-    Container(config_folder, "configs/", "Каталог", "Модули с конфигурацией", $tags="config", $sprite="folder", $link=CONFIG_PY)
-    Container(env_example, ".env", "Файл", "Переменные окружения", $tags="config", $sprite="file", $link=ENV)
-    Container(gitignore, ".gitignore", "Файл", "Git-игнор", $tags="config", $sprite="file", $link=GITIGNORE)
-    Container(requirements_txt, "requirements.txt", "Файл", "Python-зависимости", $tags="config", $sprite="file", $link=REQUIREMENTS_TXT)
+  Container_Boundary(configs, "configs/", $tags="config") {
+    Container(config_py, "config.py", "Python", "Глобальные параметры", $tags="config", $sprite="python", $link=CONFIG_PY)
   }
 
-  Container_Boundary(ci, ".github (CI)", $tags="ci") {
-    Container(github_workflows, "workflows/", "Каталог", "CI workflow-файлы", $tags="ci", $sprite="folder", $link=WORKFLOWS)
-    Container(makefile, "Makefile", "Файл", "Автоматизация задач", $tags="ci", $sprite="file", $link=MAKEFILE)
+  Container_Boundary(github_section, ".github + CI", $tags="ci") {
+    Container(github_workflows, "workflows/", "Папка", "GitHub Actions workflows", $tags="ci", $sprite="folder", $link=WORKFLOWS)
+    Container(deploy_docs_yml, "deploy_docs.yml", "YAML", "Деплой документации", $tags="ci", $sprite="file", $link=DEPLOY_DOCS_YML)
+    Container(makefile, "Makefile", "Make", "Автоматизация задач", $tags="ci", $sprite="file", $link=MAKEFILE)
   }
 
-  Container_Boundary(docker, "docker", $tags="docker") {
-    Container(dockerfile, "Dockerfile", "Docker", "Сборка образа приложения", $tags="docker", $sprite="docker", $link=DOCKERFILE)
-    Container(docker_compose, "docker-compose.yaml", "Docker Compose", "Оркестрация контейнеров", $tags="docker", $sprite="docker", $link=DOCKER_COMPOSE_YAML)
-  }
-  
-  Container_Boundary(documentation, "Документация", $tags="docs") {
-    Container(readme_md, "README.md", "Markdown", "Описание проекта", $tags="docs", $sprite="file", $link=README_MD)
-    Container(index_md, "docs/", "Directory", "Документация", $tags="docs", $sprite="folder", $link=INDEX_MD)
-    Container(project_structure_puml, "diagrams/", "PlantUML", "Диаграмма структуры", $tags="docs", $sprite="folder", $link=PROJECT_STRUCTURE_PUML)
-    Container(ideas_md, "notes/", "Папка", "Заметки", $tags="docs", $sprite="folder", $link=IDEAS_MD)
+  Container_Boundary(docker, "Docker", $tags="docker") {
+    Container(dockerfile, "Dockerfile", "Docker", "Сборка образа", $tags="docker", $sprite="docker", $link=DOCKERFILE)
+    Container(docker_compose, "docker-compose.yaml", "Docker Compose", "Оркестрация", $tags="docker", $sprite="docker", $link=DOCKER_COMPOSE_YAML)
   }
 
-  Container_Boundary(logs, "logs", $tags="utils") {
-    Container(logs_folder, "logs/", "Каталог", "Логи приложения", $tags="utils", $sprite="folder")
+  Container_Boundary(documentation, "docs/", $tags="docs") {
+    Container(index_rst, "index.rst", "reStructuredText", "Главная страница", $tags="docs", $sprite="file", $link=INDEX_RST)
   }
 
-  Container_Boundary(src, "src (исходный код)", $tags="code") {
+  Container_Boundary(src, "src/", $tags="code") {
     Container(main_py, "main.py", "Python", "Точка входа", $tags="code", $sprite="python", $link=MAIN_PY)
 
-    Container_Boundary(utils, "utils", $tags="utils") {
-      Container(logger_py, "logger.py", "Python", "Логгер", $tags="utils", $sprite="python", $link=LOGGER_PY)
+    Container_Boundary(utils, "utils/", $tags="utils") {
+      Container(logger_py, "logger.py", "Python", "Логирование", $tags="utils", $sprite="python", $link=LOGGER_PY)
     }
-
-    Container_Boundary(db, "db", $tags="code") {
-      Container(db_models_py, "models.py", "Python", "ORM-модели", $tags="code", $sprite="python", $link=MODELS_PY)
-      Container(db_access_py, "access.py", "Python", "Доступ к данным", $tags="code", $sprite="python", $link=ACCESS_PY)
-    }
-
-    Container_Boundary(api, "api", $tags="code") {
-      Container(client_py, "client.py", "Python", "Клиент внешнего API", $tags="code", $sprite="python", $link=CLIENT_PY)
-    }
-}
-
-  Container_Boundary(tests, "tests", $tags="tests") {
-    Container(test_main_py, "test_main.py", "Python", "Тесты main.py", $tags="tests", $sprite="python", $link=TEST_MAIN_PY)
   }
 
-  Container_Boundary(tools, "tools", $tags="utils") {
-    Container(print_structure_py, "print_structure.py", "Python", "Вывод структуры проекта", $tags="utils", $sprite="python", $link=PRINT_STRUCTURE_PY)
+  Container_Boundary(tests, "tests/", $tags="tests") {
+    Container(tests_folder, "tests/", "Юнит-тесты", $tags="tests", $sprite="folder")
+  }
+
+  Container_Boundary(root_files, "Конфигурация", $tags="misc") {
+    Container(requirements_txt, "requirements.txt", "TXT", "Зависимости Python", $tags="misc", $sprite="file", $link=REQUIREMENTS_TXT)
+    Container(pre_commit_config_yaml, ".pre-commit-config.yaml", "YAML", "Pre-commit хуки", $tags="misc", $sprite="file", $link=PRE_COMMIT_CONFIG_YAML)
+    Container(gitignore, ".gitignore", "TXT", "Игнорируемые файлы", $tags="misc", $sprite="file", $link=GITIGNORE)
+    Container(dockerignore, ".dockerignore", "TXT", "Docker игнор", $tags="misc", $sprite="file", $link=DOCKER_IGNORE)
+    Container(env, ".env", "ENV", "Переменные окружения", $tags="misc", $sprite="file", $link=ENV)
+    Container(vscode_settings, ".vscode/", "Папка", "Настройки VS Code", $tags="misc", $sprite="folder", $link=VSCODE_SETTINGS)
+    Container(copier_yaml, "copier.yaml", "YAML", "Шаблон генерации", $tags="misc", $sprite="file", $link=COPIER_YAML)
   }
 }
 
-Container_Ext(git_repo, "Git Hub", "VCS", "Хранение кода", $tags="external", $sprite="github")
-Container_Ext(github_actions, "GitHub Actions", "CI/CD", "Платформа автоматизации", $tags="external", $sprite="github")
-
-Container_Boundary(vps, "VPS", $tags="external") {
-  Container_Boundary(vps_docker, "Docker", $tags="docker") {
-    Container(app_1, "app_1", "Docker Container", $tags="docker", $sprite=docker)
+Container_Boundary(github, ".github + CI", $tags="ci") {
+    Container(git_repo, "Git Hub", "VCS", "Хранение кода", $tags="external", $sprite="github")
+    Container(github_actions, "GitHub Actions", "CI/CD", "Автоматизация", $tags="external", $sprite="github")
   }
-}
 
 
-' --- Связи со стилями ---
-Rel(main_py, config_folder, "Импортирует конфиги", $tags="data")
-Rel(main_py, db, "Работает с БД", $tags="data")
-Rel(main_py, api, "Работает с API", $tags="flow")
-
-Rel(config_folder, env_example, "Читает переменные окружения", $tags="data")
+' --- Связи ---
+Rel(config_py, requirements_txt, "Читает переменные окружения", $tags="data")
+Rel(main_py, config_py, "Использует конфиги", $tags="data")
 Rel(main_py, logger_py, "Использует логгер", $tags="data")
-Rel(logger_py, logs, "Сохраняет логи", $tags="data")
 
-Rel(test_main_py, main_py, "Тестирует", $tags="test")
+Rel(tests_folder, main_py, "Тестирует", $tags="test")
 
-Rel(github_actions, git_repo, "Запускается при push/pull request", $tags="infra")
-Rel(github_actions, github_workflows, "Читает workflow-файлы", $tags="infra")
+Rel(github_actions, git_repo, "Слежка за изменениями", $tags="infra")
+Rel(github_actions, github_workflows, "Читает workflow", $tags="infra")
 Rel(github_workflows, makefile, "Вызывает команды", $tags="infra")
 Rel(docker_compose, dockerfile, "Использует", $tags="infra")
 Rel(dockerfile, requirements_txt, "Использует зависимости", $tags="infra")
-Rel(git_repo, github_actions, "Запускает Workflows", $tags="infra")
 
-Rel(github_actions, vps, "SSH-доступ", $tags="infra")
 Rel(github_actions, docker, "Собирает образ", $tags="infra")
 
 SHOW_LEGEND()
