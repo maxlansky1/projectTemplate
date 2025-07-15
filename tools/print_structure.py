@@ -7,7 +7,16 @@
 import os
 
 # Папки, которые нужно игнорировать
-IGNORE_FOLDERS = {".git", "__pycache__", ".venv", "venv"}
+IGNORE_FOLDERS = {
+    ".git",
+    "__pycache__",
+    ".venv",
+    "venv",
+    "_build",
+    "_static",
+    "_templates",
+    ".ruff_cache",
+}
 
 # Файлы и расширения, которые нужно игнорировать
 IGNORE_FILES = {
