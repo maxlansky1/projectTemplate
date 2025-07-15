@@ -8,6 +8,7 @@ on:
 jobs:
   notify:
     runs-on: ubuntu-latest
+    environment: vps_deploy
     steps:
       - name: 🧪 Debug Show all variables
         run: |
