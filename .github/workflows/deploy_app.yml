@@ -9,28 +9,37 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - name: 📢 Run SSH commands
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          port: ${{ secrets.SSH_PORT }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd ${{ secrets.DEPLOY_PATH }}
-            echo "Current directory: $(pwd)"
-            whoami
-            ls -ali
+      - name: 📦 Checkout code
+        uses: actions/checkout@v4
 
-      - name: 🚀 Send Telegram message
+      - name: 🔐 Setup SSH credentials
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -p $SSH_PORT $SSH_HOST >> ~/.ssh/known_hosts
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+
+      - name: 📢 Run commands on VPS via SSH
+        run: |
+          ssh -o StrictHostKeyChecking=no \
+              -i ~/.ssh/id_rsa \
+              -p ${{ secrets.SSH_PORT }} \
+              ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
+              "cd ${{ secrets.DEPLOY_PATH }} && whoami && ls -ali"
+
+      - name: 🚀 Send Telegram notification
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_KEY }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          REPO_NAME: ${{ github.repository }}
+          COMMIT_SHA: ${{ github.sha }}
         run: |
           curl -s -X POST \
             "https://api.telegram.org/bot ${TELEGRAM_BOT_TOKEN}/sendMessage" \
             -d chat_id="${TELEGRAM_CHAT_ID}" \
             -d text="🚀 *Deployment started*\n\n📦 Repo: ${REPO_NAME}\n📌 Commit: ${COMMIT_SHA}\n🔗 https://github.com/ ${REPO_NAME}/commit/${COMMIT_SHA}" \
             -d parse_mode="Markdown"
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_KEY }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          REPO_NAME: ${{ github.repository }}
-          COMMIT_SHA: ${{ github.sha }}
