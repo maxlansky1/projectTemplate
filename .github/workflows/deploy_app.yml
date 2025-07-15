@@ -45,7 +45,7 @@ jobs:
       - name: 🚀 Send Telegram message
         run: |
           curl -s -X POST \
-            "https://api.telegram.org/bot ${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             -d chat_id="${TELEGRAM_CHAT_ID}" \
             -d text="🚀 *Deployment started*\n\n📦 Repo: ${REPO_NAME}\n📌 Commit: ${COMMIT_SHA}\n🔗 https://github.com/${REPO_NAME}/commit/${COMMIT_SHA}" \
             -d parse_mode="Markdown"
