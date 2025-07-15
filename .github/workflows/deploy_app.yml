@@ -10,26 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: vps_deploy
     steps:
-      - name: 🧪 Debug Show all variables
-        run: |
-          echo "🔍 DEBUG OUTPUT:"
-          echo "SSH_HOST:       ${{ secrets.SSH_HOST }}"
-          echo "SSH_USER:       ${{ secrets.SSH_USER }}"
-          echo "SSH_PORT:       ${{ secrets.SSH_PORT }}"
-          echo "SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}"
-          echo "DEPLOY_PATH:    ${{ secrets.DEPLOY_PATH }}"
-          echo "TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}"
-          echo "REPO_NAME:      ${{ github.repository }}"
-          echo "COMMIT_SHA:     ${{ github.sha }}"
 
-          # Проверка, не пустые ли ключевые переменные
-          if [[ -z "${{ secrets.SSH_HOST }}" ]]; then echo "❌ SSH_HOST is empty"; fi
-          if [[ -z "${{ secrets.SSH_USER }}" ]]; then echo "❌ SSH_USER is empty"; fi
-          if [[ -z "${{ secrets.SSH_PORT }}" ]]; then echo "❌ SSH_PORT is empty"; fi
-          if [[ -z "${{ secrets.SSH_PRIVATE_KEY }}" ]]; then echo "❌ SSH_PRIVATE_KEY is empty"; fi
-          if [[ -z "${{ secrets.DEPLOY_PATH }}" ]]; then echo "❌ DEPLOY_PATH is empty"; fi
-
-      - name: 📢 Run SSH commands
+      - name: Подключаемся по SSH
         uses: appleboy/ssh-action@v1.2.2
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -42,7 +24,7 @@ jobs:
             whoami
             ls -ali
 
-      - name: 🚀 Send Telegram message
+      - name: Отправляем сообщение в телеграм бота
         run: |
           curl -s -X POST \
             "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
