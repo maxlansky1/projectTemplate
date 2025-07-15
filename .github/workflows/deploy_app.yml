@@ -9,7 +9,7 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - name: 📢 Send Telegram notification
+      - name: 📢 Run SSH commands
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -18,17 +18,11 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd ${{ secrets.DEPLOY_PATH }}
+            echo "Current directory: $(pwd)"
             whoami
             ls -ali
-            # (Опционально: можно выполнить какие-то проверки или скрипты)
 
-        env:
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_KEY }}
-          COMMIT_SHA: ${{ github.sha }}
-          REPO_NAME: ${{ github.repository }}
-
-      - name: 🚀 Send message via Telegram API
+      - name: 🚀 Send Telegram message
         run: |
           curl -s -X POST \
             "https://api.telegram.org/bot ${TELEGRAM_BOT_TOKEN}/sendMessage" \
