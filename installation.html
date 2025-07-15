@@ -97,10 +97,16 @@
 <li class="toctree-l3"><a class="reference internal" href="#windows">Для Windows</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#ci-cd">CI/CD</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#vps">Настройка на стороне VPS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#github">Настройка на стороне GitHub</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#id13">✅ Резюме</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="basics.html">🗺️ Roadmap: как работать с шаблоном</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recommendations.html">Recommendations: Полезные дополнения</a></li>
 </ul>
 
         </div>
@@ -251,7 +257,7 @@
 </div>
 <div class="tip admonition">
 <p class="admonition-title">Совет</p>
-<p>Используй <a class="reference internal" href="#./recommendations.md#%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE-%D0%BF%D0%BE-%D0%BD%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D1%8E-%D0%BA%D0%BE%D0%BC%D0%BC%D0%B8%D1%82%D0%BE%D0%B2"><span class="xref myst">памятку по коммитам</span></a> для грамотной работы с Git.</p>
+<p>Используй <a class="reference internal" href="recommendations.html#id1"><span class="std std-ref">памятку по коммитам</span></a> для грамотной работы с Git.</p>
 </div>
 <hr class="docutils" />
 <div class="admonition warning">
@@ -550,6 +556,113 @@ make<span class="w"> </span>html
 </section>
 </section>
 <hr class="docutils" />
+<section id="ci-cd">
+<h2>CI/CD<a class="headerlink" href="#ci-cd" title="Ссылка на этот заголовок"></a></h2>
+<p>Для автоматического деплоя приложения на свой личный сервер следует выполнить следующие шаги:</p>
+<section id="vps">
+<h3>Настройка на стороне VPS<a class="headerlink" href="#vps" title="Ссылка на этот заголовок"></a></h3>
+<ol class="arabic simple">
+<li><p>Создать нового юзера на VPS и ограничить его в правах
+На вашем VPS создайте пользователя, который будет использоваться только для деплоя, и предоставьте ему минимальные права.</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>useradd<span class="w"> </span>deployer
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Редактируем sudoers при помощи команды <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">visudo</span></code>. Добавляем внизу такую строчку</p></li>
+</ul>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>deployer  ALL=(ALL) NOPASSWD: /usr/bin/git, /usr/bin/docker
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Редактируем /etc/passwd - запрещаем новому юзеру вход в консоль. Должно получиться так</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>deployer:x:1001:1001:,,,:/home/deployer:/usr/sbin/nologin
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Редактируем sshd_config через sudo</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>nano<span class="w"> </span>/etc/ssh/sshd_config
+</pre></div>
+</div>
+<p>Должно быть так</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>PermitRootogin no
+PubkeyAuthentication yes
+PasswordAuthentication no
+PermitEmptyPasswords no
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Добавьте его в группу docker</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>usermod<span class="w"> </span>-aG<span class="w"> </span>docker<span class="w"> </span>deployer
+</pre></div>
+</div>
+<div class="warning admonition">
+<p class="admonition-title">ВАЖНО</p>
+<p>В будущем нужно обязательно добавить более строгие настройки безопасности, но для пет-проектов
+через Github Actions этого должно быть достаточно</p>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Настройка SSH для юзера deployer</p></li>
+</ol>
+<ul class="simple">
+<li><p>Создаем в домашней директории home/deployer папку .ssh</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>mkdir<span class="w"> </span>/home/deployer/.ssh
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Добавляем админа в группу deployer</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>deployer<span class="w"> </span>admin
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Разрешаем действия в папке только юзеру deployer и группе deployer</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">770</span><span class="w"> </span>/home/deployer/.ssh
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Делаем владельцем папки юзера deployer</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span>deployer:deployer<span class="w"> </span>/home/deployer/.ssh
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Создаем файл /home/deployer/.ssh/autorized_keys</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch<span class="w"> </span>home/deployer/.ssh/autorized_keys
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Генерируем на локальном компьютере SSH ключи по алгоритму Ed25519
+В результате получаем 2 ключа с именами deployer</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ssh-keygen<span class="w"> </span>-t<span class="w"> </span>ed25519<span class="w"> </span>-a<span class="w"> </span><span class="m">200</span><span class="w"> </span>-C<span class="w"> </span><span class="s2">&quot;github actions&quot;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Копируем ПУБЛИЧНЫЙ ключ SSH в /home/deployer/.ssh/autorized_keys</p></li>
+</ul>
+</section>
+<section id="github">
+<h3>Настройка на стороне GitHub<a class="headerlink" href="#github" title="Ссылка на этот заголовок"></a></h3>
+<ol class="arabic simple">
+<li><p>Создаем необходимые переменные для Github Secrets</p></li>
+</ol>
+<ul class="simple">
+<li><p>SSH_PRIVATE_KEY - приватный SSH ключ</p></li>
+<li><p>SSH_HOST - IP адрес сервера (можно узнать через команду <code class="docutils literal notranslate"><span class="pre">ifconfig</span></code>)</p></li>
+<li><p>SSH_PORT - порт SSH (можно найти в /etc/ssh/sshd_config)</p></li>
+<li><p>SSH_USER - имя юзера (в нашем случае deployer)</p></li>
+<li><p>DEPLOY_PATH - директория на сервере, где будет развернуто приложение (/home/deployer/)</p></li>
+<li><p>TELEGRAM_BOT_KEY - API ключ телеграм бота, которому будут приходить уведомления об успешном деплое</p></li>
+</ul>
+</section>
+</section>
 <section id="id13">
 <h2>✅ Резюме<a class="headerlink" href="#id13" title="Ссылка на этот заголовок"></a></h2>
 <p>Теперь твой проект полностью настроен и готов к разработке. Ты можешь:</p>

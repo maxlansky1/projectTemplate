@@ -371,6 +371,83 @@ HTML-версия документации будет доступна в пап
 
 ---
 
+### CI/CD
+Для автоматического деплоя приложения на свой личный сервер следует выполнить следующие шаги:
+
+#### Настройка на стороне VPS
+1. Создать нового юзера на VPS и ограничить его в правах
+На вашем VPS создайте пользователя, который будет использоваться только для деплоя, и предоставьте ему минимальные права. 
+```bash
+useradd deployer
+```
+- Редактируем sudoers при помощи команды `sudo visudo`. Добавляем внизу такую строчку
+```text
+deployer  ALL=(ALL) NOPASSWD: /usr/bin/git, /usr/bin/docker
+```
+- Редактируем /etc/passwd - запрещаем новому юзеру вход в консоль. Должно получиться так
+```bash
+deployer:x:1001:1001:,,,:/home/deployer:/usr/sbin/nologin
+```
+- Редактируем sshd_config через sudo
+```bash
+sudo nano /etc/ssh/sshd_config
+```
+Должно быть так
+```text
+PermitRootogin no
+PubkeyAuthentication yes
+PasswordAuthentication no
+PermitEmptyPasswords no
+```
+
+2. Добавьте его в группу docker
+```bash
+usermod -aG docker deployer
+```
+
+```{admonition} ВАЖНО
+:class: warning
+В будущем нужно обязательно добавить более строгие настройки безопасности, но для пет-проектов
+через Github Actions этого должно быть достаточно
+```
+3. Настройка SSH для юзера deployer
+- Создаем в домашней директории home/deployer папку .ssh
+```bash
+sudo mkdir /home/deployer/.ssh
+```
+
+- Добавляем админа в группу deployer
+```bash
+sudo usermod -aG deployer admin
+```
+- Разрешаем действия в папке только юзеру deployer и группе deployer
+```bash
+sudo chmod 770 /home/deployer/.ssh
+```
+- Делаем владельцем папки юзера deployer
+```bash
+sudo chown -R deployer:deployer /home/deployer/.ssh
+```
+- Создаем файл /home/deployer/.ssh/autorized_keys
+```bash
+touch home/deployer/.ssh/autorized_keys
+```
+- Генерируем на локальном компьютере SSH ключи по алгоритму Ed25519
+В результате получаем 2 ключа с именами deployer
+```bash
+ssh-keygen -t ed25519 -a 200 -C "github actions"
+```
+- Копируем ПУБЛИЧНЫЙ ключ SSH в /home/deployer/.ssh/autorized_keys
+
+#### Настройка на стороне GitHub
+1. Создаем необходимые переменные для Github Secrets
+- SSH_PRIVATE_KEY - приватный SSH ключ
+- SSH_HOST - IP адрес сервера (можно узнать через команду `ifconfig`)
+- SSH_PORT - порт SSH (можно найти в /etc/ssh/sshd_config)
+- SSH_USER - имя юзера (в нашем случае deployer)
+- DEPLOY_PATH - директория на сервере, где будет развернуто приложение (/home/deployer/)
+- TELEGRAM_BOT_KEY - API ключ телеграм бота, которому будут приходить уведомления об успешном деплое
+
 ### ✅ Резюме
 
 Теперь твой проект полностью настроен и готов к разработке. Ты можешь:
