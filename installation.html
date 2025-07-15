@@ -575,12 +575,6 @@ make<span class="w"> </span>html
 </pre></div>
 </div>
 <ul class="simple">
-<li><p>Редактируем /etc/passwd - запрещаем новому юзеру вход в консоль. Должно получиться так</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>deployer:x:1001:1001:,,,:/home/deployer:/usr/sbin/nologin
-</pre></div>
-</div>
-<ul class="simple">
 <li><p>Редактируем sshd_config через sudo</p></li>
 </ul>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>nano<span class="w"> </span>/etc/ssh/sshd_config
@@ -594,15 +588,10 @@ PermitEmptyPasswords no
 </pre></div>
 </div>
 <ol class="arabic simple" start="2">
-<li><p>Добавьте его в группу docker</p></li>
+<li><p>Добавляем юзера deployer в группу docker</p></li>
 </ol>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>usermod<span class="w"> </span>-aG<span class="w"> </span>docker<span class="w"> </span>deployer
 </pre></div>
-</div>
-<div class="warning admonition">
-<p class="admonition-title">ВАЖНО</p>
-<p>В будущем нужно обязательно добавить более строгие настройки безопасности, но для пет-проектов
-через Github Actions этого должно быть достаточно</p>
 </div>
 <ol class="arabic simple" start="3">
 <li><p>Настройка SSH для юзера deployer</p></li>
@@ -617,18 +606,6 @@ PermitEmptyPasswords no
 <li><p>Добавляем админа в группу deployer</p></li>
 </ul>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>deployer<span class="w"> </span>admin
-</pre></div>
-</div>
-<ul class="simple">
-<li><p>Разрешаем действия в папке только юзеру deployer и группе deployer</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">770</span><span class="w"> </span>/home/deployer/.ssh
-</pre></div>
-</div>
-<ul class="simple">
-<li><p>Делаем владельцем папки юзера deployer</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span>deployer:deployer<span class="w"> </span>/home/deployer/.ssh
 </pre></div>
 </div>
 <ul class="simple">
@@ -647,6 +624,25 @@ PermitEmptyPasswords no
 <ul class="simple">
 <li><p>Копируем ПУБЛИЧНЫЙ ключ SSH в /home/deployer/.ssh/autorized_keys</p></li>
 </ul>
+<ol class="arabic simple" start="4">
+<li><p>Настройки прав доступа (необходимо для подключения по ssh)
+Настраиваем следующие права для юзера deployer, его директорий и файлов</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>chmod<span class="w"> </span>go-w<span class="w"> </span>/home/deployer
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>/home/deployer/.ssh
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">600</span><span class="w"> </span>/home/deployer/.ssh/authorized_keys
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Делаем владельцем папки юзера deployer</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span>deployer:deployer<span class="w"> </span>/home/deployer/.ssh
+</pre></div>
+</div>
 </section>
 <section id="github">
 <h3>Настройка на стороне GitHub<a class="headerlink" href="#github" title="Ссылка на этот заголовок"></a></h3>
@@ -661,6 +657,9 @@ PermitEmptyPasswords no
 <li><p>DEPLOY_PATH - директория на сервере, где будет развернуто приложение (/home/deployer/)</p></li>
 <li><p>TELEGRAM_BOT_KEY - API ключ телеграм бота, которому будут приходить уведомления об успешном деплое</p></li>
 </ul>
+<ol class="arabic simple" start="2">
+<li><p>Делаем push на гитхаб, получаем уведомление в телеграм</p></li>
+</ol>
 </section>
 </section>
 <section id="id13">
