@@ -1,4 +1,4 @@
-name: Simple Deploy Notification
+name: Тестирование SSH подключения
 
 on:
   push:
