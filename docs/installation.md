@@ -384,10 +384,7 @@ useradd deployer
 ```text
 deployer  ALL=(ALL) NOPASSWD: /usr/bin/git, /usr/bin/docker
 ```
-- Редактируем /etc/passwd - запрещаем новому юзеру вход в консоль. Должно получиться так
-```bash
-deployer:x:1001:1001:,,,:/home/deployer:/usr/sbin/nologin
-```
+
 - Редактируем sshd_config через sudo
 ```bash
 sudo nano /etc/ssh/sshd_config
@@ -400,16 +397,11 @@ PasswordAuthentication no
 PermitEmptyPasswords no
 ```
 
-2. Добавьте его в группу docker
+2. Добавляем юзера deployer в группу docker
 ```bash
 usermod -aG docker deployer
 ```
 
-```{admonition} ВАЖНО
-:class: warning
-В будущем нужно обязательно добавить более строгие настройки безопасности, но для пет-проектов
-через Github Actions этого должно быть достаточно
-```
 3. Настройка SSH для юзера deployer
 - Создаем в домашней директории home/deployer папку .ssh
 ```bash
@@ -420,14 +412,7 @@ sudo mkdir /home/deployer/.ssh
 ```bash
 sudo usermod -aG deployer admin
 ```
-- Разрешаем действия в папке только юзеру deployer и группе deployer
-```bash
-sudo chmod 770 /home/deployer/.ssh
-```
-- Делаем владельцем папки юзера deployer
-```bash
-sudo chown -R deployer:deployer /home/deployer/.ssh
-```
+
 - Создаем файл /home/deployer/.ssh/autorized_keys
 ```bash
 touch home/deployer/.ssh/autorized_keys
@@ -439,6 +424,23 @@ ssh-keygen -t ed25519 -a 200 -C "github actions"
 ```
 - Копируем ПУБЛИЧНЫЙ ключ SSH в /home/deployer/.ssh/autorized_keys
 
+4. Настройки прав доступа (необходимо для подключения по ssh)
+Настраиваем следующие права для юзера deployer, его директорий и файлов
+```bash
+sudo chmod go-w /home/deployer
+```
+```bash
+sudo chmod 700 /home/deployer/.ssh
+```
+```bash
+sudo chmod 600 /home/deployer/.ssh/authorized_keys
+```
+
+- Делаем владельцем папки юзера deployer
+```bash
+sudo chown -R deployer:deployer /home/deployer/.ssh
+```
+
 #### Настройка на стороне GitHub
 1. Создаем необходимые переменные для Github Secrets
 - SSH_PRIVATE_KEY - приватный SSH ключ
@@ -447,6 +449,8 @@ ssh-keygen -t ed25519 -a 200 -C "github actions"
 - SSH_USER - имя юзера (в нашем случае deployer)
 - DEPLOY_PATH - директория на сервере, где будет развернуто приложение (/home/deployer/)
 - TELEGRAM_BOT_KEY - API ключ телеграм бота, которому будут приходить уведомления об успешном деплое
+
+2. Делаем push на гитхаб, получаем уведомление в телеграм
 
 ### ✅ Резюме
 
