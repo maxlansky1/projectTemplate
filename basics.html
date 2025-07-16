@@ -1339,14 +1339,14 @@ make html</p>
 
 <span class="c"># Устанавливаем PYTHONPATH и PATH</span>
 <span class="k">ENV</span><span class="w"> </span>PYTHONPATH<span class="w"> </span>/app
-<span class="k">ENV</span><span class="w"> </span>PATH<span class="w"> </span>/home/appuser/.local/bin:<span class="nv">$PATH</span>
+<span class="k">ENV</span><span class="w"> </span>PATH<span class="w"> </span>/home/deployer/.local/bin:<span class="nv">$PATH</span>
 
 <span class="c"># Устанавливаем рабочую директорию</span>
 <span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
 
 <span class="c"># Создаём пользователя ДО установки зависимостей и даем ему права на чтение и запись</span>
 <span class="k">ARG</span><span class="w"> </span><span class="nv">UID</span><span class="o">=</span><span class="m">1001</span>
-<span class="k">RUN</span><span class="w"> </span>useradd<span class="w"> </span>-m<span class="w"> </span>-u<span class="w"> </span><span class="si">${</span><span class="nv">UID</span><span class="si">}</span><span class="w"> </span>appuser
+<span class="k">RUN</span><span class="w"> </span>useradd<span class="w"> </span>-m<span class="w"> </span>-u<span class="w"> </span><span class="si">${</span><span class="nv">UID</span><span class="si">}</span><span class="w"> </span>deployer
 
 <span class="c"># Копируем requirements</span>
 <span class="k">COPY</span><span class="w"> </span>requirements.txt<span class="w"> </span>.
@@ -1359,11 +1359,11 @@ make html</p>
 <span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>.
 
 <span class="c"># Даём права пользователю на всё содержимое</span>
-<span class="k">RUN</span><span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span>appuser:appuser<span class="w"> </span>/app<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="k">RUN</span><span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span>deployer:deployer<span class="w"> </span>/app<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>chmod<span class="w"> </span>+x<span class="w"> </span>/app/src/main.py
 
 <span class="c"># Переключаемся на пользователя</span>
-<span class="k">USER</span><span class="w"> </span><span class="s">appuser</span>
+<span class="k">USER</span><span class="w"> </span><span class="s">deployer</span>
 
 <span class="c"># Проверка состояния контейнера</span>
 <span class="k">HEALTHCHECK</span><span class="w"> </span>--interval<span class="o">=</span>30s<span class="w"> </span>--timeout<span class="o">=</span>5s<span class="w"> </span>--retries<span class="o">=</span><span class="m">3</span><span class="w"> </span><span class="se">\</span>
