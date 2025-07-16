@@ -20,8 +20,9 @@ ENV PATH /home/appuser/.local/bin:$PATH
 # Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Создаём пользователя ДО установки зависимостей
-RUN useradd -m appuser
+# Создаём пользователя ДО установки зависимостей и даем ему права на чтение и запись
+ARG UID=1001
+RUN useradd -m -u ${UID} appuser
 
 # Копируем requirements
 COPY requirements.txt .
