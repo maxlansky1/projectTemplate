@@ -15,14 +15,14 @@ ENV LC_ALL en_US.UTF-8
 
 # Устанавливаем PYTHONPATH и PATH
 ENV PYTHONPATH /app
-ENV PATH /home/appuser/.local/bin:$PATH
+ENV PATH /home/deployer/.local/bin:$PATH
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
 
 # Создаём пользователя ДО установки зависимостей и даем ему права на чтение и запись
 ARG UID=1001
-RUN useradd -m -u ${UID} appuser
+RUN useradd -m -u ${UID} deployer
 
 # Копируем requirements
 COPY requirements.txt .
@@ -35,11 +35,11 @@ RUN pip install --upgrade pip && \
 COPY . .
 
 # Даём права пользователю на всё содержимое
-RUN chown -R appuser:appuser /app && \
+RUN chown -R deployer:deployer /app && \
     chmod +x /app/src/main.py
 
 # Переключаемся на пользователя
-USER appuser
+USER deployer
 
 # Проверка состояния контейнера
 HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
