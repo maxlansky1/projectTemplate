@@ -10,6 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     environment: vps_deploy
     steps:
+
+      - name: Проверка репозитория
+        uses: actions/checkout@v3
+
       - name: Проверяем, подтягиваются ли переменные
         run: |
           echo "🔍 DEBUG OUTPUT:"
