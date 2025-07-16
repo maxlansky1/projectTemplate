@@ -10,29 +10,94 @@ jobs:
     runs-on: ubuntu-latest
     environment: vps_deploy
     steps:
+      - name: Проверяем, подтягиваются ли переменные
+        run: |
+          echo "🔍 DEBUG OUTPUT:"
+          echo "SSH_HOST:       ${{ secrets.SSH_HOST }}"
+          echo "SSH_USER:       ${{ secrets.SSH_USER }}"
+          echo "SSH_PORT:       ${{ secrets.SSH_PORT }}"
+          echo "SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}"
+          echo "DEPLOY_PATH:    ${{ secrets.DEPLOY_PATH }}"
+          echo "TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}"
+          echo "REPO_NAME:      ${{ github.repository }}"
+          echo "COMMIT_SHA:     ${{ github.sha }}"
+
+          # Проверка, не пустые ли ключевые переменные
+          if [[ -z "${{ secrets.SSH_HOST }}" ]]; then echo "❌ SSH_HOST is empty"; fi
+          if [[ -z "${{ secrets.SSH_USER }}" ]]; then echo "❌ SSH_USER is empty"; fi
+          if [[ -z "${{ secrets.SSH_PORT }}" ]]; then echo "❌ SSH_PORT is empty"; fi
+          if [[ -z "${{ secrets.SSH_PRIVATE_KEY }}" ]]; then echo "❌ SSH_PRIVATE_KEY is empty"; fi
+          if [[ -z "${{ secrets.DEPLOY_PATH }}" ]]; then echo "❌ DEPLOY_PATH is empty"; fi
+
+      - name: Определяем тип изменений
+        id: changes
+        run: |
+          changed_files=$(git diff --name-only HEAD^)
+
+          # Если изменились файлы docker или requirements - пересборка, в другом случае рестарт
+          if echo "$changed_files" | grep -E 'Dockerfile|docker-compose|requirements.txt' > /dev/null; then
+            echo "run_rebuild=true" >> $GITHUB_ENV
+          else
+            echo "run_rebuild=false" >> $GITHUB_ENV
+          fi
+      - name: Определяем название репозитория
+        run: |
+          echo "REPO_NAME=$(basename ${{ github.repository }})" >> $GITHUB_ENV
 
       - name: Подключаемся по SSH
-        uses: appleboy/ssh-action@v1.2.2
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd ${{ secrets.DEPLOY_PATH }}
-            echo "Current directory: $(pwd)"
-            whoami
-            ls -ali
+            # Переходим в директорию проекта 
+            cd "${{ secrets.DEPLOY_PATH }}/${{ env.REPO_NAME }}"
+            
+            # Полностью откатываем любые локальные изменения
+            git reset --hard
+
+            # Подтягиваем изменения из main
+            git pull origin main
+
+            # Выполняем нужное действие в зависимости от изменений
+            if [ "${{ env.run_rebuild }}" = "true" ]; then
+              echo "🔄 Выполняем полный rebuild..."
+              make rebuild
+            else
+              echo "🔁 Перезапускаем сервис без пересборки..."
+              make restart
+            fi
+
+            docker ps
 
       - name: Отправляем сообщение в телеграм бота
+        if: success()
         run: |
+          # Получаем список запущенных контейнеров
+          CONTAINERS=$(docker ps --format "table {{.Image}}\t{{.Status}}\t{{.Ports}}")
+
+          # Отправляем сообщение через бота
           curl -s -X POST \
             "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             -d chat_id="${TELEGRAM_CHAT_ID}" \
-            -d text="🚀 *Deployment started*\n\n📦 Repo: ${REPO_NAME}\n📌 Commit: ${COMMIT_SHA}\n🔗 https://github.com/${REPO_NAME}/commit/${COMMIT_SHA}" \
-            -d parse_mode="Markdown"
+            -d parse_mode="Markdown" \
+            -d text="✅ *Сборка прошла успешно*
+
+            📦 *Repo:* \`${REPO_NAME}\`
+            📌 *Commit:* [${COMMIT_SHA:0:7}](https://github.com/${REPO_NAME}/commit/${COMMIT_SHA})
+            🕒 *Time:* $(date '+%Y-%m-%d %H:%M:%S')
+
+            📦 *Запущенные контейнеры:*
+            \`\`\`
+            $CONTAINERS
+            \`\`\`
+
+            🔗 [View in GitHub Actions](https://github.com/${REPO_NAME}/actions/runs/${GITHUB_RUN_ID})"
+            
         env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           REPO_NAME: ${{ github.repository }}
           COMMIT_SHA: ${{ github.sha }}
