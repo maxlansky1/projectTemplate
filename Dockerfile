@@ -22,7 +22,9 @@ WORKDIR /app
 
 # Создаём пользователя ДО установки зависимостей и даем ему права на чтение и запись
 ARG UID=1001
-RUN useradd -m -u ${UID} deployer
+ARG GID=1001
+RUN groupadd -g ${GID} deployer && \
+    useradd -m -u ${UID} -g deployer deployer
 
 # Копируем requirements
 COPY requirements.txt .
