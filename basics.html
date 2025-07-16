@@ -1346,7 +1346,9 @@ make html</p>
 
 <span class="c"># Создаём пользователя ДО установки зависимостей и даем ему права на чтение и запись</span>
 <span class="k">ARG</span><span class="w"> </span><span class="nv">UID</span><span class="o">=</span><span class="m">1001</span>
-<span class="k">RUN</span><span class="w"> </span>useradd<span class="w"> </span>-m<span class="w"> </span>-u<span class="w"> </span><span class="si">${</span><span class="nv">UID</span><span class="si">}</span><span class="w"> </span>deployer
+<span class="k">ARG</span><span class="w"> </span><span class="nv">GID</span><span class="o">=</span><span class="m">1001</span>
+<span class="k">RUN</span><span class="w"> </span>groupadd<span class="w"> </span>-g<span class="w"> </span><span class="si">${</span><span class="nv">GID</span><span class="si">}</span><span class="w"> </span>deployer<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>useradd<span class="w"> </span>-m<span class="w"> </span>-u<span class="w"> </span><span class="si">${</span><span class="nv">UID</span><span class="si">}</span><span class="w"> </span>-g<span class="w"> </span>deployer<span class="w"> </span>deployer
 
 <span class="c"># Копируем requirements</span>
 <span class="k">COPY</span><span class="w"> </span>requirements.txt<span class="w"> </span>.
