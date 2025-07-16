@@ -6,6 +6,8 @@
 к настройкам через класс `Config`.
 """
 
+from pathlib import Path
+
 from environs import Env
 
 env = Env()
@@ -21,25 +23,23 @@ class Config:
     телеграм-бота, email, логирования, безопасности и т.д.
     """
 
-    # --- Общие настройки ---
+    # --- Общие настройки --- (имя приложения, уровень логирования, путь к корню проекта, часовой пояс, кол-во воркеров)
     APP_NAME: str = env.str("APP_NAME", "MyApp")
+    LOG_LEVEL: str = env.str("LOG_LEVEL", "INFO")
+    PROJECT_ROOT: Path = Path(__file__).parent.parent
+    TIMEZONE: str = env.str("TIMEZONE", "UTC")
+    MAX_WORKERS: int = env.int("MAX_WORKERS", 5)
 
-    # --- Секреты и ключи (обязательные) ---
-    SECRET_KEY: str = env.str("SECRET_KEY")
-    JWT_SECRET: str = env.str("JWT_SECRET")
-
-    # --- База данных ---
-    DB_ENGINE: str = env.str("DB_ENGINE", "postgresql")
-    DB_HOST: str = env.str("DB_HOST", "localhost")
-    DB_PORT: int = env.int("DB_PORT", 5432)
-    DB_NAME: str = env.str("DB_NAME")
-    DB_USER: str = env.str("DB_USER")
-    DB_PASSWORD: str = env.str("DB_PASSWORD")
-    DB_SSL_MODE: str = env.str("DB_SSL_MODE", "prefer")
-
-    # --- Кэширование (Redis) ---
-    REDIS_URL: str = env.str("REDIS_URL", "redis://localhost:6379/0")
-    REDIS_PASSWORD: str = env.str("REDIS_PASSWORD", None)
+    # --- Базовые директории проекта ---
+    GITHUB_WORKFLOWS_DIR = PROJECT_ROOT / ".github" / "workflows"
+    CONFIGS_DIR: Path = PROJECT_ROOT / "configs"
+    DIAGRAMS_DIR: Path = PROJECT_ROOT / "diagrams"
+    DOCS_DIR: Path = PROJECT_ROOT / "docs"
+    LOGS_DIR: Path = PROJECT_ROOT / "logs"
+    NOTES_DIR: Path = PROJECT_ROOT / "notes"
+    SRC_DIR: Path = PROJECT_ROOT / "src"
+    TESTS_DIR: Path = PROJECT_ROOT / "tests"
+    TOOLS_DIR: Path = PROJECT_ROOT / "tools"
 
     # --- Docker ---
     DOCKER_ENV: str = env.str("DOCKER_ENV", "development")
@@ -56,34 +56,6 @@ class Config:
     GOOGLE_CLIENT_ID: str = env.str("GOOGLE_CLIENT_ID", None)
     GOOGLE_CLIENT_SECRET: str = env.str("GOOGLE_CLIENT_SECRET", None)
     GOOGLE_REDIRECT_URI: str = env.str("GOOGLE_REDIRECT_URI", None)
-
-    # --- Email настройки ---
-    EMAIL_HOST: str = env.str("EMAIL_HOST", None)
-    EMAIL_PORT: int = env.int("EMAIL_PORT", 587)
-    EMAIL_HOST_USER: str = env.str("EMAIL_HOST_USER", None)
-    EMAIL_HOST_PASSWORD: str = env.str("EMAIL_HOST_PASSWORD", None)
-    EMAIL_USE_TLS: bool = env.bool("EMAIL_USE_TLS", True)
-    EMAIL_USE_SSL: bool = env.bool("EMAIL_USE_SSL", False)
-    EMAIL_DEFAULT_FROM: str = env.str("EMAIL_DEFAULT_FROM", None)
-
-    # --- Sentry ---
-    SENTRY_DSN: str = env.str("SENTRY_DSN", None)
-
-    # --- Логирование ---
-    LOG_LEVEL: str = env.str("LOG_LEVEL", "INFO")
-
-    # --- API и внешние сервисы ---
-    API_SERVICE_URL: str = env.str("API_SERVICE_URL", None)
-    API_SERVICE_KEY: str = env.str("API_SERVICE_KEY", None)
-
-    # --- Другие ---
-    TIMEZONE: str = env.str("TIMEZONE", "UTC")
-    MAX_WORKERS: int = env.int("MAX_WORKERS", 5)
-
-    # --- Безопасность ---
-    CORS_ALLOWED_ORIGINS: list = env.list("CORS_ALLOWED_ORIGINS", ["http://localhost"])
-    SESSION_COOKIE_SECURE: bool = env.bool("SESSION_COOKIE_SECURE", False)
-    CSRF_COOKIE_SECURE: bool = env.bool("CSRF_COOKIE_SECURE", False)
 
 
 config = Config()
