@@ -1344,8 +1344,9 @@ make html</p>
 <span class="c"># Устанавливаем рабочую директорию</span>
 <span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
 
-<span class="c"># Создаём пользователя ДО установки зависимостей</span>
-<span class="k">RUN</span><span class="w"> </span>useradd<span class="w"> </span>-m<span class="w"> </span>appuser
+<span class="c"># Создаём пользователя ДО установки зависимостей и даем ему права на чтение и запись</span>
+<span class="k">ARG</span><span class="w"> </span><span class="nv">UID</span><span class="o">=</span><span class="m">1001</span>
+<span class="k">RUN</span><span class="w"> </span>useradd<span class="w"> </span>-m<span class="w"> </span>-u<span class="w"> </span><span class="si">${</span><span class="nv">UID</span><span class="si">}</span><span class="w"> </span>appuser
 
 <span class="c"># Копируем requirements</span>
 <span class="k">COPY</span><span class="w"> </span>requirements.txt<span class="w"> </span>.
