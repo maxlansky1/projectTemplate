@@ -46,8 +46,8 @@ COPY --chown=${DEPLOY_USER_NAME}:${DEPLOY_USER_NAME} . .
 USER ${DEPLOY_USER_NAME}
 
 # Проверяем состояния контейнера
-HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
-  CMD curl -f http://localhost:${APP_PORT}/health || exit 1
+# HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
+#   CMD curl -f http://localhost:${APP_PORT}/health || exit 1
 
 # Запуск приложения
 CMD ["python", "-m", "src.main"]
