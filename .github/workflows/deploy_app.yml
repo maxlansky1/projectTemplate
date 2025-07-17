@@ -98,18 +98,18 @@ jobs:
             "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             -d chat_id="${TELEGRAM_CHAT_ID}" \
             -d parse_mode="HTML" \
-            -d text="✅ *Сборка прошла успешно*
+            -d text="✅ <b>Сборка прошла успешно</b>
 
-            📦 *Repo:* \`${REPO_NAME}\`
-            📌 *Commit:* [${COMMIT_SHA:0:7}](https://github.com/${REPO_NAME}/commit/${COMMIT_SHA})
-            🕒 *Time:* $(date '+%Y-%m-%d %H:%M:%S')
+            📦 <b>Repo:</b> <code>${REPO_NAME}</code>
+            📌 <b>Commit:</b> <a href='https://github.com/${REPO_NAME}/commit/${COMMIT_SHA}'>${COMMIT_SHA:0:7}</a>
+            🕒 <b>Time:</b> $(date '+%Y-%m-%d %H:%M:%S')
 
-            📦 *Запущенные контейнеры:*
-            \`\`\`
+            📦 <b>Запущенные контейнеры:</b>
+            <pre>
             $CONTAINERS
-            \`\`\`
+            </pre>
 
-            🔗 [View in GitHub Actions](https://github.com/${REPO_NAME}/actions/runs/${GITHUB_RUN_ID})"
+            🔗 <a href='https://github.com/${REPO_NAME}/actions/runs/${GITHUB_RUN_ID}'>View in GitHub Actions</a>"
             
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
