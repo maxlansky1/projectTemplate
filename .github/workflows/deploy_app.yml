@@ -89,7 +89,7 @@ jobs:
         if: success()
         run: |
           # Получаем список запущенных контейнеров
-          CONTAINERS=$(docker ps -a --format "table {{.Image}}\t{{.Status}}\t{{.Ports}}")
+          CONTAINERS=$(docker ps -a --format "table {{.Image}} {{.Status}} {{.Ports}}" | sed 's/\t/ /g')
           
           echo "Контейнеры: $CONTAINERS"
 
