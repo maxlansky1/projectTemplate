@@ -598,9 +598,11 @@ PermitEmptyPasswords no
 </pre></div>
 </div>
 <ul class="simple">
-<li><p>Добавляем юзера deployer в группу docker</p></li>
+<li><p>Добавляем юзера deployer в группу docker, а нашего основного юзера в группу deployer
+(вместо админ вставьте имя вашего основного юзера)</p></li>
 </ul>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>usermod<span class="w"> </span>-aG<span class="w"> </span>docker<span class="w"> </span>deployer
+usermod<span class="w"> </span>-aG<span class="w"> </span>deployer<span class="w"> </span>admin
 </pre></div>
 </div>
 <ol class="arabic simple" start="3">
@@ -651,12 +653,37 @@ PermitEmptyPasswords no
 </pre></div>
 </div>
 <ol class="arabic simple" start="6">
-<li><p>Настраиваем copier</p></li>
-<li><p>Настраиваем и открываем порты. Например, порт 55555</p></li>
+<li><p>Настраиваем и открываем порты для работы приложения. Например, порт 55555</p></li>
 </ol>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>ufw<span class="w"> </span>alow<span class="w"> </span><span class="m">55555</span>/tcp
 sudo<span class="w"> </span>ufw<span class="w"> </span>reload
 sudo<span class="w"> </span>ufw<span class="w"> </span>status
+</pre></div>
+</div>
+<ol class="arabic simple" start="7">
+<li><p>Переключаемся на нового юзера deployer и клонируем приложение с гитхаб</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="8">
+<li><p>Переходим в папку проекта и создаем в ней файл .env</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>projectTemplate
+nano<span class="w"> </span>.env
+</pre></div>
+</div>
+<ol class="arabic simple" start="9">
+<li><p>Заполняем .env по образцу .env.example - копируем все из .env.example, заменяем на свои значения</p></li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Предупреждение</p>
+<p>ВАЖНО указать UID и GID юзера deployer во избежание проблем с правами доступа</p>
+</div>
+<ol class="arabic simple" start="10">
+<li><p>Переключаемся обратно на админа и меняем права доступа для проекта</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span>deployer:deployer<span class="w"> </span>projectTemplate/
 </pre></div>
 </div>
 </section>
