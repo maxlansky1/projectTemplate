@@ -406,9 +406,11 @@ PasswordAuthentication no
 PermitEmptyPasswords no
 ```
 
-- Добавляем юзера deployer в группу docker
+- Добавляем юзера deployer в группу docker, а нашего основного юзера в группу deployer
+(вместо админ вставьте имя вашего основного юзера)
 ```bash
 usermod -aG docker deployer
+usermod -aG deployer admin
 ```
 
 3. Переключаемся на нового юзера
@@ -447,13 +449,32 @@ sudo chown -R deployer:deployer /home/deployer/.ssh
 sudo chmod 600 /home/deployer/.ssh/authorized_keys
 ```
 
-6. Настраиваем copier
-
-7. Настраиваем и открываем порты. Например, порт 55555
+6. Настраиваем и открываем порты для работы приложения. Например, порт 55555
 ```bash
 sudo ufw alow 55555/tcp
 sudo ufw reload
 sudo ufw status
+```
+
+7. Переключаемся на нового юзера deployer и клонируем приложение с гитхаб
+```bash
+git clone 
+```
+
+8. Переходим в папку проекта и создаем в ней файл .env
+```bash
+cd projectTemplate
+nano .env
+```
+
+9. Заполняем .env по образцу .env.example - копируем все из .env.example, заменяем на свои значения
+```{warning}
+ВАЖНО указать UID и GID юзера deployer во избежание проблем с правами доступа
+```
+
+10. Переключаемся обратно на админа и меняем права доступа для проекта
+```bash
+sudo chown -R deployer:deployer projectTemplate/
 ```
 
 #### Настройка на стороне GitHub
