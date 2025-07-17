@@ -8,14 +8,17 @@ services:
       context: .             # Dockerfile в текущей директории
       dockerfile: Dockerfile
       args:
-        UID: 1001
-        GID: 1001
+        UID: ${UID}
+        GID: ${GID}
+        DEPLOY_USER_NAME: ${DEPLOY_USER_NAME}
+        APP_NAME: ${APP_NAME}
+        APP_PORT: ${APP_PORT}
 
     command: python src/main.py  # можно переопределить стандартный CMD
 
     volumes:
-      - .:/app               # монтируем исходный код (удобно при разработке)
-      - ./logs:/app/logs     # том для логов
+      - .:/${APP_NAME}               # монтируем исходный код (удобно при разработке)
+      - ./logs:/${APP_NAME}/logs     # том для логов
 
     env_file:
       - .env                 # переменные окружения (токены, настройки)
