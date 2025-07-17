@@ -1493,6 +1493,7 @@ sudo<span class="w"> </span>ufw<span class="w"> </span>status
 
 <span class="c"># Указывает, какой файл docker-compose используется</span>
 <span class="nv">COMPOSE_FILE</span><span class="o">=</span>docker-compose.yaml
+<span class="nv">DC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>docker-compose<span class="w"> </span>-f<span class="w"> </span><span class="k">$(</span>COMPOSE_FILE<span class="k">)</span>
 
 <span class="c"># Сервис по умолчанию (например, app)</span>
 <span class="nv">SERVICE</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span>app
@@ -1507,12 +1508,12 @@ sudo<span class="w"> </span>ufw<span class="w"> </span>status
 <span class="c"># ▶️ Запуск контейнеров в фоне</span>
 <span class="c"># Используй после сборки или при старте проекта</span>
 <span class="nf">up</span><span class="o">:</span>
-<span class="w">	</span>docker-compose<span class="w"> </span>-f<span class="w"> </span><span class="k">$(</span>COMPOSE_FILE<span class="k">)</span><span class="w"> </span>up<span class="w"> </span>-d
+<span class="w">	</span><span class="k">$(</span>DC<span class="k">)</span><span class="w"> </span>up<span class="w"> </span>-d
 
 <span class="c"># ⛔ Остановить все контейнеры проекта</span>
 <span class="c"># Не удаляет образы и данные</span>
 <span class="nf">down</span><span class="o">:</span>
-<span class="w">	</span>docker-compose<span class="w"> </span>-f<span class="w"> </span><span class="k">$(</span>COMPOSE_FILE<span class="k">)</span><span class="w"> </span>down
+<span class="w">	</span><span class="k">$(</span>DC<span class="k">)</span><span class="w"> </span>down
 
 <span class="c"># 🔁 Перезапустить контейнеры без пересборки</span>
 <span class="c"># Полезно, если изменился код, но не зависимости</span>
@@ -1523,33 +1524,33 @@ sudo<span class="w"> </span>ufw<span class="w"> </span>status
 <span class="c"># 🔨 Пересобрать образы с нуля + очистка мусора</span>
 <span class="c"># Только для изменений в requirements.txt или Dockerfile</span>
 <span class="nf">build</span><span class="o">:</span>
-<span class="w">	</span>docker-compose<span class="w"> </span>-f<span class="w"> </span><span class="k">$(</span>COMPOSE_FILE<span class="k">)</span><span class="w"> </span>build<span class="w"> </span>--no-cache
+<span class="w">	</span><span class="k">$(</span>DC<span class="k">)</span><span class="w"> </span>build<span class="w"> </span>--no-cache
 <span class="w">	</span><span class="k">$(</span>MAKE<span class="k">)</span><span class="w"> </span>prune
 
-<span class="c"># 🔁🔄 Полный цикл: остановка → пересборка → запуск</span>
+<span class="c"># 🔁🔄 Полный цикл: остановка → удаление → запуск</span>
 <span class="c"># Используй, если хочешь всё обновить &quot;от и до&quot;</span>
-<span class="nf">rebuild</span><span class="o">:</span><span class="w"> </span><span class="n">down</span> <span class="n">build</span> <span class="n">up</span>
+<span class="nf">rebuild</span><span class="o">:</span><span class="w"> </span><span class="n">prune</span> <span class="n">up</span>
 
 <span class="c"># 🔍 Просмотр логов в реальном времени</span>
 <span class="nf">logs</span><span class="o">:</span>
-<span class="w">	</span>docker-compose<span class="w"> </span>-f<span class="w"> </span><span class="k">$(</span>COMPOSE_FILE<span class="k">)</span><span class="w"> </span>logs<span class="w"> </span>-f
+<span class="w">	</span><span class="k">$(</span>DC<span class="k">)</span><span class="w"> </span>logs<span class="w"> </span>-f
 
 <span class="c"># 🖥️ Вход внутрь контейнера через bash (или sh)</span>
 <span class="nf">bash</span><span class="o">:</span>
-<span class="w">	</span>docker-compose<span class="w"> </span>-f<span class="w"> </span><span class="k">$(</span>COMPOSE_FILE<span class="k">)</span><span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="k">$(</span>SERVICE<span class="k">)</span><span class="w"> </span>/bin/bash<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="se">\</span>
-<span class="w">	</span>docker-compose<span class="w"> </span>-f<span class="w"> </span><span class="k">$(</span>COMPOSE_FILE<span class="k">)</span><span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="k">$(</span>SERVICE<span class="k">)</span><span class="w"> </span>/bin/sh
+<span class="w">	</span><span class="k">$(</span>DC<span class="k">)</span><span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="k">$(</span>SERVICE<span class="k">)</span><span class="w"> </span>/bin/bash<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="se">\</span>
+<span class="w">	</span><span class="k">$(</span>DC<span class="k">)</span><span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="k">$(</span>SERVICE<span class="k">)</span><span class="w"> </span>/bin/sh
 
 <span class="c"># 🗑️ Очистка: удаление остановленных контейнеров и старых образов этого проекта</span>
 <span class="nf">prune</span><span class="o">:</span>
-<span class="w">	</span>docker-compose<span class="w"> </span>-f<span class="w"> </span><span class="k">$(</span>COMPOSE_FILE<span class="k">)</span><span class="w"> </span>down<span class="w"> </span>--rmi<span class="w"> </span><span class="nb">local</span><span class="w"> </span>--volumes
+<span class="w">	</span><span class="k">$(</span>DC<span class="k">)</span><span class="w"> </span>down<span class="w"> </span>--rmi<span class="w"> </span><span class="nb">local</span><span class="w"> </span>--volumes<span class="w"> </span>--remove-orphans
 
 <span class="c"># Очистка сгенерированной документации</span>
 <span class="nf">docs-clean</span><span class="o">:</span>
-<span class="w">	</span>.<span class="se">\d</span>ocs<span class="se">\m</span>ake.bat<span class="w"> </span>clean
+<span class="w">	</span><span class="nb">cd</span><span class="w"> </span>docs<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span>clean
 
 <span class="c"># Сборка HTML-документации</span>
 <span class="nf">docs-html</span><span class="o">:</span>
-<span class="w">	</span>.<span class="se">\d</span>ocs<span class="se">\m</span>ake.bat<span class="w"> </span>html
+<span class="w">	</span><span class="nb">cd</span><span class="w"> </span>docs<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span>html
 
 <span class="c"># =============================================</span>
 <span class="c"># 💡 ПАМЯТКА: Какие команды когда использовать</span>
