@@ -68,6 +68,9 @@ jobs:
             # Полностью откатываем любые локальные изменения
             git reset --hard
 
+            # Настройка git для автоматического слияния
+            git config pull.rebase false
+
             # Подтягиваем изменения из main
             git pull
 
@@ -80,13 +83,15 @@ jobs:
               make restart
             fi
 
-            docker ps
+            docker ps -a
 
       - name: Отправляем сообщение в телеграм бота
         if: success()
         run: |
           # Получаем список запущенных контейнеров
-          CONTAINERS=$(docker ps --format "table {{.Image}}\t{{.Status}}\t{{.Ports}}")
+          CONTAINERS=$(docker ps -a --format "table {{.Image}}\t{{.Status}}\t{{.Ports}}")
+          
+          echo "Контейнеры: $CONTAINERS"
 
           # Отправляем сообщение через бота
           curl -s -X POST \
