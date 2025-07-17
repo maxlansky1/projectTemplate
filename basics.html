@@ -1372,8 +1372,8 @@ make html</p>
 <span class="k">USER</span><span class="w"> </span><span class="s">${DEPLOY_USER_NAME}</span>
 
 <span class="c"># Проверяем состояния контейнера</span>
-<span class="k">HEALTHCHECK</span><span class="w"> </span>--interval<span class="o">=</span>30s<span class="w"> </span>--timeout<span class="o">=</span>5s<span class="w"> </span>--retries<span class="o">=</span><span class="m">3</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="k">CMD</span><span class="w"> </span>curl<span class="w"> </span>-f<span class="w"> </span>http://localhost:<span class="si">${</span><span class="nv">APP_PORT</span><span class="si">}</span>/health<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="c"># HEALTHCHECK --interval=30s --timeout=5s --retries=3 \</span>
+<span class="c">#   CMD curl -f http://localhost:${APP_PORT}/health || exit 1</span>
 
 <span class="c"># Запуск приложения</span>
 <span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;-m&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;src.main&quot;</span><span class="p">]</span>
