@@ -100,7 +100,10 @@
 <div class="viewcode-block" id="log_messages">
 <a class="viewcode-back" href="../../basics.html#src.main.log_messages">[документация]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">log_messages</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Функция, которая логирует сообщения разных уровней и выводит текст через print.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Функция, которая логирует сообщения разных уровней и выводит текст через print.</span>
+
+<span class="sd">    Задает 5 уровней логирования</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
 
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;DEBUG: А — </span><span class="si">{</span><span class="n">now</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
