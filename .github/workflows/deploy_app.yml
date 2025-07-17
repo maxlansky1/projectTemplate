@@ -1,4 +1,4 @@
-name: Тестирование SSH подключения
+name: Автодеплой
 
 on:
   push:
@@ -89,7 +89,7 @@ jobs:
         if: success()
         run: |
           # Получаем список запущенных контейнеров
-          CONTAINERS=$(docker ps -a --format "{{.Image}} {{.Status}} {{.Ports}}"
+          CONTAINERS=$(docker ps -a --format "{{.Image}} {{.Status}} {{.Ports}}")
           
           echo "Контейнеры: $CONTAINERS"
 
