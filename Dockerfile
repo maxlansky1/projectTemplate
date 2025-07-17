@@ -1,4 +1,12 @@
+# Начинаем сборку с образа Python slim, чтобы сократить размер приложения
 FROM python:3.12-slim
+
+# Импортируем нужные переменные (импортируются по пути .env -> docker-compose -> Dockerfile)
+ARG DEPLOY_USER_NAME
+ARG UID
+ARG GID
+ARG APP_NAME
+ARG APP_PORT
 
 # Устанавливаем локали (без вывода предупреждений)
 RUN apt-get update && \
@@ -14,17 +22,15 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
 # Устанавливаем PYTHONPATH и PATH
-ENV PYTHONPATH /app
-ENV PATH /home/deployer/.local/bin:$PATH
+ENV PYTHONPATH /${APP_NAME}
+ENV PATH /home/${DEPLOY_USER_NAME}/.local/bin:$PATH
 
 # Устанавливаем рабочую директорию
-WORKDIR /app
+WORKDIR /${APP_NAME}
 
 # Создаём пользователя ДО установки зависимостей и даем ему права на чтение и запись
-ARG UID=1001
-ARG GID=1001
-RUN groupadd -g ${GID} deployer && \
-    useradd -m -u ${UID} -g deployer deployer
+RUN groupadd -g ${GID} ${DEPLOY_USER_NAME} && \
+    useradd -m -u ${UID} -g ${DEPLOY_USER_NAME} ${DEPLOY_USER_NAME}
 
 # Копируем requirements
 COPY requirements.txt .
@@ -33,19 +39,15 @@ COPY requirements.txt .
 RUN pip install --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
-# Копируем исходный код
-COPY . .
+# Копируем исходный код в контейнер с правами нового юзера
+COPY --chown=${DEPLOY_USER_NAME}:${DEPLOY_USER_NAME} . .
 
-# Даём права пользователю на всё содержимое
-RUN chown -R deployer:deployer /app && \
-    chmod +x /app/src/main.py
+# Переключаемся на нового юзера
+USER ${DEPLOY_USER_NAME}
 
-# Переключаемся на пользователя
-USER deployer
-
-# Проверка состояния контейнера
+# Проверяем состояния контейнера
 HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
-  CMD curl -f http://localhost:8000/health || exit 1
+  CMD curl -f http://localhost:${APP_PORT}/health || exit 1
 
 # Запуск приложения
 CMD ["python", "-m", "src.main"]
