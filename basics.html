@@ -92,6 +92,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#src">🧱 Исходный код (src/)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#src-main-py">🧱 src/main.py</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.log_messages"><code class="docutils literal notranslate"><span class="pre">log_messages()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#src.main.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
 </ul>
 </li>
@@ -1115,10 +1116,15 @@ LICENSE
 <p id="module-src.main">Точка входа — главный запуск приложения.</p>
 <p>Этот модуль содержит точку входа в приложение и вызывает основную функцию main().</p>
 <dl class="py function">
+<dt class="sig sig-object py" id="src.main.log_messages">
+<span class="sig-prename descclassname"><span class="pre">src.main.</span></span><span class="sig-name descname"><span class="pre">log_messages</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main.html#log_messages"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#src.main.log_messages" title="Ссылка на это определение"></a></dt>
+<dd><p>Функция, которая логирует сообщения разных уровней и выводит текст через print.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="src.main.main">
 <span class="sig-prename descclassname"><span class="pre">src.main.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main.html#main"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#src.main.main" title="Ссылка на это определение"></a></dt>
-<dd><p>Запускает приложение.</p>
-<p>Логирует сообщения разных уровней и выводит тестовый текст через print().</p>
+<dd><p>Основная функция, запускающая бесконечный цикл с логами.</p>
 </dd></dl>
 
 </div>
@@ -1493,7 +1499,7 @@ sudo<span class="w"> </span>ufw<span class="w"> </span>status
 
 <span class="c"># Указывает, какой файл docker-compose используется</span>
 <span class="nv">COMPOSE_FILE</span><span class="o">=</span>docker-compose.yaml
-<span class="nv">DC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>docker-compose<span class="w"> </span>-f<span class="w"> </span><span class="k">$(</span>COMPOSE_FILE<span class="k">)</span>
+<span class="nv">DC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>docker-compose
 
 <span class="c"># Сервис по умолчанию (например, app)</span>
 <span class="nv">SERVICE</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span>app
@@ -1529,7 +1535,7 @@ sudo<span class="w"> </span>ufw<span class="w"> </span>status
 
 <span class="c"># 🔁🔄 Полный цикл: остановка → удаление → запуск</span>
 <span class="c"># Используй, если хочешь всё обновить &quot;от и до&quot;</span>
-<span class="nf">rebuild</span><span class="o">:</span><span class="w"> </span><span class="n">prune</span> <span class="n">up</span>
+<span class="nf">rebuild</span><span class="o">:</span><span class="w"> </span><span class="n">down</span> <span class="n">prune</span> <span class="n">up</span>
 
 <span class="c"># 🔍 Просмотр логов в реальном времени</span>
 <span class="nf">logs</span><span class="o">:</span>
