@@ -37,7 +37,7 @@ jobs:
         id: changes
         run: |
           if git rev-parse HEAD^ &>/dev/null; then
-            changed_files=$(git diff --name-only HEAD^)
+            changed_files=$(git diff --name-only --diff-filter=d HEAD~1)
           else
             echo "Первый коммит — требуется полная пересборка"
             echo "run_rebuild=true" >> $GITHUB_ENV
