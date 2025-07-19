@@ -55,6 +55,7 @@ jobs:
           echo "REPO_NAME=$(basename ${{ github.repository }})" >> $GITHUB_ENV
 
       - name: Подключаемся по SSH
+        id: ssh-connect
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -83,11 +84,18 @@ jobs:
               make restart
             fi
 
-            # Получаем список контейнеров и сохраняем в переменную
-            CONTAINERS=$(docker ps -a)
+            # Получаем список контейнеров
+            docker ps -a
 
       - name: Отправляем сообщение в телеграм бота
         if: success()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          REPO_NAME: ${{ github.repository }}
+          COMMIT_SHA: ${{ github.sha }}
+          CONTAINERS: ${{ steps.ssh-connect.outputs.stdout }}
+
         run: |
           # Формируем сообщение
           MESSAGE="✅ <b>Сборка прошла успешно</b>
@@ -107,9 +115,3 @@ jobs:
             -d chat_id="${TELEGRAM_CHAT_ID}" \
             -d parse_mode="HTML" \
             --data-urlencode text="$MESSAGE"
-            
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          REPO_NAME: ${{ github.repository }}
-          COMMIT_SHA: ${{ github.sha }}
