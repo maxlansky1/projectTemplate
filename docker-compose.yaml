@@ -30,6 +30,9 @@ services:
     tty: true                # для корректной работы логов и bash-сессии
     stdin_open: true         # возможность docker attach
 
+    environment:
+      - PYTHONIOENCODING=utf-8
+
     # depends_on:
     #   - db                 # зависимости от других сервисов, если будут
 
