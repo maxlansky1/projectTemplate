@@ -86,8 +86,8 @@ jobs:
       - name: получаем список запущенных контейнеров
         run: |
           # Получаем список контейнеров
-          docker ps -a --format "{{.Image}} {{.Status}} {{.Ports}}" > /tmp/container_list.txt
-          cat /tmp/container_list.txt  # Выводим содержимое файла для проверки
+          docker ps -a > container_list.txt
+          cat container_list.txt  # Выводим содержимое файла для проверки
 
       - name: Отправляем сообщение в телеграм бота
         if: success()
@@ -105,9 +105,12 @@ jobs:
           curl -s -X POST \
             "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendDocument" \
             -F chat_id="${TELEGRAM_CHAT_ID}" \
-            -F document="@/tmp/container_list.txt" \
+            -F document="@container_list.txt" \
             -F caption="$MESSAGE" \
             -F parse_mode="HTML"
+          
+          # Удаляем текстовый файл
+          rm container_list.txt
             
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
