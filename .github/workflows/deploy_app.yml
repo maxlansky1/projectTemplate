@@ -105,9 +105,7 @@ jobs:
             🕒 <b>Time:</b> $(date '+%Y-%m-%d %H:%M:%S')
 
             📦 <b>Запущенные контейнеры:</b>
-            <pre>
-            $CONTAINERS
-            </pre>
+            <pre>$(echo "$CONTAINERS" | sed 's/"/\\"/g')</pre>
 
             🔗 <a href='https://github.com/${REPO_NAME}/actions/runs/${GITHUB_RUN_ID}'>View in GitHub Actions</a>"
             
