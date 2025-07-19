@@ -83,7 +83,13 @@ jobs:
               make restart
             fi
 
-            docker ps -a
+      - name: Сделать скриншот с контейнерами
+        run: |
+          # Получаем список контейнеров
+          docker ps -a --format "{{.Image}} {{.Status}} {{.Ports}}" > /tmp/container_list.txt
+
+          # Делаем скриншот с помощью scrot
+          scrot /tmp/screenshot.png
 
       - name: Отправляем сообщение в телеграм бота
         if: success()
@@ -100,17 +106,15 @@ jobs:
           📌 <b>Commit:</b> <a href='https://github.com/ ${REPO_NAME}/commit/${COMMIT_SHA}'>${COMMIT_SHA:0:7}</a>
           🕒 <b>Time:</b> $(date '+%Y-%m-%d %H:%M:%S')
 
-          📦 <b>Запущенные контейнеры:</b>
-          <pre>$CONTAINERS</pre>
-
           🔗 <a href='https://github.com/ ${REPO_NAME}/actions/runs/${GITHUB_RUN_ID}'>View in GitHub Actions</a>"
 
           # Отправляем сообщение через бота
           curl -s -X POST \
-            "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
-            -d chat_id="${TELEGRAM_CHAT_ID}" \
-            -d parse_mode="HTML" \
-            --data-urlencode text="$MESSAGE"
+            "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto" \
+            -F chat_id="${TELEGRAM_CHAT_ID}" \
+            -F photo="@/tmp/screenshoot.png" \
+            -F caption="$MESSAGE" \
+            -F parse_mode="HTML"
             
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
