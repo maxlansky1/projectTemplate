@@ -1354,9 +1354,10 @@ make html</p>
 <span class="k">ENV</span><span class="w"> </span>LANGUAGE<span class="w"> </span>en_US:en
 <span class="k">ENV</span><span class="w"> </span>LC_ALL<span class="w"> </span>en_US.UTF-8
 
-<span class="c"># Устанавливаем PYTHONPATH и PATH</span>
+<span class="c"># Устанавливаем PYTHONPATH, PATH и PYTHONIOENCODING</span>
 <span class="k">ENV</span><span class="w"> </span>PYTHONPATH<span class="w"> </span>/<span class="si">${</span><span class="nv">APP_NAME</span><span class="si">}</span>
 <span class="k">ENV</span><span class="w"> </span>PATH<span class="w"> </span>/home/<span class="si">${</span><span class="nv">DEPLOY_USER_NAME</span><span class="si">}</span>/.local/bin:<span class="nv">$PATH</span>
+<span class="k">ENV</span><span class="w"> </span><span class="nv">PYTHONIOENCODING</span><span class="o">=</span>utf-8
 
 <span class="c"># Устанавливаем рабочую директорию</span>
 <span class="k">WORKDIR</span><span class="w"> </span><span class="s">/${APP_NAME}</span>
