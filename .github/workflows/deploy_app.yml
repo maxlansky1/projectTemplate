@@ -83,11 +83,9 @@ jobs:
               make restart
             fi
 
-      - name: получаем список запущенных контейнеров
-        run: |
-          # Получаем список контейнеров
-          docker ps -a > container_list.txt
-          cat container_list.txt  # Выводим содержимое файла для проверки
+            # Получаем список контейнеров
+            docker ps -a > container_list.txt
+            cat container_list.txt  # Выводим содержимое файла для проверки
 
       - name: Отправляем сообщение в телеграм бота
         if: success()
