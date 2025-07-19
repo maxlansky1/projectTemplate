@@ -21,9 +21,10 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
-# Устанавливаем PYTHONPATH и PATH
+# Устанавливаем PYTHONPATH, PATH и PYTHONIOENCODING
 ENV PYTHONPATH /${APP_NAME}
 ENV PATH /home/${DEPLOY_USER_NAME}/.local/bin:$PATH
+ENV PYTHONIOENCODING=utf-8
 
 # Устанавливаем рабочую директорию
 WORKDIR /${APP_NAME}
