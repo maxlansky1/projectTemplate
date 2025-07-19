@@ -52,8 +52,10 @@ jobs:
           # Проверка на изменения в Dockerfile, docker-compose или requirements.txt
           if echo "$changed_files" | grep -qE '(Dockerfile|docker-compose.*\.yml|requirements\.txt)'; then
             echo "run_rebuild=true" >> $GITHUB_ENV
+            echo "action_type=Пересборка" >> $GITHUB_ENV
           else
             echo "run_rebuild=false" >> $GITHUB_ENV
+            echo "action_type=Рестарт" >> $GITHUB_ENV
           fi
 
       - name: Определяем название репозитория
@@ -101,10 +103,11 @@ jobs:
           REPO_NAME: ${{ github.repository }}
           COMMIT_SHA: ${{ github.sha }}
           CONTAINERS: ${{ steps.ssh-connect.outputs.stdout }}
+          ACTION_TYPE: ${{ env.action_type }}
 
         run: |
           # Формируем сообщение
-          MESSAGE="✅ <b>Сборка прошла успешно</b>
+          MESSAGE="✅ <b>${action_type}</b>
 
           📦 <b>Repo:</b> <code>${REPO_NAME}</code>
           📌 <b>Commit:</b> <a href='https://github.com/${REPO_NAME}/commit/${COMMIT_SHA}'>${COMMIT_SHA:0:7}</a>
