@@ -87,6 +87,7 @@ jobs:
         run: |
           # Получаем список контейнеров
           docker ps -a --format "{{.Image}} {{.Status}} {{.Ports}}" > /tmp/container_list.txt
+          cat /tmp/container_list.txt  # Выводим содержимое файла для проверки
 
       - name: Отправляем сообщение в телеграм бота
         if: success()
