@@ -13,6 +13,8 @@ jobs:
 
       - name: Проверка репозитория
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Проверяем, подтягиваются ли переменные
         run: |
@@ -33,11 +35,11 @@ jobs:
           if [[ -z "${{ secrets.SSH_PRIVATE_KEY }}" ]]; then echo "❌ SSH_PRIVATE_KEY is empty"; fi
           if [[ -z "${{ secrets.DEPLOY_PATH }}" ]]; then echo "❌ DEPLOY_PATH is empty"; fi
 
-      - name: Определяем тип изменений
+      - name: Определяем тип изменений и выбираем пересборку/рестарт
         id: changes
         run: |
           if git rev-parse HEAD^ &>/dev/null; then
-            changed_files=$(git diff --name-only --diff-filter=d HEAD~1)
+            changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }})
           else
             echo "Первый коммит — требуется полная пересборка"
             echo "run_rebuild=true" >> $GITHUB_ENV
@@ -45,11 +47,14 @@ jobs:
           fi
 
           # Если изменились файлы docker или requirements - пересборка, в другом случае рестарт
-          if echo "$changed_files" | grep -E 'Dockerfile|docker-compose|requirements.txt' > /dev/null; then
+          echo "$changed_files" | grep -E '(Dockerfile|docker-compose.*\.yml|requirements\.txt)'
+
+          if echo "$changed_files" | grep -E '(Dockerfile|docker-compose.*\.yml|requirements\.txt)' > /dev/null; then
             echo "run_rebuild=true" >> $GITHUB_ENV
           else
             echo "run_rebuild=false" >> $GITHUB_ENV
           fi
+
       - name: Определяем название репозитория
         run: |
           echo "REPO_NAME=$(basename ${{ github.repository }})" >> $GITHUB_ENV
