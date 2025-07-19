@@ -38,7 +38,7 @@ jobs:
       - name: Определяем тип изменений и выбираем пересборку/рестарт
         id: changes
         run: |
-          if git rev-parse HEAD^ &>/dev/null; then
+          if [[ "${{ github.event.before }}" != "0000000000000000000000000000000000000000" ]]; then
             changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }})
           else
             echo "Первый коммит — требуется полная пересборка"
@@ -47,9 +47,9 @@ jobs:
           fi
 
           # Если изменились файлы docker или requirements - пересборка, в другом случае рестарт
-          echo "$changed_files" | grep -E '(Dockerfile|docker-compose.*\.yml|requirements\.txt)'
+          echo "$changed_files" | grep -qE '(Dockerfile|docker-compose.*\.yml|requirements\.txt)'
 
-          if echo "$changed_files" | grep -E '(Dockerfile|docker-compose.*\.yml|requirements\.txt)' > /dev/null; then
+          if echo "$changed_files" | grep -qE '(Dockerfile|docker-compose.*\.yml|requirements\.txt)' > /dev/null; then
             echo "run_rebuild=true" >> $GITHUB_ENV
           else
             echo "run_rebuild=false" >> $GITHUB_ENV
