@@ -27,7 +27,7 @@ def log_messages():
     logger.critical(f"CRITICAL: Д — {now}")
 
     print(f"[{now}] This is usual print function")
-    print(f"[{now}] This is unusual print function")
+    print(f"[{now}] Это необычный принт")
 
 
 def main():
