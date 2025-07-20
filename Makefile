@@ -4,7 +4,6 @@
 
 # Считываем переменные окружения и экспортируем их
 include .env
-export
 
 # Указывает, какой файл docker-compose используется
 COMPOSE_FILE=docker-compose.yaml
