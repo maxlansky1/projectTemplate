@@ -12,7 +12,12 @@ ARG APP_PORT
 RUN apt-get update && \
     apt-get install -y locales && \
     echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
-    locale-gen en_US.UTF-8 && \
+    echo "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen && \
+    # Генерируем локали
+    locale-gen en_US.UTF-8 ru_RU.UTF-8 && \
+    # Обновляем системные настройки локалей
+    update-locale LANG=en_US.UTF-8 && \
+    # Чистим кэш
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
