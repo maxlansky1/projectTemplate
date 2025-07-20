@@ -89,9 +89,8 @@ def get_logger(name=None):
         return logger
 
     # --- Консольный вывод ---
-    console_handler = logging.StreamHandler(
-        open(sys.stdout.fileno(), mode="w", encoding="utf-8", buffering=1)
-    )
+    console_handler = logging.StreamHandler(sys.stdout)
+
     console_handler.setLevel(logging.DEBUG)
     console_formatter = ColoredFormatter(fmt=LOG_FORMAT, datefmt=DATE_FORMAT)
     console_handler.setFormatter(console_formatter)
