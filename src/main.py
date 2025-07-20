@@ -4,10 +4,16 @@
 Этот модуль содержит точку входа в приложение и вызывает основную функцию main().
 """
 
+import io
+import sys
 import time
 from datetime import datetime
 
 from src.utils.logger import get_logger
+
+# Явно устанавливаем кодировку utf-8 для stdout
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
+sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")
 
 # Настраиваем логирование
 logger = get_logger(__name__)
@@ -20,9 +26,9 @@ def log_messages():
     """
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    logger.debug(f"DEBUG: А — {now}")
-    logger.info(f"INFO: Б — {now}")
-    logger.warning(f"WARNING: В — {now}")
+    logger.debug(f"ДЕБАГ: А — {now}")
+    logger.info(f"ИНФО: Б — {now}")
+    logger.warning(f"ВНИМАНИЕ: В — {now}")
     logger.error(f"ERROR: Г — {now}")
     logger.critical(f"CRITICAL: Д — {now}")
 
