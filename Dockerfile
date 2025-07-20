@@ -21,10 +21,10 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Устанавливаем переменные окружения для локалей
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
-ENV LC_ALL en_US.UTF-8
+# Устанавливаем русские локали по умолчанию
+ENV LANG ru_RU.UTF-8
+ENV LANGUAGE ru_RU:ru
+ENV LC_ALL ru_RU.UTF-8
 
 # Устанавливаем PYTHONPATH, PATH и PYTHONIOENCODING
 ENV PYTHONPATH /${APP_NAME}
