@@ -26,8 +26,8 @@ def log_messages():
     logger.error(f"ERROR: Г — {now}")
     logger.critical(f"CRITICAL: Д — {now}")
 
-    print(f"[{now}] Это обычный print()")
-    print(f"[{now}] Это необычный print")
+    print(f"[{now}] This is usual print function")
+    print(f"[{now}] This is unusual print function")
 
 
 def main():
