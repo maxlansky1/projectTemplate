@@ -6,14 +6,15 @@
 ElevenLabs (TTS) и других будущих интеграций с искусственным интеллектом.
 """
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import Field, field_validator
 
+from configs.schemas.base import BaseConfig
 from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
 
 
-class OpenRouterSettings(BaseModel):
+class OpenRouterSettings(BaseConfig):
     """
     Настройки OpenRouter API для работы с Large Language Models.
 
@@ -177,7 +178,7 @@ class OpenRouterSettings(BaseModel):
         return v.strip().rstrip("/")
 
 
-class AssemblyAISettings(BaseModel):
+class AssemblyAISettings(BaseConfig):
     """
     Настройки AssemblyAI для распознавания речи (Speech-to-Text).
 
@@ -216,7 +217,7 @@ class AssemblyAISettings(BaseModel):
         return bool(self.api_key and self.api_key.strip())
 
 
-class ElevenLabsSettings(BaseModel):
+class ElevenLabsSettings(BaseConfig):
     """
     Настройки ElevenLabs для синтеза речи (Text-to-Speech).
 

@@ -8,14 +8,15 @@
 
 from typing import List, Optional
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import Field, field_validator
 
+from configs.schemas.base import BaseConfig
 from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
 
 
-class TelegramSettings(BaseModel):
+class TelegramSettings(BaseConfig):
     """
     Настройки Telegram бота.
 

@@ -7,10 +7,12 @@
 
 from pathlib import Path
 
-from pydantic import BaseModel, Field
+from pydantic import Field
+
+from configs.schemas.base import BaseConfig
 
 
-class StorageSettings(BaseModel):
+class StorageSettings(BaseConfig):
     """
     Настройки хранилища и путей.
 

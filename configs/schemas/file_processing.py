@@ -5,14 +5,15 @@
 медиафайлов различных типов: видео, аудио, изображения, документы.
 """
 
-from pydantic import BaseModel, Field
+from pydantic import Field
 
+from configs.schemas.base import BaseConfig
 from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
 
 
-class MediaProcessingSettings(BaseModel):
+class MediaProcessingSettings(BaseConfig):
     """
     Настройки обработки медиафайлов.
 
