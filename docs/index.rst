@@ -14,3 +14,4 @@ projectTemplate
    installation
    basics
    recommendations
+   databases

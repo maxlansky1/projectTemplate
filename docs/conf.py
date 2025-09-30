@@ -19,6 +19,8 @@ copyright = "2025, maxlansky"
 author = "maxlansky"
 release = "0.1"
 
+# [ ] TODO: Добавить версионирование документации
+
 # Настройки для работы с PlantUML и рендеринга UML-диаграмм.
 # В GitHub Actions используется путь /usr/local/bin/plantuml/plantuml.jar, а для Windows — C:\\plantuml\\plantuml.jar.
 if "GITHUB_ACTIONS" in os.environ:
