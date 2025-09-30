@@ -38,6 +38,8 @@ class AppSettings(BaseConfig):
     def __init__(self, **data):
         """Инициализация с логированием безопасной конфигурации."""
         super().__init__(**data)
+        # Создаём папку /data, если её нет
+        self.storage.data_dir.mkdir(exist_ok=True)
         # Логируем безопасный дамп при создании
         self._log_safe_configuration()
 
