@@ -10,7 +10,7 @@ from configs.schemas.ai import (
     OpenRouterSettings,
 )
 from configs.schemas.base import BaseConfig
-from configs.schemas.database import SQLiteSettings
+from configs.schemas.database import DatabaseSettings
 from configs.schemas.file_processing import MediaProcessingSettings
 from configs.schemas.storage import StorageSettings
 from configs.schemas.telegram import TelegramSettings
@@ -32,7 +32,7 @@ class AppSettings(BaseConfig):
     elevenlabs: ElevenLabsSettings = ElevenLabsSettings()
     storage: StorageSettings = StorageSettings()
     file_processing: MediaProcessingSettings = MediaProcessingSettings()
-    database: SQLiteSettings = SQLiteSettings()
+    database: DatabaseSettings = DatabaseSettings()
 
     # Синглтон для производительности и консистентности
     _instance: ClassVar[Optional["AppSettings"]] = None

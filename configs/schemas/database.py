@@ -28,3 +28,11 @@ class SQLiteSettings(BaseConfig):
     max_overflow: int = Field(
         default=10, description="Максимальное количество дополнительных соединений"
     )
+
+
+class DatabaseSettings(BaseConfig):
+    """
+    Общие настройки для всех баз данных.
+    """
+
+    sqlite: SQLiteSettings = SQLiteSettings()
