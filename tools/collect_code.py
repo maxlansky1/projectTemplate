@@ -13,6 +13,7 @@
 - Отображение уведомлений о результате действия.
 - Возможность копирования дерева структуры проекта.
 - Возможность копирования дерева + содержимого выбранных файлов.
+- Кнопка "Сбросить все галочки" для очистки выбора файлов.
 
 Использование
 1. Откройте консоль Git Bash в виртуальном окружении вашего проекта в VS Code
@@ -180,6 +181,13 @@ class CodeCollectorApp:
         )
         btn3.pack(side=tk.LEFT, padx=5)
 
+        btn4 = ttk.Button(
+            button_frame,
+            text="Сбросить все галочки",
+            command=self.clear_all_selections,
+        )
+        btn4.pack(side=tk.LEFT, padx=5)
+
         # Метка для уведомления (изначально скрыта)
         self.status_label = tk.Label(self.root, text="", fg="green", font=("Arial", 10))
         self.status_label.pack(pady=5)
@@ -225,6 +233,7 @@ class CodeCollectorApp:
                 else:
                     node = self.tree.insert(parent, "end", text=f"[FILE] {entry}")
                     self.tree_items[node] = {"path": entry_path, "type": "file"}
+
         except PermissionError:
             pass  # Игнорируем папки, к которым нет доступа
 
@@ -253,6 +262,18 @@ class CodeCollectorApp:
                 self.selected_files.add(item_id)
                 # Обновляем текст в дереве
                 self.tree.item(item_id, text=f"{self.tree.item(item_id, 'text')} [✓]")
+
+    def clear_all_selections(self):
+        """
+        Снимает выбор со всех файлов.
+        """
+        for item_id in self.selected_files.copy():
+            # Убираем галочку с файла в дереве
+            self.tree.item(
+                item_id, text=self.tree.item(item_id, "text").replace(" [✓]", "")
+            )
+        self.selected_files.clear()
+        self.show_status("Все галочки сняты.", "green")
 
     def collect_and_copy(self):
         """
