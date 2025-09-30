@@ -1,7 +1,15 @@
+"""
+ORM-модель пользователя.
+
+Содержит поля:
+- username: уникальное имя пользователя
+- email: уникальный email
+"""
+
 from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column
 
-from ..core import Base
+from .base import Base
 
 
 class User(Base):

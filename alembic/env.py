@@ -20,7 +20,7 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from alembic import context
 from configs.settings import settings
-from src.databases.sqlite.core import Base
+from src.databases.sqlite.models.base import Base
 from src.databases.sqlite.models.user import User  # noqa: F401
 
 # TODO: добавить миграции алембик в CI/CD
@@ -68,6 +68,12 @@ def run_migrations_offline() -> None:
 
 
 def do_run_migrations(connection: Connection) -> None:
+    """
+    Конфигурирует контекст Alembic и запускает миграции.
+
+    Args:
+        connection: Активное соединение с БД.
+    """
     context.configure(connection=connection, target_metadata=target_metadata)
 
     with context.begin_transaction():

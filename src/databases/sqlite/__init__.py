@@ -8,7 +8,8 @@
 """
 
 from .connection import get_db_session
-from .core import Base, async_session, connection, engine
+from .core import async_session, connection, engine
+from .models.base import Base
 
 __all__ = [
     "engine",
