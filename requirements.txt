@@ -1,18 +1,13 @@
-# для вывода цветных логов
+# Вывод цветных логов
 colorama
 
-# TODO: рефактор - переходим с environs на pydantic + python-dotenv
-# работа с .env
+# Работа с .env
 python-dotenv
-environs
 
-# Поддержка markdown
-myst-parser
-
-# для проверки кода перед коммитом (линтеры, форматирование итд)
+# Проверка кода перед коммитом (линтеры, форматирование итд)
 pre-commit
 
-# для автоматической генерации документации при помощи sphinx
+# Генерация документации
 sphinx
 sphinx-autodoc-typehints
 sphinx-copybutton
@@ -20,10 +15,16 @@ sphinx-intl
 sphinxcontrib-plantuml
 sphinx-rtd-theme
 sphinx-togglebutton
+myst-parser
 
-# Библиотека для управления проектами
+# Управление шаблоном проекта
 copier
 
-# Библиотека для валидации
+# Валидация и сериализация
 pydantic[all]
 pydantic-settings
+
+# Работа с базами данных
+sqlalchemy
+aiosqlite
+alembic
