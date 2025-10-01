@@ -1,0 +1,83 @@
+@startuml name dbLayerArchitecture
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/main/icons/devicons
+!define ICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+
+!include DEVICONS/python.puml
+!include ICONS/file.puml
+
+skinparam defaultFontName "Source Code Pro"
+
+' --- Яркие стили ---
+AddElementTag("config", $bgColor="#4dabf7", $fontColor="white", $borderColor="#1864ab")
+AddElementTag("code", $bgColor="#69db7c", $fontColor="black", $borderColor="#2b8a3e")
+AddElementTag("dao", $bgColor="#ff922b", $fontColor="black", $borderColor="#e8590c")
+AddElementTag("alembic", $bgColor="#da77f2", $fontColor="black", $borderColor="#862e9c")
+AddElementTag("db", $bgColor="#74c0fc", $fontColor="black", $borderColor="#1c7ed6")
+AddElementTag("misc", $bgColor="#adb5bd", $fontColor="black", $borderColor="#495057")
+
+LAYOUT_TOP_DOWN()
+
+Container_Boundary(projectTemplate, "projectTemplate", "") {
+
+  ' --- Config (Pydantic) ---
+  Container_Boundary(configs, "configs", "Config (Pydantic)", $tags="config") {
+    Container(database_schema_py, "database.py", "Python", "Pydantic-схемы БД", $tags="config", $sprite="python")
+    Container(settings_py, "settings.py", "Python", "AppSettings", $tags="config", $sprite="python")
+  }
+
+  ' --- SQLAlchemy Core + Models ---
+  Container_Boundary(databases, "databases", "SQLAlchemy Core / ORM", $tags="code") {
+    Container(core_py, "core.py", "Python", "Engine, Session, @connection", $tags="code", $sprite="python")
+
+    Container_Boundary(models, "models", "ORM Models", $tags="code") {
+      Container(base_model_py, "base.py", "Python", "Declarative Base", $tags="code", $sprite="python")
+      Container(user_model_py, "user.py", "Python", "ORM-модель User", $tags="code", $sprite="python")
+    }
+
+    Container_Boundary(schemas_py, "schemas", "Pydantic Schemas", $tags="config") {
+      Container(user_schema_py, "user.py", "Python", "Pydantic User схемы", $tags="config", $sprite="python")
+    }
+  }
+
+  ' --- DAO ---
+  Container_Boundary(dao, "dao", "DAO Layer", $tags="dao") {
+    Container(base_dao_py, "base.py", "Python", "BaseDAO (CRUD)", $tags="dao", $sprite="python")
+    Container(user_dao_py, "user.py", "Python", "UserDAO", $tags="dao", $sprite="python")
+  }
+
+  ' --- Alembic ---
+  Container_Boundary(alembic, "alembic", "Alembic Migrations", $tags="alembic") {
+    Container(alembic_env_py, "env.py", "Python", "Инициализация Alembic", $tags="alembic", $sprite="python")
+    Container(alembic_versions, "versions/", "Папка", "Файлы миграций", $tags="alembic", $sprite="file")
+  }
+}
+
+' --- Внешние зависимости ---
+System_Ext(sqlite_db, "SQLite", "Файловая БД", $tags="db", $sprite="file")
+System_Ext(pydantic_lib, "Pydantic", "Валидация", $tags="config", $sprite="python")
+System_Ext(sqlalchemy_lib, "SQLAlchemy", "ORM/Engine", $tags="code", $sprite="python")
+System_Ext(alembic_lib, "Alembic", "Миграции", $tags="alembic", $sprite="python")
+
+' ===== Отношения (чётко и просто) =====
+Rel(settings_py, core_py, "Передаёт URL подключения")
+Rel(core_py, sqlite_db, "Создаёт соединение", "aiosqlite")
+Rel(core_py, sqlalchemy_lib, "Engine/Session")
+
+Rel(base_model_py, sqlalchemy_lib, "Declarative Base")
+Rel(user_model_py, base_model_py, "Наследует Base")
+
+Rel(user_schema_py, pydantic_lib, "Наследует BaseModel")
+Rel(user_schema_py, user_model_py, "Сериализует ORM → Pydantic")
+
+Rel(user_dao_py, user_model_py, "Работает с моделями")
+Rel(user_dao_py, user_schema_py, "Использует схемы")
+
+Rel(alembic_env_py, base_model_py, "Читает metadata")
+Rel(alembic_env_py, settings_py, "Берёт URL")
+Rel(alembic_lib, alembic_env_py, "Запускает миграции")
+Rel(alembic_lib, sqlite_db, "Меняет структуру БД")
+
+LAYOUT_WITH_LEGEND()
+@enduml
