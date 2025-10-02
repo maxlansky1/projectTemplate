@@ -14,6 +14,7 @@
 - Возможность копирования дерева структуры проекта.
 - Возможность копирования дерева + содержимого выбранных файлов.
 - Кнопка "Сбросить все галочки" для очистки выбора файлов.
+- Кнопка "Обновить дерево" для пересборки дерева при изменении файлов.
 
 Использование
 1. Откройте консоль Git Bash в виртуальном окружении вашего проекта в VS Code
@@ -24,8 +25,6 @@
 import os
 import tkinter as tk
 from tkinter import ttk
-
-# TODO: добавить кнопку обновить - если приложение уже запущено и были добавлены/удалены файлы, нужно перезапускать приложение
 
 # Папки, которые нужно игнорировать
 IGNORE_FOLDERS = {
@@ -160,33 +159,61 @@ class CodeCollectorApp:
         self.tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
+        # Настройка стиля для больших кнопок
+        style = ttk.Style()
+        style.configure("Large.TButton", font=("Arial", 11), width=20, anchor="center")
+
         # Кнопки
         button_frame = ttk.Frame(self.root)
         button_frame.pack(pady=10)
 
+        # Левый столбец: копирование
+        left_frame = ttk.Frame(button_frame)
+        left_frame.pack(side=tk.LEFT, padx=(0, 10))
+
         btn1 = ttk.Button(
-            button_frame, text="Скопировать файлы", command=self.collect_and_copy
+            left_frame,
+            text="📋 Скопировать файлы",
+            command=self.collect_and_copy,
+            style="Large.TButton",
         )
-        btn1.pack(side=tk.LEFT, padx=5)
+        btn1.pack(pady=3)
 
         btn2 = ttk.Button(
-            button_frame, text="Скопировать дерево", command=self.copy_tree
+            left_frame,
+            text="📁 Скопировать дерево",
+            command=self.copy_tree,
+            style="Large.TButton",
         )
-        btn2.pack(side=tk.LEFT, padx=5)
+        btn2.pack(pady=3)
 
         btn3 = ttk.Button(
-            button_frame,
-            text="Скопировать дерево + файлы",
+            left_frame,
+            text="📄 Дерево + файлы",
             command=self.copy_tree_and_files,
+            style="Large.TButton",
         )
-        btn3.pack(side=tk.LEFT, padx=5)
+        btn3.pack(pady=3)
+
+        # Правый столбец: управление
+        right_frame = ttk.Frame(button_frame)
+        right_frame.pack(side=tk.RIGHT, padx=(10, 0))
 
         btn4 = ttk.Button(
-            button_frame,
-            text="Сбросить все галочки",
+            right_frame,
+            text="🧹 Сбросить чекбоксы",
             command=self.clear_all_selections,
+            style="Large.TButton",
         )
-        btn4.pack(side=tk.LEFT, padx=5)
+        btn4.pack(pady=3)
+
+        btn5 = ttk.Button(
+            right_frame,
+            text="🔄 Обновить дерево",
+            command=self.refresh_tree,
+            style="Large.TButton",
+        )
+        btn5.pack(pady=3)
 
         # Метка для уведомления (изначально скрыта)
         self.status_label = tk.Label(self.root, text="", fg="green", font=("Arial", 10))
@@ -207,6 +234,29 @@ class CodeCollectorApp:
         )
         self.tree_items[root_node] = {"path": self.project_path, "type": "dir"}
         self._add_directory_contents(root_node, self.project_path)
+
+    def refresh_tree(self):
+        """Обновляет дерево файлов, сохраняя выбранные файлы, если они остались."""
+        # Сохраняем пути выбранных файлов
+        selected_paths = {
+            self.tree_items[item_id]["path"] for item_id in self.selected_files
+        }
+
+        # Очищаем дерево
+        self.tree.delete(*self.tree.get_children())
+        self.tree_items.clear()
+        self.selected_files.clear()
+
+        # Пересобираем дерево
+        self.populate_tree()
+
+        # Повторно выделяем файлы, которые остались
+        for item_id, data in self.tree_items.items():
+            if data["type"] == "file" and data["path"] in selected_paths:
+                self.selected_files.add(item_id)
+                self.tree.item(item_id, text=f"{self.tree.item(item_id, 'text')} [✓]")
+
+        self.show_status("Дерево обновлено.", "green")
 
     def _add_directory_contents(self, parent, path):
         """
