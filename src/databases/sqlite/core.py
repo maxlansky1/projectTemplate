@@ -14,15 +14,13 @@
 """
 
 from functools import wraps
-from pathlib import Path
 
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
 from configs.settings import settings
 
 # Формируем путь и URL для подключения к БД
-db_path: Path = settings.storage.data_dir / "db.sqlite3"
-db_url: str = f"sqlite+aiosqlite:///{db_path}"
+db_url: str = settings.database.sqlite.database_url
 
 
 # Асинхронный движок с настройками из конфига
@@ -65,6 +63,12 @@ def connection(func):
 
     @wraps(func)
     async def wrapper(*args, **kwargs):
+        """
+        Внутренняя функция-обёртка, управляющая сессией.
+
+        Создаёт асинхронную сессию, передаёт её в оборачиваемую функцию,
+        обрабатывает исключения и гарантирует закрытие сессии.
+        """
         async with async_session() as session:
             try:
                 return await func(*args, session=session, **kwargs)
