@@ -9,6 +9,7 @@ pre-commit
 
 # Генерация документации
 sphinx
+sphinx-autobuild
 sphinx-autodoc-typehints
 sphinx-copybutton
 sphinx-intl
@@ -28,3 +29,6 @@ pydantic-settings
 sqlalchemy
 aiosqlite
 alembic
+
+# Работа с медиа
+pillow
