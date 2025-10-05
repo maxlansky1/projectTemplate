@@ -27,3 +27,5 @@ html:
 
 livehtml:
 	sphinx-autobuild "$(SOURCEDIR)" "$(BUILDDIR)/html" --open-browser --port=0 $(SPHINXOPTS) $(O)
+
+#TODO: забиндить постоянный порт для livehtml
