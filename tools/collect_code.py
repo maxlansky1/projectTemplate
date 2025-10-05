@@ -32,9 +32,9 @@ IGNORE_FOLDERS = {
     "__pycache__",
     ".venv",
     "venv",
-    "_build",
-    "_static",
-    "_templates",
+    # "_build",  # папка сборки Sphinx
+    # "_static",  # Стили Sphinx
+    # "_templates",  # Шаблоны Sphinx
     ".ruff_cache",
 }
 
