@@ -59,3 +59,26 @@ class BaseDAO:
             await session.rollback()
             raise e
         return new_instances
+
+    @classmethod
+    async def find_one_or_none_by_id(cls, session: AsyncSession, data_id: int):
+        """
+        Возвращает одну запись по её ID или None, если запись не найдена.
+        Использует session.get() для эффективного получения по первичному ключу.
+        """
+        return await session.get(cls.model, data_id)
+
+    @classmethod
+    async def delete_one_by_id(cls, session: AsyncSession, data_id: int):
+        """
+        Удаляет одну запись по ID.
+        """
+        try:
+            data = await session.get(cls.model, data_id)
+            if data:
+                await session.delete(data)
+                await session.flush()
+            return data
+        except SQLAlchemyError as e:
+            await session.rollback()
+            raise e

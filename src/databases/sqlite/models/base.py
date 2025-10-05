@@ -12,7 +12,13 @@
 from datetime import datetime
 
 from sqlalchemy import Integer, func
-from sqlalchemy.orm import DeclarativeBase, Mapped, declared_attr, mapped_column
+from sqlalchemy.orm import (
+    DeclarativeBase,
+    Mapped,
+    class_mapper,
+    declared_attr,
+    mapped_column,
+)
 
 
 class Base(DeclarativeBase):
@@ -40,3 +46,8 @@ class Base(DeclarativeBase):
     def __tablename__(cls) -> str:
         # Автоматически формирует имя таблицы: User -> users, Post -> posts
         return cls.__name__.lower() + "s"
+
+    def to_dict(self) -> dict:
+        """Универсальный метод для конвертации объекта SQLAlchemy в словарь"""
+        columns = class_mapper(self.__class__).columns
+        return {column.key: getattr(self, column.key) for column in columns}
