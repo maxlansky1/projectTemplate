@@ -9,16 +9,19 @@ import os
 import sys
 
 # Добавляет родительскую директорию в системный путь, чтобы Sphinx мог найти исходные модули
-# для автодокументации. Это позволяет Sphinx импортировать модули проекта из корневой директории.
-sys.path.insert(0, os.path.abspath(".."))
+# Получаем путь к корню проекта и
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+
+sys.path.insert(0, project_root)
+
+# Отладка для системного пути
+# print(f"[DEBUG] Adding to sys.path: {project_root}")
 
 # Информация о проекте для документации
 project = "projectTemplate"
 copyright = "2025, maxlansky"
 author = "maxlansky"
 release = "0.1"
-
-# [ ] TODO: Добавить версионирование документации
 
 
 # ============================================================================
@@ -34,17 +37,14 @@ elif os.name == "nt":  # Для Windows
 else:
     raise OSError("Unsupported OS")
 
-plantuml_output_format = "svg"
+# Формат рендера диаграммы
+plantuml_output_format = "svg_img"
 plantuml_latex_output_format = "svg"
 
 
 # ============================================================================
 # РАСШИРЕНИЯ SPHINX
 # ============================================================================
-
-# TODO: внедрить https://github.com/sphinx-contrib/multiversion для версионирования документации
-# TODO:внедрить https://autoclasstoc.readthedocs.io/ для улучшенной документации классов
-# TODO: внедрить https://sphinx-hoverxref.readthedocs.io/en/latest/ для интерактивных подсказок в документации
 
 # Список расширений Sphinx
 extensions = [
@@ -53,12 +53,10 @@ extensions = [
     # === Автодокументация ===
     "sphinx.ext.autodoc",  # автодока из docstring'ов
     "sphinx.ext.viewcode",  # ссылки на исходники
+    "autoclasstoc",  #  улучшенная документация классов
     "sphinx.ext.napoleon",  # Google/NumPy стиль docstring'ов
-    "sphinx_autodoc_typehints",  # type hints в сигнатурах
     # === Утилиты и вспомогательные расширения ===
-    "sphinx.ext.todo",  # поддержка TODO
     "sphinx.ext.coverage",  # проверяет покрытие документации
-    "sphinx.ext.ifconfig",  # условные директивы в документации
     "sphinx_copybutton",  # добавляет кнопку скопировать код в документацию
     "sphinx_togglebutton",  # позволяет создавать разворачиваемые списки
     # === Визуализация и темы ===
@@ -68,17 +66,43 @@ extensions = [
     "sphinx.ext.githubpages",  # позволяет использовать стили sphinx при хостинге доков на github pages
 ]
 
-# Настройки по умолчанию для расширения autodoc, которое автоматически извлекает docstring'и
+# ============================================================================
+# НАСТРОЙКИ АВТОДОКУМЕНТАЦИИ
+# ============================================================================
+
+# === Настройки autodoc ===
 autodoc_default_options = {
-    "members": True,
-    "undoc-members": False,  # Не показывать недокументированные члены
-    "private-members": False,  # Не показывать приватные методы (_method)
-    "special-members": False,  # Не показывать __init__, __str__ и т.д.
-    "inherited-members": False,  # Показывать унаследованные методы
+    "members": True,  # Показывать публичные элементы
+    "undoc-members": True,  # Показывать недокументированные члены (а не скрывать!)
+    "private-members": True,  # Показывать приватные методы (_method) (а не скрывать!)
+    "special-members": True,  # Показывать специальные методы (__init__, __str__) (а не скрывать!)
+    "inherited-members": True,  # Показывать унаследованные методы
     "show-inheritance": True,  # Показывать иерархию наследования
+    "exclude-members": "__weakref__",  # Исключить конкретные элементы
 }
 
-# Настройки для myst_parser
+# Настройка mock для autodoc - рекурсивно мокает все подмодули и классы (временно отключено)
+# autodoc_mock_imports = [
+#     'configs',
+# ]
+
+# Порядок элементов по исходному коду (естественнее для чтения)
+autodoc_member_order = "bysource"
+# Включать docstring класса + __init__ метода
+autoclass_content = "both"
+# Формат типов - короткий (чище выглядит)
+autodoc_typehints_format = "short"
+# Отображение типов в описании (удобнее для чтения)
+autodoc_typehints = "description"
+
+# === Настройки sphinx.ext.napoleon ===
+napoleon_google_docstring = True
+napoleon_numpy_docstring = False  # если используете только Google стиль
+napoleon_include_init_with_doc = False
+napoleon_include_private_with_doc = False
+napoleon_use_param = True
+
+# === Настройки для myst_parser ===
 myst_enable_extensions = [
     "amsmath",  # математика
     "colon_fence",  # ::: для блоков кода
@@ -131,18 +155,20 @@ language = "ru"
 html_theme = "sphinx_rtd_theme"
 html_theme_options = {
     # === Селекторы версий и языков ===
-    "version_selector": True,
-    "language_selector": False,  # отключено, если не нужно
-    "flyout_display": "attached",  # или 'hidden' — по усмотрению
+    # Эти опции добавляют выпадающие списки (селекторы) в шапку темы для переключения между версиями документации и языками.
+    "version_selector": True,  # Включает селектор версий. Sphinx ожидает наличие переменной `html_context['versions']` для заполнения списка.
+    "language_selector": False,  # Выключает селектор языков. Если True, Sphinx ожидает `html_context['languages']`.
+    # `flyout_display` управляет поведением меню с селекторами и кнопкой поиска.
+    # "flyout_display": "attached",  # Значение по умолчанию. Меню отображается как прикреплённый выпадающий список. Других стандартных значений, кроме 'attached', тема обычно не предоставляет, 'hidden' - это гипотетическое значение для описания.
     # === Навигация ===
-    "prev_next_buttons_location": "bottom",
-    "collapse_navigation": True,
-    "sticky_navigation": True,
-    "navigation_depth": 4,
-    "includehidden": True,
-    "titles_only": False,
+    # Эти опции влияют на отображение и поведение бокового навигационного меню.
+    "prev_next_buttons_location": "bottom",  # Определяет, где отображаются кнопки "Следующая страница" / "Предыдущая страница"
+    "collapse_navigation": True,  # Дерево навигации в боковой панели будет свернуто по умолчанию, кроме текущего раздела.
+    "sticky_navigation": True,  # Боковая навигационная панель будет оставаться видимой при прокрутке
+    "navigation_depth": 6,  # Максимальная глубина вложенности элементов в боковом меню
+    "titles_only": False,  # True - нет подзаголовков в меню. False - есть подзаголовки.
     # === Визуальные настройки ===
-    "style_nav_header_background": "#2980B9",  # цвет шапки
+    "style_nav_header_background": "#2980B9",  # Устанавливает цвет фона шапки навигационной панели в формате HEX.
 }
 
 # Настройки для истории изменений документации
@@ -191,3 +217,15 @@ html_css_files = [
 git_untracked_check = False
 git_remote_name = "origin"
 git_branch = "main"  # или 'master', в зависимости от твоей ветки
+
+# === Настройки sphinx-togglebutton ===
+
+# Настройка CSS-селектора для элементов
+togglebutton_selector = ".toggle, .admonition.dropdown"
+
+# Настройка текста подсказки
+togglebutton_hint = "Развернуть"
+togglebutton_hint_hide = "Свернуть"
+
+# Поведение при печати. По умолчанию True (разворачивает все элементы)
+togglebutton_open_on_print = True

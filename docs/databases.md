@@ -52,7 +52,7 @@ SQLite — это **встраиваемая** реляционная база �
 
 ```{eval-rst}
 .. uml:: ../../projectTemplate/diagrams/database_schema.puml
-   :scale: 10%
+   :scale: 50 %
    :align: center
 ```
 

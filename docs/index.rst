@@ -7,7 +7,7 @@ projectTemplate
 =============================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 6
    :caption: Contents:
 
    introduction
@@ -15,3 +15,5 @@ projectTemplate
    basics
    recommendations
    databases
+   documentation
+   diagrams

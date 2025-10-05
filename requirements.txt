@@ -10,7 +10,6 @@ pre-commit
 # Генерация документации
 sphinx
 sphinx-autobuild
-sphinx-autodoc-typehints
 sphinx-copybutton
 sphinx-intl
 sphinxcontrib-plantuml
