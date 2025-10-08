@@ -548,7 +548,3 @@ C4 Model получил своё название от основного наб
 ##### Рекомендуется ли использовать?
 
 **Да**.
-
-# C4-PlantUML
-
-#TODO: дописать раздел https://github.com/plantuml-stdlib/C4-PlantUML?tab=readme-ov-file#c4-plantuml
