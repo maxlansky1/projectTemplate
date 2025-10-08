@@ -7,10 +7,24 @@ projectTemplate
 =============================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 6
+   :caption: Введение:
 
-   introduction
-   installation
-   basics
-   recommendations
+   articles/introduction
+   articles/installation
+
+.. toctree::
+   :maxdepth: 6
+   :caption: Основы:
+
+   articles/basics
+   articles/recommendations
+
+.. toctree::
+   :maxdepth: 6
+   :caption: Архитектура:
+
+   articles/databases
+   articles/documentation
+   articles/diagrams
+   articles/c4_model

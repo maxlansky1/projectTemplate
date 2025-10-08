@@ -10,6 +10,7 @@
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css" />
 
   
     
@@ -20,12 +21,13 @@
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="_static/copybutton.js?v=f281be69"></script>
-      <script>let toggleHintShow = 'Click to show';</script>
-      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleHintShow = 'Развернуть';</script>
+      <script>let toggleHintHide = 'Свернуть';</script>
       <script>let toggleOpenOnPrint = 'true';</script>
       <script src="_static/togglebutton.js?v=4a39c7ea"></script>
       <script src="_static/translations.js?v=cd1d70c9"></script>
       <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script src="_static/custom.js"></script>
     <script src="_static/js/theme.js"></script>
     <script src="_static/searchtools.js"></script>
     <script src="_static/language_data.js"></script>
@@ -37,7 +39,7 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
 
           
           
@@ -52,19 +54,33 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Введение:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="introduction.html">📜 Overview: Обзор шаблона</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">⚙️ Getting started: Установка и настройка шаблона</a></li>
-<li class="toctree-l1"><a class="reference internal" href="basics.html">🗺️ Roadmap: как работать с шаблоном</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recommendations.html">Recommendations: Полезные дополнения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="articles/introduction.html">📜 Overview: Обзор шаблона</a></li>
+<li class="toctree-l1"><a class="reference internal" href="articles/installation.html">⚙️ Getting started: Установка и настройка шаблона</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Основы:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="articles/basics.html">🗺️ Roadmap: как работать с шаблоном</a></li>
+<li class="toctree-l1"><a class="reference internal" href="articles/recommendations.html">Recommendations: Полезные дополнения</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Архитектура:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="articles/databases.html">🗄️ Подключение и настройка SQL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="articles/documentation.html">📚 Работа с документацией</a></li>
+<li class="toctree-l1"><a class="reference internal" href="articles/diagrams.html">📝 Диаграммы в документации и проектировании</a></li>
+<li class="toctree-l1"><a class="reference internal" href="articles/c4_model.html"><aside class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<span class="docutils literal">/home/runner/work/projectTemplate/projectTemplate/docs/articles/c4_model.md</span>, line 1)</p>
+<p>Substitution error:UndefinedError: „diagram“ is undefined [myst.substitution]</p>
+</aside>
+ C4 Model</a></li>
 </ul>
 
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств"  style="background: #2980B9" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">projectTemplate</a>
       </nav>
@@ -103,7 +119,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Авторские права 2025, gleb. </p>
+    <p>&#169; Авторские права 2025, maxlansky. </p>
   </div>
 
   Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием

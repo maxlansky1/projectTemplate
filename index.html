@@ -11,6 +11,7 @@
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -20,23 +21,24 @@
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="_static/copybutton.js?v=f281be69"></script>
-      <script>let toggleHintShow = 'Click to show';</script>
-      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleHintShow = 'Развернуть';</script>
+      <script>let toggleHintHide = 'Свернуть';</script>
       <script>let toggleOpenOnPrint = 'true';</script>
       <script src="_static/togglebutton.js?v=4a39c7ea"></script>
       <script src="_static/translations.js?v=cd1d70c9"></script>
       <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script src="_static/custom.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Алфавитный указатель" href="genindex.html" />
     <link rel="search" title="Поиск" href="search.html" />
-    <link rel="next" title="📜 Overview: Обзор шаблона" href="introduction.html" /> 
+    <link rel="next" title="📜 Overview: Обзор шаблона" href="articles/introduction.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
 
           
           
@@ -51,19 +53,33 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Введение:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="introduction.html">📜 Overview: Обзор шаблона</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">⚙️ Getting started: Установка и настройка шаблона</a></li>
-<li class="toctree-l1"><a class="reference internal" href="basics.html">🗺️ Roadmap: как работать с шаблоном</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recommendations.html">Recommendations: Полезные дополнения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="articles/introduction.html">📜 Overview: Обзор шаблона</a></li>
+<li class="toctree-l1"><a class="reference internal" href="articles/installation.html">⚙️ Getting started: Установка и настройка шаблона</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Основы:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="articles/basics.html">🗺️ Roadmap: как работать с шаблоном</a></li>
+<li class="toctree-l1"><a class="reference internal" href="articles/recommendations.html">Recommendations: Полезные дополнения</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Архитектура:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="articles/databases.html">🗄️ Подключение и настройка SQL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="articles/documentation.html">📚 Работа с документацией</a></li>
+<li class="toctree-l1"><a class="reference internal" href="articles/diagrams.html">📝 Диаграммы в документации и проектировании</a></li>
+<li class="toctree-l1"><a class="reference internal" href="articles/c4_model.html"><aside class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<span class="docutils literal">/home/runner/work/projectTemplate/projectTemplate/docs/articles/c4_model.md</span>, line 1)</p>
+<p>Substitution error:UndefinedError: „diagram“ is undefined [myst.substitution]</p>
+</aside>
+ C4 Model</a></li>
 </ul>
 
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств"  style="background: #2980B9" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="#">projectTemplate</a>
       </nav>
@@ -75,7 +91,7 @@
       <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">projectTemplate</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/index.rst.txt" rel="nofollow"> Просмотреть исходный код страницы</a>
+              <a href="https://github.com/maxlansky/projectTemplate/blob/mainindex.rst" class="fa fa-github"> Редактировать на GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -86,41 +102,604 @@
   <section id="projecttemplate">
 <h1>projectTemplate<a class="headerlink" href="#projecttemplate" title="Ссылка на этот заголовок"></a></h1>
 <div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Введение:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="introduction.html">📜 Overview: Обзор шаблона</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="introduction.html#id1">О шаблоне</a></li>
-<li class="toctree-l2"><a class="reference internal" href="introduction.html#id2">Быстрый старт</a></li>
+<li class="toctree-l1"><a class="reference internal" href="articles/introduction.html">📜 Overview: Обзор шаблона</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="articles/introduction.html#id1">О шаблоне</a></li>
+<li class="toctree-l2"><a class="reference internal" href="articles/introduction.html#id2">Быстрый старт</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">⚙️ Getting started: Установка и настройка шаблона</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#python">Установка и настройка Python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#visual-studio-code">💻 Установка Visual Studio Code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#notepad">Notepad++</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#git-github">🔄 Git и Github</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#copier">📐 Copier</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#id5">⚙️ Виртуальное окружение</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#pre-commit">🕵️‍♂️ Подключение pre-commit</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#id12">📚 Работа с документацией</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#ci-cd">CI/CD</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#id13">✅ Резюме</a></li>
+<li class="toctree-l1"><a class="reference internal" href="articles/installation.html">⚙️ Getting started: Установка и настройка шаблона</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="articles/installation.html#python">Установка и настройка Python</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/installation.html#windows">Windows</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/installation.html#id1">Скачивание Python</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/installation.html#id2">Установка Python</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/installation.html#id3">Проверка установки</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/installation.html#id4">Виртуальное окружение</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="basics.html">🗺️ Roadmap: как работать с шаблоном</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="basics.html#id1">🗂️ Структура проекта</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basics.html#vs-code-vscode">💻 Настройки VS Code (.vscode/)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basics.html#id3">⚙️ Конфигурация</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basics.html#src">🧱 Исходный код (src/)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basics.html#tools">🛠️ Инструменты (tools/)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basics.html#tests">🧪 Тестирование (tests/)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basics.html#docs">📚 Документация (docs/)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basics.html#docker">🐳 Docker</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basics.html#ci-cd-github-actions">🔄 CI/CD (GitHub Actions)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/installation.html#linux-debian-ubuntu">Linux (Debian/Ubuntu)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/installation.html#id5">Проверка наличия Python</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/installation.html#id6">Установка Python</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="articles/installation.html#ubuntu-debian">Для Ubuntu/Debian:</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/installation.html#fedora">Для Fedora:</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/installation.html#arch-linux">Для Arch Linux:</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="recommendations.html">Recommendations: Полезные дополнения</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="recommendations.html#id1">Руководство по написанию коммитов</a></li>
-<li class="toctree-l2"><a class="reference internal" href="recommendations.html#myst-markdown">Основы работы с MyST Markdown</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/installation.html#id7">Проверка установки</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/installation.html#id8">Виртуальное окружение</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="articles/installation.html#macos">macOS</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/installation.html#id9">Проверка наличия Python</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/installation.html#id10">Установка Python</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="articles/installation.html#id11">Способ 1: Скачивание с официального сайта</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/installation.html#homebrew">Способ 2: Используя Homebrew</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="articles/installation.html#id12">Проверка установки</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/installation.html#id13">Виртуальное окружение</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="articles/installation.html#id14">Дополнительные инструменты</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/installation.html#pip">pip — менеджер пакетов</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/installation.html#virtualenv">virtualenv — улучшенное управление виртуальными окружениями</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="articles/installation.html#id15">✅ Рекомендации</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/installation.html#visual-studio-code">💻 Установка Visual Studio Code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/installation.html#windows-vs-code">Настройки терминала Windows для работы с VS Code</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/installation.html#id16">Шаги настройки</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/installation.html#notepad">Notepad++</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/installation.html#id17">Установка</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/installation.html#git-github">🔄 Git и Github</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/installation.html#git-windows">Минимальная установка Git на Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/installation.html#copier">📐 Copier</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/installation.html#id18">Копирование шаблона проекта</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/installation.html#id19">Обновление шаблона проекта с помощью copier</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/installation.html#id20">⚙️ Виртуальное окружение</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/installation.html#id21">Создание виртуального окружения</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/installation.html#id22">Установка зависимостей</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/installation.html#requirements-txt">Как обновить <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code>?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/installation.html#id23">Пример:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/installation.html#pre-commit">🕵️‍♂️ Подключение pre-commit</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/installation.html#id24">Что такое pre-commit?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/installation.html#id25">Запуск pre-commit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/installation.html#id26">Хуки</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/installation.html#id27">📚 Работа с документацией</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/installation.html#linux">Для Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/installation.html#id28">Для Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/installation.html#ci-cd">CI/CD</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/installation.html#vps">Настройка на стороне VPS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/installation.html#github">Настройка на стороне GitHub</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/installation.html#id29">✅ Резюме</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Основы:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="articles/basics.html">🗺️ Roadmap: как работать с шаблоном</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="articles/basics.html#id1">🗂️ Структура проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="articles/basics.html#vs-code-vscode">💻 Настройки VS Code (.vscode/)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/basics.html#settings-json">⚙️ settings.json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/basics.html#extensions-json">⚙️ extensions.json</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/basics.html#id2">Расширения, используемые в этом шаблоне</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/basics.html#id3">⚙️ Конфигурация</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/basics.html#requirements-txt">📋 requirements.txt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/basics.html#configs">📁 configs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/basics.html#configs-config-py">⚙️ configs/config.py</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="articles/basics.html#env-env-example">📋 .env и .env.example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/basics.html#copier">📐 Настройки copier</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/basics.html#copier-yaml">⚙️ copier.yaml</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/basics.html#copier-conf-answers-file-jinja">📋 copier_conf.answers_file.jinja</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="articles/basics.html#pre-commit">⚙️ Настройки pre-commit</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/basics.html#pre-commit-config-yaml">🕵️‍♂️ .pre-commit-config.yaml</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="articles/basics.html#id4">⚙️ Настройки исключений</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/basics.html#gitignore">📋 .gitignore</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/basics.html#dockerignore">📋 .dockerignore</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/basics.html#src">🧱 Исходный код (src/)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/basics.html#src-main-py">🧱 src/main.py</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/basics.html#src.main.log_messages"><code class="docutils literal notranslate"><span class="pre">log_messages()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/basics.html#src.main.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="articles/basics.html#src-utils-logger-py">🛠️ src/utils/logger.py</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/basics.html#src.utils.logger.LOGS_DIR"><code class="docutils literal notranslate"><span class="pre">LOGS_DIR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/basics.html#src.utils.logger.LOG_FORMAT"><code class="docutils literal notranslate"><span class="pre">LOG_FORMAT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/basics.html#src.utils.logger.DATE_FORMAT"><code class="docutils literal notranslate"><span class="pre">DATE_FORMAT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/basics.html#src.utils.logger.ColoredFormatter"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="articles/basics.html#src.utils.logger.ColoredFormatter.COLORS"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.COLORS</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/basics.html#id0"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.COLORS</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/basics.html#src.utils.logger.ColoredFormatter.format"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.format()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/basics.html#src.utils.logger.ColoredFormatter.__dict__"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.__dict__</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/basics.html#src.utils.logger.ColoredFormatter.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.__firstlineno__</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/basics.html#src.utils.logger.ColoredFormatter.__init__"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.__init__()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/basics.html#src.utils.logger.ColoredFormatter.__module__"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.__module__</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/basics.html#src.utils.logger.ColoredFormatter.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.__static_attributes__</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/basics.html#src.utils.logger.ColoredFormatter.converter"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.converter()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/basics.html#src.utils.logger.ColoredFormatter.default_msec_format"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.default_msec_format</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/basics.html#src.utils.logger.ColoredFormatter.default_time_format"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.default_time_format</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/basics.html#src.utils.logger.ColoredFormatter.formatException"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.formatException()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/basics.html#src.utils.logger.ColoredFormatter.formatMessage"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.formatMessage()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/basics.html#src.utils.logger.ColoredFormatter.formatStack"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.formatStack()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/basics.html#src.utils.logger.ColoredFormatter.formatTime"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.formatTime()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/basics.html#src.utils.logger.ColoredFormatter.usesTime"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.usesTime()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="articles/basics.html#src.utils.logger.get_logger"><code class="docutils literal notranslate"><span class="pre">get_logger()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/basics.html#tools">🛠️ Инструменты (tools/)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/basics.html#tools-diagram-auto-update-py">🛠️ tools/diagram_auto_update.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/basics.html#tools-print-structure-py">🛠️ tools/print_structure.py</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/basics.html#tests">🧪 Тестирование (tests/)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="articles/basics.html#docs">📚 Документация (docs/)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/basics.html#conf-py">⚙️ conf.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/basics.html#index-rst">📋 index.rst</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/basics.html#md">📋 Файлы *.md</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/basics.html#makefile-make-bat">🧰 Makefile и make.bat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/basics.html#id5">📋 Диаграммы</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/basics.html#docker">🐳 Docker</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/basics.html#dockerfile">🐳 Dockerfile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/basics.html#docker-compose-yaml">🐳 docker-compose.yaml</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/basics.html#id6">Алгоритм деплоя нового приложения</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="articles/basics.html#makefile">🧰 Makefile</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/basics.html#ci-cd-github-actions">🔄 CI/CD (GitHub Actions)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/basics.html#ci-cd">Что такое CI/CD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/basics.html#workflows">Workflows</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="articles/recommendations.html">Recommendations: Полезные дополнения</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="articles/recommendations.html#id1">Руководство по написанию коммитов</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/recommendations.html#id2">🔤 Формат сообщения коммита</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/recommendations.html#id3">Типы коммитов</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/recommendations.html#id4">Примеры хороших и плохих коммитов</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/recommendations.html#id5">💡 Полезные практики</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/recommendations.html#id6">✅ Чек-лист: Хороший ли твой коммит?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/recommendations.html#myst-markdown">Основы работы с MyST Markdown</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/recommendations.html#id7">Адмониции</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/recommendations.html#attention"><code class="docutils literal notranslate"><span class="pre">attention</span></code> — Внимание</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/recommendations.html#note"><code class="docutils literal notranslate"><span class="pre">note</span></code> — Примечание</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/recommendations.html#warning"><code class="docutils literal notranslate"><span class="pre">warning</span></code> — Предупреждение</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/recommendations.html#tip"><code class="docutils literal notranslate"><span class="pre">tip</span></code> — Совет</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/recommendations.html#seealso"><code class="docutils literal notranslate"><span class="pre">seealso</span></code> — См. также</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/recommendations.html#hint">🔍 <code class="docutils literal notranslate"><span class="pre">hint</span></code> — Подсказка</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/recommendations.html#important"><code class="docutils literal notranslate"><span class="pre">important</span></code> — Важно</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/recommendations.html#custom"><code class="docutils literal notranslate"><span class="pre">custom</span></code> — Произвольный заголовок</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/recommendations.html#dropdown"><code class="docutils literal notranslate"><span class="pre">dropdown</span></code> — Сворачиваемый блок</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Архитектура:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="articles/databases.html">🗄️ Подключение и настройка SQL</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="articles/databases.html#sqlite">🏗️ Архитектура системы для работы с SQLite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="articles/databases.html#id1">🛠️ Настройки подключения к БД</a></li>
+<li class="toctree-l2"><a class="reference internal" href="articles/databases.html#sqlalchemy">🧩 SQLAlchemy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/databases.html#engine">🚀 Движок (Engine)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/databases.html#session">🧭 Сессия (Session)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/databases.html#id2">Основные методы сессии</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="articles/databases.html#sessionmaker">🏭 Фабрика сессий (Sessionmaker)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/databases.html#connection">🧩 Декоратор <code class="docutils literal notranslate"><span class="pre">&#64;connection</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/databases.html#orm">📊 ORM</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/databases.html#base">🧱 Базовый класс <code class="docutils literal notranslate"><span class="pre">Base</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/databases.html#user">🧩 Модель <code class="docutils literal notranslate"><span class="pre">User</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/databases.html#id3">🏗️ Создание новой модели</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/databases.html#id4">🔄 Изменение модели</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/databases.html#id5">🔄 Обновление моделей в БД</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/databases.html#alembic-env-py">Регистрация в <code class="docutils literal notranslate"><span class="pre">alembic/env.py</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/databases.html#src-databases-sqlite-models-init-py">Экспорт в <code class="docutils literal notranslate"><span class="pre">src/databases/sqlite/models/__init__.py</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/databases.html#id6">Генерация миграции</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="articles/databases.html#id7">🔗 Отношения между ORM-моделями</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/databases.html#id8">Типы отношений</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="articles/databases.html#one-to-one">🔄 One-to-One (Один к одному)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/databases.html#one-to-many-many-to-one">🔄 One-to-Many / Many-to-One (Один ко многим / Многие к одному)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/databases.html#many-to-many">🔄 Many-to-Many (Многие ко многим)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/databases.html#pydantic">📋 Pydantic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/databases.html#id9">Валидация входящих данных</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/databases.html#id10">Сериализация исходящих данных (Схемы ответа)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/databases.html#dao">🏗️ DAO</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/databases.html#basedao">Класс <code class="docutils literal notranslate"><span class="pre">BaseDAO</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/databases.html#userdao">Класс <code class="docutils literal notranslate"><span class="pre">UserDAO</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/databases.html#id11">Определение модели</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/databases.html#id12">Наследование от <code class="docutils literal notranslate"><span class="pre">BaseDAO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/databases.html#id13">Добавление специфичных методов</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/databases.html#crud">🧱 CRUD операции</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/databases.html#create">🧮 Создание данных (Create)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/databases.html#id14">Добавление одного объекта</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/databases.html#id15">Добавление нескольких объектов</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/databases.html#id16">Сложные случаи: добавление в несколько таблиц</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="articles/databases.html#read">📖 Чтение данных (Read)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/databases.html#session-get-vs-select-id"><code class="docutils literal notranslate"><span class="pre">session.get()</span></code> vs <code class="docutils literal notranslate"><span class="pre">select()</span></code> для получения одной записи по ID</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/databases.html#id-session-get">Получение одной записи по ID (с использованием <code class="docutils literal notranslate"><span class="pre">session.get()</span></code>)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/databases.html#id17">Получение нескольких записей</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/databases.html#id18">Фильтрация данных</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/databases.html#id19">Выборка конкретных колонок</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/databases.html#select-options">Подгрузка данных (Отношения) (с использованием <code class="docutils literal notranslate"><span class="pre">select()</span></code> и <code class="docutils literal notranslate"><span class="pre">options()</span></code>)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="articles/databases.html#update">🔄 Обновление данных (Update)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/databases.html#id20">Обновление отдельного объекта</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/databases.html#id21">Массовое обновление через <code class="docutils literal notranslate"><span class="pre">update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="articles/databases.html#delete">🗑️ Удаление данных (Delete)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/databases.html#id22">Удаление в стиле ООП</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/databases.html#id23">Массовое удаление через <code class="docutils literal notranslate"><span class="pre">delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/databases.html#id24">Универсальные методы удаления в <code class="docutils literal notranslate"><span class="pre">BaseDAO</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/databases.html#alembic">🧭 Alembic: Управление схемой базы данных</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/databases.html#id25">🚀 Инициализация Alembic (уже выполнена в шаблоне)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/databases.html#id26">⚙️ Настройка <code class="docutils literal notranslate"><span class="pre">alembic/env.py</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/databases.html#id27">1. Регистрация ORM-моделей</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/databases.html#id28">2. Подключение к БД</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="articles/databases.html#id29">🔄 Работа с миграциями</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/databases.html#id30">Генерация миграции</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/databases.html#id31">Применение миграции</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/databases.html#id32">Откат миграции</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="articles/documentation.html">📚 Работа с документацией</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="articles/documentation.html#id2">Докстринги</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/documentation.html#id3">Стили оформления докстрингов</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/documentation.html#google">Google-стиль</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/documentation.html#id4">Комментарии</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/documentation.html#docstring">Когда использовать docstring’и, а когда комментарии</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/documentation.html#docs">Структура директории <code class="docutils literal notranslate"><span class="pre">docs/</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/documentation.html#index-rst"><code class="docutils literal notranslate"><span class="pre">index.rst</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/documentation.html#conf-py"><code class="docutils literal notranslate"><span class="pre">conf.py</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/documentation.html#static"><code class="docutils literal notranslate"><span class="pre">_static/</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/documentation.html#templates"><code class="docutils literal notranslate"><span class="pre">_templates/</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/documentation.html#makefile-make-bat"><code class="docutils literal notranslate"><span class="pre">Makefile</span></code>, <code class="docutils literal notranslate"><span class="pre">make.bat</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/documentation.html#build"><code class="docutils literal notranslate"><span class="pre">_build/</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/documentation.html#id5">Разделы документации</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/documentation.html#sphinx">Генератор документации Sphinx</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/documentation.html#id6">Что такое Sphinx</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/documentation.html#id7">Сборка документации</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/documentation.html#html">1. Генерация статического HTML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/documentation.html#sphinx-autobuild">2. Интерактивная разработка с <code class="docutils literal notranslate"><span class="pre">sphinx-autobuild</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="articles/documentation.html#id8">Расширения Sphinx</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/documentation.html#id9">Поддержка форматов</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="articles/documentation.html#myst-parser">myst_parser</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="articles/documentation.html#id10">Автоматические ссылки на заголовки</a></li>
+<li class="toctree-l6"><a class="reference internal" href="articles/documentation.html#id11">Вставка изображений</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="articles/documentation.html#id12">Автодокументация</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="articles/documentation.html#sphinx-ext-autodoc">sphinx.ext.autodoc</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="articles/documentation.html#autodoc">Конфигурация autodoc</a></li>
+<li class="toctree-l6"><a class="reference internal" href="articles/documentation.html#id13">Документирование модулей</a></li>
+<li class="toctree-l6"><a class="reference internal" href="articles/documentation.html#id14">Документирование классов и исключений</a></li>
+<li class="toctree-l6"><a class="reference internal" href="articles/documentation.html#id15">Документирование функций/методов/декораторов</a></li>
+<li class="toctree-l6"><a class="reference internal" href="articles/documentation.html#id16">Документирование атрибутов/данных</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="articles/documentation.html#sphinx-ext-viewcode">sphinx.ext.viewcode</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/documentation.html#sphinx-ext-napoleon">sphinx.ext.napoleon</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="articles/documentation.html#id17">Утилиты и вспомогательные расширения</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="articles/documentation.html#sphinxcontrib-plantuml">sphinxcontrib.plantuml</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/documentation.html#sphinx-copybutton">sphinx_copybutton</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/documentation.html#sphinx-togglebutton">sphinx_togglebutton</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/documentation.html#sphinx-rtd-theme">sphinx_rtd_theme</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/documentation.html#sphinx-ext-coverage">sphinx.ext.coverage</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="articles/documentation.html#github-pages">Деплой на GitHub Pages</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="articles/documentation.html#sphinx-ext-githubpages">sphinx.ext.githubpages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/documentation.html#id18">Языки разметки</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/documentation.html#rest">ReST</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/documentation.html#id20">Директивы ReST</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="articles/documentation.html#toctree">toctree</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/documentation.html#id21">Адмониции</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="articles/documentation.html#id22">Информационные блоки</a></li>
+<li class="toctree-l6"><a class="reference internal" href="articles/documentation.html#id23">Предупреждающие блоки</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="articles/documentation.html#id24">Вставка кода</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="articles/documentation.html#code-block">code-block — вставка кода в документе</a></li>
+<li class="toctree-l6"><a class="reference internal" href="articles/documentation.html#include">include — включение внешних файлов</a></li>
+<li class="toctree-l6"><a class="reference internal" href="articles/documentation.html#literalinclude">literalinclude — включение внешних файлов</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="articles/documentation.html#id25">Вставка таблиц</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/documentation.html#id26">Вставка изображений</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="articles/documentation.html#image">image</a></li>
+<li class="toctree-l6"><a class="reference internal" href="articles/documentation.html#figure">figure</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="articles/documentation.html#markdown">Markdown</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/documentation.html#id28">Текст</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/documentation.html#id29">Код</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/documentation.html#id30">Ссылки</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/documentation.html#id31">Изображения</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="articles/documentation.html#rest-markdown">Сравнение ReST и Markdown</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/documentation.html#myst-parser-markdown-rest">MyST Parser — гибрид Markdown и ReST</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/documentation.html#id32">Синтаксис директив</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/documentation.html#id33">Использование диаграмм в документации</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/documentation.html#id34">Девиконы</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="articles/diagrams.html">📝 Диаграммы в документации и проектировании</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="articles/diagrams.html#diagrams-as-a-code">1. Введение. Подход Diagrams as a Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="articles/diagrams.html#uml-unified-modeling-language">2. <strong>UML (Unified Modeling Language)</strong></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/diagrams.html#uml">Типы UML-диаграмм</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/diagrams.html#id2">Структурные диаграммы</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/diagrams.html#id3">Поведенческие диаграммы</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="articles/diagrams.html#id4">Недостатки UML</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/diagrams.html#plantuml">3. <strong>PlantUML</strong></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/diagrams.html#id5">Синтаксис PlantUML</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/diagrams.html#id6">Базовые элементы</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/diagrams.html#id7">Определения и импорт</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/diagrams.html#id8">Иконки и изображения</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/diagrams.html#id9">Управление стилями и темами</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/diagrams.html#id10">Директивы и настройки</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/diagrams.html#id11">Заметки и аннотации</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/diagrams.html#activity-diagrams">Условия и циклы (в Activity Diagrams)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/diagrams.html#id12">Ссылки и гиперссылки</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/diagrams.html#c4-model">4. <strong>C4 Model</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="articles/diagrams.html#c4-plantuml"><strong>C4 PlantUML</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="articles/diagrams.html#id13">5. <strong>Другие типы диаграмм в PlantUML</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="articles/diagrams.html#kroki">6. <strong>Kroki</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="articles/diagrams.html#mermaid-plantuml">7. <strong>Mermaid (как альтернатива PlantUML)</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="articles/diagrams.html#id14">8. <strong>Рекомендации по использованию диаграмм</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="articles/diagrams.html#id15">9. <strong>Примеры диаграмм из проекта</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="articles/diagrams.html#id16">10. <strong>Заключение</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="articles/c4_model.html"><aside class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<span class="docutils literal">/home/runner/work/projectTemplate/projectTemplate/docs/articles/c4_model.md</span>, line 1)</p>
+<p>Substitution error:UndefinedError: „diagram“ is undefined [myst.substitution]</p>
+</aside>
+ C4 Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="articles/c4_model.html#id1">Общее описание</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/c4_model.html#id2">Основные принципы и цели</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/c4_model.html#id3">Нотация</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id4">Диаграммы</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id5">Элементы</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id6">Отношения</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id7">Цвета</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id8">Ключ/легенда диаграммы</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/c4_model.html#id9">Абстракции</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/c4_model.html#software-system">Программная система (Software System)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/c4_model.html#container">Контейнер (Container)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id10">Часто задаваемые вопросы</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="articles/c4_model.html#component">Компонент (Component)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#vs">Компоненты vs Код</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#spring-petclinic">Пример: Spring PetClinic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id11">Часто задаваемые вопросы</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="articles/c4_model.html#code">Код (Code)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/c4_model.html#microservices">Микросервисы (Microservices)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id12">Этап 1 — монолитная архитектура</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id13">Этап 2 — архитектура микросервисов</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#conways-law">Этап 3 — Закон Конвея (Conway’s Law)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id14">Итог</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="articles/c4_model.html#queues-and-topics">Очереди и топики (Queues and Topics)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#point-to-point">Точка-точка (Point-to-point)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#pub-sub">Публикация/подписка (Pub/Sub)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id15">Итог</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="articles/c4_model.html#id16">Часто задаваемые вопросы</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id17">Можно ли изменить терминологию?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id18">Можно ли добавить больше уровней абстракции?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="articles/c4_model.html#id19">Диаграммы</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/c4_model.html#context-diagram">Context Diagram</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id20">Пример</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id21">Условные обозначения</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id22">Область охвата</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id23">Основные элементы</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id24">Вспомогательные элементы</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id25">Целевая аудитория</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id26">Рекомендуется ли использовать?</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="articles/c4_model.html#container-diagram">Container Diagram</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id27">Пример</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id28">Условные обозначения</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id29">Область охвата</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id30">Основные элементы</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id31">Вспомогательные элементы</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id32">Целевая аудитория</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id33">Рекомендуется ли использовать?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id34">Примечания</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="articles/c4_model.html#component-diagram">Component Diagram</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id35">Пример</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id36">Условные обозначения</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id37">Область охвата</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id38">Основные элементы</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id39">Вспомогательные элементы</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id40">Целевая аудитория</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id41">Рекомендуется ли использовать?</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="articles/c4_model.html#code-diagram">Code Diagram</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id42">Пример</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id43">Область охвата</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id44">Основные элементы</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id45">Целевая аудитория</a></li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id46">Рекомендуется ли использовать?</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="articles/c4_model.html#id47">Дополнительные диаграммы</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id48">Диаграмма ландшафта систем</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="articles/c4_model.html#id49">Пример</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/c4_model.html#id50">Условные обозначения</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/c4_model.html#id51">Область охвата</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/c4_model.html#id52">Основные элементы</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/c4_model.html#id53">Целевая аудитория</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/c4_model.html#id54">Рекомендуется ли использовать?</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id55">Динамическая диаграмма</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="articles/c4_model.html#id56">Пример (стиль сотрудничества)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/c4_model.html#id57">Условные обозначения</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/c4_model.html#id58">Пример (стиль последовательности)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/c4_model.html#id59">Область охвата</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/c4_model.html#id60">Основные и вспомогательные элементы</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/c4_model.html#id61">Целевая аудитория</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/c4_model.html#id62">Рекомендуется ли использовать?</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/c4_model.html#id63">Примечания</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="articles/c4_model.html#id64">Диаграмма развертывания</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="articles/c4_model.html#id65">Пример 1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/c4_model.html#id66">Условные обозначения</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/c4_model.html#id67">Пример 2</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/c4_model.html#id68">Условные обозначения</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/c4_model.html#id69">Пример 3</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/c4_model.html#id70">Условные обозначения</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/c4_model.html#id71">Область охвата</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/c4_model.html#id72">Основные и вспомогательные элементы</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/c4_model.html#id73">Вспомогательные элементы</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/c4_model.html#id74">Целевая аудитория</a></li>
+<li class="toctree-l5"><a class="reference internal" href="articles/c4_model.html#id75">Рекомендуется ли использовать?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -131,13 +710,13 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
-        <a href="introduction.html" class="btn btn-neutral float-right" title="📜 Overview: Обзор шаблона" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="articles/introduction.html" class="btn btn-neutral float-right" title="📜 Overview: Обзор шаблона" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Авторские права 2025, gleb. </p>
+    <p>&#169; Авторские права 2025, maxlansky. </p>
   </div>
 
   Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием

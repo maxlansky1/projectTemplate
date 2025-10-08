@@ -10,6 +10,7 @@
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
@@ -19,12 +20,13 @@
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="../../../_static/copybutton.js?v=f281be69"></script>
-      <script>let toggleHintShow = 'Click to show';</script>
-      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleHintShow = 'Развернуть';</script>
+      <script>let toggleHintHide = 'Свернуть';</script>
       <script>let toggleOpenOnPrint = 'true';</script>
       <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
       <script src="../../../_static/translations.js?v=cd1d70c9"></script>
       <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script src="../../../_static/custom.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Алфавитный указатель" href="../../../genindex.html" />
     <link rel="search" title="Поиск" href="../../../search.html" /> 
@@ -34,7 +36,7 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
 
           
           
@@ -49,19 +51,33 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Введение:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">📜 Overview: Обзор шаблона</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">⚙️ Getting started: Установка и настройка шаблона</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../basics.html">🗺️ Roadmap: как работать с шаблоном</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../recommendations.html">Recommendations: Полезные дополнения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../articles/introduction.html">📜 Overview: Обзор шаблона</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../articles/installation.html">⚙️ Getting started: Установка и настройка шаблона</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Основы:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../articles/basics.html">🗺️ Roadmap: как работать с шаблоном</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../articles/recommendations.html">Recommendations: Полезные дополнения</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Архитектура:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../articles/databases.html">🗄️ Подключение и настройка SQL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../articles/documentation.html">📚 Работа с документацией</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../articles/diagrams.html">📝 Диаграммы в документации и проектировании</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../articles/c4_model.html"><aside class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<span class="docutils literal">/home/runner/work/projectTemplate/projectTemplate/docs/articles/c4_model.md</span>, line 1)</p>
+<p>Substitution error:UndefinedError: „diagram“ is undefined [myst.substitution]</p>
+</aside>
+ C4 Model</a></li>
 </ul>
 
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств"  style="background: #2980B9" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">projectTemplate</a>
       </nav>
@@ -99,7 +115,7 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">colorama</span><span class="w"> </span><span class="kn">import</span> <span class="n">Back</span><span class="p">,</span> <span class="n">Fore</span><span class="p">,</span> <span class="n">Style</span><span class="p">,</span> <span class="n">init</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">configs.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
 <span class="c1"># Инициализация colorama для Windows/Linux/macOS</span>
 <span class="n">init</span><span class="p">(</span><span class="n">autoreset</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -114,7 +130,7 @@
 
 
 <div class="viewcode-block" id="ColoredFormatter">
-<a class="viewcode-back" href="../../../basics.html#src.utils.logger.ColoredFormatter">[документация]</a>
+<a class="viewcode-back" href="../../../articles/basics.html#src.utils.logger.ColoredFormatter">[документация]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ColoredFormatter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Цветной форматтер для вывода логов в консоль.</span>
 
@@ -135,7 +151,7 @@
     <span class="p">}</span>
 
 <div class="viewcode-block" id="ColoredFormatter.format">
-<a class="viewcode-back" href="../../../basics.html#src.utils.logger.ColoredFormatter.format">[документация]</a>
+<a class="viewcode-back" href="../../../articles/basics.html#src.utils.logger.ColoredFormatter.format">[документация]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Форматирует запись лога, применяя цвет в зависимости от уровня.</span>
 
@@ -157,7 +173,7 @@
 
 
 <div class="viewcode-block" id="get_logger">
-<a class="viewcode-back" href="../../../basics.html#src.utils.logger.get_logger">[документация]</a>
+<a class="viewcode-back" href="../../../articles/basics.html#src.utils.logger.get_logger">[документация]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_logger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Возвращает настроенный логгер с указанным именем.</span>
 
@@ -174,16 +190,15 @@
 
     <span class="c1"># Настройка корневого логгера при помощи configs/config.py</span>
     <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">Config</span><span class="o">.</span><span class="n">LOG_LEVEL</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;LOG_LEVEL&quot;</span><span class="p">,</span> <span class="s2">&quot;INFO&quot;</span><span class="p">))</span>
 
     <span class="c1"># Предотвращаем дублирование логов (если уже есть хэндлеры)</span>
     <span class="k">if</span> <span class="n">logger</span><span class="o">.</span><span class="n">hasHandlers</span><span class="p">():</span>
         <span class="k">return</span> <span class="n">logger</span>
 
     <span class="c1"># --- Консольный вывод ---</span>
-    <span class="n">console_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">(</span>
-        <span class="nb">open</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">fileno</span><span class="p">(),</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="n">buffering</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="p">)</span>
+    <span class="n">console_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+
     <span class="n">console_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
     <span class="n">console_formatter</span> <span class="o">=</span> <span class="n">ColoredFormatter</span><span class="p">(</span><span class="n">fmt</span><span class="o">=</span><span class="n">LOG_FORMAT</span><span class="p">,</span> <span class="n">datefmt</span><span class="o">=</span><span class="n">DATE_FORMAT</span><span class="p">)</span>
     <span class="n">console_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">console_formatter</span><span class="p">)</span>
@@ -208,7 +223,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Авторские права 2025, gleb. </p>
+    <p>&#169; Авторские права 2025, maxlansky. </p>
   </div>
 
   Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием
