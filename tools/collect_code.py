@@ -290,7 +290,8 @@ class CodeCollectorApp:
     def on_item_click(self, event):
         """
         Обработчик клика по элементу дерева.
-        Переключает выбор файла (добавляет/удаляет из self.selected_files).
+        Если клик по файлу — переключает выбор.
+        Если клик по папке — копирует дерево этой папки.
         """
         item_id = self.tree.identify_row(event.y)
         if item_id not in self.tree_items:
@@ -298,20 +299,31 @@ class CodeCollectorApp:
 
         item = self.tree_items[item_id]
 
-        # Работаем только с файлами
         if item["type"] == "file":
+            # Логика для файлов (переключение галочки)
             if item_id in self.selected_files:
-                # Убираем из выбора
                 self.selected_files.remove(item_id)
-                # Обновляем текст в дереве
                 self.tree.item(
                     item_id, text=self.tree.item(item_id, "text").replace(" [✓]", "")
                 )
             else:
-                # Добавляем в выбор
                 self.selected_files.add(item_id)
-                # Обновляем текст в дереве
                 self.tree.item(item_id, text=f"{self.tree.item(item_id, 'text')} [✓]")
+
+        elif item["type"] == "dir":
+            # Копируем дерево папки
+            self.copy_single_dir_tree(item["path"])
+
+    def copy_single_dir_tree(self, dir_path):
+        """
+        Копирует дерево структуры указанной директории в буфер обмена.
+        """
+        dir_name = os.path.basename(dir_path) + "/"
+        tree_output = f"{dir_name}\n{get_tree_structure(dir_path).rstrip()}\n"
+        self.root.clipboard_clear()
+        self.root.clipboard_append(tree_output)
+        self.root.update()
+        self.show_status(f"Дерево папки '{dir_name}' скопировано в буфер.", "green")
 
     def clear_all_selections(self):
         """
