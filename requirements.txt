@@ -13,7 +13,7 @@ sphinx-autobuild
 sphinx-copybutton
 sphinx-intl
 sphinxcontrib-plantuml
-sphinx-rtd-theme
+sphinx-immaterial
 sphinx-togglebutton
 myst-parser
 

@@ -11,6 +11,8 @@ import sys
 # Добавляет родительскую директорию в системный путь, чтобы Sphinx мог найти исходные модули
 # Получаем путь к корню проекта и
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+template_path = os.path.join(project_root, "diagrams", "template")
+icons_path = os.path.join(project_root, "diagrams", "icons")
 
 sys.path.insert(0, project_root)
 
@@ -31,9 +33,11 @@ release = "0.1"
 # Настройки для работы с PlantUML и рендеринга UML-диаграмм.
 # В GitHub Actions используется путь /usr/local/bin/plantuml/plantuml.jar, а для Windows — C:\\plantuml\\plantuml.jar.
 if "GITHUB_ACTIONS" in os.environ:
-    plantuml = "java -jar /usr/local/bin/plantuml/plantuml.jar"
+    plantuml = f"java -jar /usr/local/bin/plantuml/plantuml.jar -I{template_path} -I{icons_path}"
 elif os.name == "nt":  # Для Windows
-    plantuml = r"java -jar C:\plantuml\plantuml.jar"
+    plantuml = (
+        f'java -jar "C:\\plantuml\\plantuml.jar" -I"{template_path}" -I"{icons_path}"'
+    )
 else:
     raise OSError("Unsupported OS")
 
@@ -60,7 +64,7 @@ extensions = [
     "sphinx_togglebutton",  # позволяет создавать разворачиваемые списки
     # === Визуализация и темы ===
     "sphinxcontrib.plantuml",  # добавляет поддержку plantuml
-    "sphinx_rtd_theme",  # переключает на красивую тему
+    "sphinx_immaterial",  # использовать тему mk docs
     # === GitHub Pages ===
     "sphinx.ext.githubpages",  # позволяет использовать стили sphinx при хостинге доков на github pages
 ]
@@ -174,25 +178,101 @@ language = "ru"
 # ============================================================================
 # НАСТРОЙКИ HTML-ТЕМЫ
 # ============================================================================
-
-# Настройки темы
-html_theme = "sphinx_rtd_theme"
+# TODO: доделать кастомные настройки темы
+# Настройки темы Mk Docs
+html_theme = "sphinx_immaterial"
+# material theme options (see theme.conf for more information)
 html_theme_options = {
-    # === Селекторы версий и языков ===
-    # Эти опции добавляют выпадающие списки (селекторы) в шапку темы для переключения между версиями документации и языками.
-    "version_selector": True,  # Включает селектор версий. Sphinx ожидает наличие переменной `html_context['versions']` для заполнения списка.
-    "language_selector": False,  # Выключает селектор языков. Если True, Sphinx ожидает `html_context['languages']`.
-    # `flyout_display` управляет поведением меню с селекторами и кнопкой поиска.
-    # "flyout_display": "attached",  # Значение по умолчанию. Меню отображается как прикреплённый выпадающий список. Других стандартных значений, кроме 'attached', тема обычно не предоставляет, 'hidden' - это гипотетическое значение для описания.
-    # === Навигация ===
-    # Эти опции влияют на отображение и поведение бокового навигационного меню.
-    "prev_next_buttons_location": "bottom",  # Определяет, где отображаются кнопки "Следующая страница" / "Предыдущая страница"
-    "collapse_navigation": True,  # Дерево навигации в боковой панели будет свернуто по умолчанию, кроме текущего раздела.
-    "sticky_navigation": True,  # Боковая навигационная панель будет оставаться видимой при прокрутке
-    "navigation_depth": 6,  # Максимальная глубина вложенности элементов в боковом меню
-    "titles_only": False,  # True - нет подзаголовков в меню. False - есть подзаголовки.
-    # === Визуальные настройки ===
-    "style_nav_header_background": "#2980B9",  # Устанавливает цвет фона шапки навигационной панели в формате HEX.
+    "icon": {
+        "repo": "fontawesome/brands/github",
+        "edit": "material/file-edit-outline",
+    },
+    "site_url": "https://jbms.github.io/sphinx-immaterial/",
+    "repo_url": "https://github.com/jbms/sphinx-immaterial/",
+    "repo_name": "Sphinx-Immaterial",
+    "edit_uri": "blob/main/docs",
+    "globaltoc_collapse": True,
+    "features": [
+        "navigation.expand",
+        # "navigation.tabs",
+        # "navigation.tabs.sticky",
+        # "toc.integrate",
+        "navigation.sections",
+        # "navigation.instant",
+        # "header.autohide",
+        "navigation.top",
+        "navigation.footer",
+        # "navigation.tracking",
+        # "search.highlight",
+        "search.share",
+        "search.suggest",
+        "toc.follow",
+        "toc.sticky",
+        "content.tabs.link",
+        "content.code.copy",
+        "content.action.edit",
+        "content.action.view",
+        "content.tooltips",
+        "announce.dismiss",
+    ],
+    "palette": [
+        {
+            "media": "(prefers-color-scheme)",
+            "toggle": {
+                "icon": "material/brightness-auto",
+                "name": "Switch to light mode",
+            },
+        },
+        {
+            "media": "(prefers-color-scheme: light)",
+            "scheme": "default",
+            "primary": "light-green",
+            "accent": "light-blue",
+            "toggle": {
+                "icon": "material/lightbulb",
+                "name": "Switch to dark mode",
+            },
+        },
+        {
+            "media": "(prefers-color-scheme: dark)",
+            "scheme": "slate",
+            "primary": "deep-orange",
+            "accent": "lime",
+            "toggle": {
+                "icon": "material/lightbulb-outline",
+                "name": "Switch to system preference",
+            },
+        },
+    ],
+    # BEGIN: version_dropdown
+    "version_dropdown": True,
+    "version_info": [
+        {
+            "version": "https://sphinx-immaterial.rtfd.io",
+            "title": "ReadTheDocs",
+            "aliases": [],
+        },
+        {
+            "version": "https://jbms.github.io/sphinx-immaterial",
+            "title": "Github Pages",
+            "aliases": [],
+        },
+    ],
+    # END: version_dropdown
+    "toc_title_is_page_title": True,
+    # BEGIN: social icons
+    "social": [
+        {
+            "icon": "fontawesome/brands/github",
+            "link": "https://github.com/jbms/sphinx-immaterial",
+            "name": "Source on github.com",
+        },
+        {
+            "icon": "fontawesome/brands/python",
+            "link": "https://pypi.org/project/sphinx-immaterial/",
+        },
+    ],
+    # END: social icons
 }
 
 # Настройки для истории изменений документации
@@ -229,6 +309,7 @@ html_js_files = [
 ]
 
 html_css_files = [
+    "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css",
     "custom.css",
 ]
 
