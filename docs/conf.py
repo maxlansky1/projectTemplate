@@ -40,8 +40,8 @@ if "GITHUB_ACTIONS" in os.environ:
     icons_files = glob.glob(os.path.join(icons_path, "*.puml"))
     # Создаём строку с опциями -I для каждого найденного файла
     plantuml_includes = " ".join([f'-I"{f}"' for f in template_files + icons_files])
-    # Собираем полную команду
-    plantuml = f'java -jar "/usr/local/bin/plantuml/plantuml.jar" {plantuml_includes}'
+    # Собираем полную команду: добавляем относительный путь, указываем относительные пути ко всем нужным файлам
+    plantuml = f'java -DRELATIVE_INCLUDE="." -jar "/usr/local/bin/plantuml/plantuml.jar" {plantuml_includes}'
 elif os.name == "nt":  # Для Windows
     plantuml = (
         f'java -jar "C:\\plantuml\\plantuml.jar" -I"{template_path}" -I"{icons_path}"'
