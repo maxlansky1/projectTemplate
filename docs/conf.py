@@ -34,7 +34,7 @@ release = "0.1"
 # В GitHub Actions используется путь /usr/local/bin/plantuml/plantuml.jar, а для Windows — C:\\plantuml\\plantuml.jar.
 if "GITHUB_ACTIONS" in os.environ:
     # Собираем полную команду: добавляем относительный путь, указываем относительные пути ко всем нужным файлам
-    plantuml = f'java -jar "/usr/local/bin/plantuml/plantuml.jar" -I"{template_path}" -I"{icons_path}"'
+    plantuml = f'java -jar "/usr/local/bin/plantuml/plantuml.jar" "{template_path}" "{icons_path}"'
 elif os.name == "nt":  # Для Windows
     plantuml = (
         f'java -jar "C:\\plantuml\\plantuml.jar" -I"{template_path}" -I"{icons_path}"'
