@@ -8,6 +8,7 @@ projectTemplate
 
 .. toctree::
    :maxdepth: 6
+   :numbered: 3
    :caption: Введение:
 
    articles/introduction
@@ -15,6 +16,7 @@ projectTemplate
 
 .. toctree::
    :maxdepth: 6
+   :numbered: 3
    :caption: Основы:
 
    articles/basics
@@ -22,9 +24,10 @@ projectTemplate
 
 .. toctree::
    :maxdepth: 6
+   :numbered: 3
    :caption: Архитектура:
 
    articles/databases
    articles/documentation
    articles/diagrams
-   articles/c4_model
+   articles/c4_plantuml

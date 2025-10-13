@@ -15,7 +15,7 @@
 - ⚡ **Удобный Makefile для быстрого запуска команд** для удобства в работе с проектом.
 
 ```{eval-rst}
-.. uml:: ../../projectTemplate/diagrams/project_structure.puml
+.. uml:: ../../diagrams/project_structure.puml
    :scale: 10%
    :align: center
 ```

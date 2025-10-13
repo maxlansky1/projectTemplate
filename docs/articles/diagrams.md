@@ -1,4 +1,241 @@
-## 📝 Диаграммы в документации и проектировании
+# 📝 Диаграммы в документации и проектировании
+
+```{eval-rst}
+.. uml:: ../../diagrams/template_diagram.puml
+   :scale: 50 %
+   :align: center
+```
+
+
+1. tags - работает
+2. icons - работает
+3. relations - работает
+#TODO: добавить спрайты в relations
+4. boundaries - работает
+
+```text
+diagrams/
+└── template/
+    ├── style.puml            # Общий стиль (цвета, шрифты, теги)
+    ├── fonts.puml            # Настройки шрифтов
+    ├── arrows.puml           # Стили стрелок
+    ├── tags.puml             # Теги и цвета элементов (твой список)
+    ├── boundaries.puml       # Стили границ (для контейнеров и т.д.)
+    ├── icons.puml            # Стили иконок (если используются)
+    ├── legend.puml           # Шаблон легенды
+    ├── layout.puml           # Настройки размещения (отступы, размеры)
+    └── theme.puml            # Комбинированный темплейт (включает всё)
+```
+
+## Девиконы
+
+Импорт девиконов
+
+```text
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/main/icons/devicons
+
+!define DEVICONS2 https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/main/icons/devicons2
+
+!define FONTAWESOME5 https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/main/icons/font-awesome-5
+```
+
+🧩 Инструменты и платформы
+
+```text
+!include DEVICONS/git.puml
+!include DEVICONS/github_badge.puml
+!include DEVICONS/docker.puml
+!include DEVICONS/google_drive.puml
+!include DEVICONS/terminal.puml
+
+!include DEVICONS2/git_woodmark.puml
+!include DEVICONS2/github_original_woodmark.puml
+!include DEVICONS2/grafana_woodmark.puml
+!include DEVICONS2/google.puml
+!include DEVICONS2/vscode.puml
+```
+
+💻 Языки и технологии
+
+```text
+!include DEVICONS/java.puml
+!include DEVICONS/javascript.puml
+!include DEVICONS/python.puml
+!include DEVICONS/php.puml
+!include DEVICONS/html5.puml
+!include DEVICONS/css3.puml
+!include DEVICONS/markdown.puml
+```
+
+🗄️ Базы данных и кеш
+
+```text
+!include DEVICONS/database.puml
+!include DEVICONS/postgresql.puml
+!include DEVICONS/redis.puml
+
+!include DEVICONS2/redis_woodmark.puml
+```
+
+🌐 Браузеры и ОС
+
+```text
+!include DEVICONS/chrome.puml
+!include DEVICONS/firefox.puml
+!include DEVICONS/linux.puml
+!include DEVICONS/windows.puml
+```
+
+⚙️ Системные и утилитарные иконки
+
+```text
+!include FONTAWESOME5/cogs.puml
+!include FONTAWESOME5/tools.puml
+!include FONTAWESOME5/share_alt.puml
+!include FONTAWESOME5/link.puml
+!include FONTAWESOME5/telegram.puml
+```
+
+📁 Файлы и документы
+
+```text
+!include FONTAWESOME5/book_open.puml
+!include FONTAWESOME5/file_alt.puml
+!include FONTAWESOME5/folder_open.puml
+```
+
+
+## Универсальные стили 
+
+
+## Тестовый шаблон диаграммы
+
+```text
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml   
+
+' --- Определения для сторонних библиотек ---
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/tree/main/icons/devicons  
+!define DEVICONS2 https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/tree/main/icons/devicons2 
+!define FONTAWESOME5 https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/tree/main/icons/font-awesome-5font-awesome-5  
+
+' --- Импорт иконок ---
+!include DEVICONS/git.puml
+!include DEVICONS/github_badge.puml
+!include DEVICONS/docker.puml
+!include DEVICONS/google_drive.puml
+!include DEVICONS/terminal.puml
+!include DEVICONS2/git_woodmark.puml
+!include DEVICONS2/github_original_woodmark.puml
+!include DEVICONS2/grafana_woodmark.puml
+!include DEVICONS2/google.puml
+!include DEVICONS2/vscode.puml
+!include DEVICONS/java.puml
+!include DEVICONS/javascript.puml
+!include DEVICONS/python.puml
+!include DEVICONS/php.puml
+!include DEVICONS/html5.puml
+!include DEVICONS/css3.puml
+!include DEVICONS/markdown.puml
+!include DEVICONS/database.puml
+!include DEVICONS/postgresql.puml
+!include DEVICONS/redis.puml
+!include DEVICONS2/redis_woodmark.puml
+!include DEVICONS/chrome.puml
+!include DEVICONS/firefox.puml
+!include DEVICONS/linux.puml
+!include DEVICONS/windows.puml
+!include FONTAWESOME5/ban.puml
+!include FONTAWESOME5/bluetooth.puml
+!include FONTAWESOME5/cogs.puml
+!include FONTAWESOME5/tools.puml
+!include FONTAWESOME5/sync_alt.puml
+!include FONTAWESOME5/share_alt.puml
+!include FONTAWESOME5/link.puml
+!include FONTAWESOME5/telegram.puml
+!include FONTAWESOME5/toggle_off.puml
+!include FONTAWESOME5/toggle_on.puml
+!include FONTAWESOME5/book_open.puml
+!include FONTAWESOME5/bookmark.puml
+!include FONTAWESOME5/file_alt.puml
+!include FONTAWESOME5/file_code.puml
+!include FONTAWESOME5/file_csv.puml
+!include FONTAWESOME5/file_excel.puml
+!include FONTAWESOME5/file_pdf.puml
+!include FONTAWESOME5/folder_open.puml
+!include FONTAWESOME5/lock.puml
+!include FONTAWESOME5/lock_open.puml
+!include FONTAWESOME5/map_marked_alt.puml
+
+' --- Универсальные стили контейнеров ---
+AddElementTag("config", $bgColor="#e0e0e0", $fontColor="black", $borderColor="#b0b0b0")
+AddElementTag("data", $bgColor="#cfe2ff", $fontColor="black", $borderColor="#9ec5fe")
+AddElementTag("code", $bgColor="#d2f4ea", $fontColor="black", $borderColor="#8fdcc1")
+AddElementTag("utils", $bgColor="#ffe5e5", $fontColor="black", $borderColor="#e59898")
+AddElementTag("docs", $bgColor="#fff1d0", $fontColor="black", $borderColor="#ffd27f")
+AddElementTag("tests", $bgColor="#fcd5ce", $fontColor="black", $borderColor="#f08080")
+AddElementTag("ci", $bgColor="#d0e2ff", $fontColor="black", $borderColor="#89b4f8")
+AddElementTag("docker", $bgColor="#f5e6cc", $fontColor="black", $borderColor="#d1b37f")
+AddElementTag("api", $bgColor="#d1ecf1", $fontColor="black", $borderColor="#87c1d4")
+AddElementTag("logging", $bgColor="#fff3cd", $fontColor="black", $borderColor="#ffdf7e")
+AddElementTag("external", $bgColor="#e2d5f9", $fontColor="black", $borderColor="#c0a6f3")
+AddElementTag("misc", $bgColor="#f8f9fa", $fontColor="black", $borderColor="#dee2e6")
+
+' --- Система и внешние сущности ---
+System_Boundary(mySystem, "Main Application System") {
+  Container(app, "Main Application", "Java", "Core application logic", $tags="code", $sprite="java")
+  Container(api, "API Gateway", "Node.js", "Handles API requests", $tags="api", $sprite="javascript")
+  Container(db, "Main Database", "PostgreSQL", "Primary application data", $tags="data", $sprite="postgresql")
+  Container(cache, "Cache", "Redis", "In-memory data caching", $tags="data", $sprite="redis")
+  Container(config_store, "Config Store", "JSON", "Centralized configuration", $tags="config", $sprite="file_alt")
+  Container(log_aggregator, "Log Aggregator", "Elasticsearch", "Collects application logs", $tags="logging", $sprite="file_alt")
+  Container(auth_service, "Auth Service", "OAuth2", "Handles authentication", $tags="utils", $sprite="lock")
+  Container(notification_service, "Notification Service", "SMTP", "Sends notifications", $tags="utils", $sprite="telegram")
+  Container(file_service, "File Service", "S3", "Manages file uploads", $tags="utils", $sprite="folder_open")
+  Container(test_runner, "Test Runner", "JUnit", "Executes test suites", $tags="tests", $sprite="github_badge")
+  Container(docs_gen, "Docs Generator", "Swagger", "Generates API docs", $tags="docs", $sprite="book_open")
+  Container(ci_cd, "CI/CD Pipeline", "Jenkins", "Builds and deploys", $tags="ci", $sprite="cogs")
+  Container(container_registry, "Container Registry", "DockerHub", "Stores Docker images", $tags="docker", $sprite="docker")
+  Container(metrics_service, "Metrics Service", "Prometheus", "Collects metrics", $tags="utils", $sprite="sync_alt")
+  Container(grafana, "Grafana", "Monitoring", "Metrics dashboard", $tags="utils", $sprite="grafana_original")
+  Container(load_balancer, "Load Balancer", "Nginx", "Distributes traffic", $tags="api", $sprite="share_alt")
+}
+
+System_Ext(ext_db, "External Database", "SQL", "External partner data", $tags="external", $sprite="database")
+System_Ext(ext_auth, "External Identity Provider", "SAML", "SSO Provider", $tags="external", $sprite="lock_open")
+System_Ext(ext_storage, "External Storage", "Cloud", "Cloud file storage", $tags="external", $sprite="google_drive")
+
+Person(user_web, "Web User", "Uses the web application", $tags="misc", $sprite="chrome")
+Person(user_mobile, "Mobile User", "Uses the mobile application", $tags="misc", $sprite="terminal")
+
+' --- Связи ---
+Rel(user_web, load_balancer, "Uses HTTPS", "HTTPS")
+Rel(user_mobile, api, "Uses REST API", "HTTPS")
+Rel(load_balancer, app, "Forwards requests", "HTTP")
+Rel(api, app, "Forwards requests", "HTTP")
+Rel(app, db, "Reads/Writes data", "JDBC")
+Rel(app, cache, "Reads/Writes cache", "Redis Protocol")
+Rel(app, config_store, "Fetches config", "HTTP")
+Rel(app, auth_service, "Validates tokens", "HTTP")
+Rel(app, notification_service, "Sends notifications", "HTTP")
+Rel(app, file_service, "Uploads/downloads files", "HTTP")
+Rel(app, log_aggregator, "Sends logs", "HTTP")
+Rel(test_runner, app, "Tests API", "HTTP")
+Rel(docs_gen, api, "Fetches API spec", "HTTP")
+Rel(ci_cd, container_registry, "Pushes images", "Docker API")
+Rel(ci_cd, app, "Deploys application", "Deployment API")
+Rel(metrics_service, app, "Fetches metrics", "Prometheus Format")
+Rel(grafana, metrics_service, "Queries metrics", "HTTP")
+Rel(auth_service, ext_auth, "Delegates authentication", "SAML")
+Rel(file_service, ext_storage, "Stores files", "Cloud API")
+Rel(app, ext_db, "Syncs data", "Custom Protocol")
+
+@enduml
+```
+
+
+
+# Теория диаграмм
 
 ### 1. Введение. Подход Diagrams as a Code
 
@@ -89,13 +326,6 @@ UML включает в себя множество типов диаграмм,
   Показывает экземпляры классов и их связи в определённый момент времени.  
   Полезна для иллюстрации примеров работы системы.
 
-  ```{uml}
-  
-     object user1 : User
-     object order1 : Order
-
-     user1 --> order1 : places
-  ```
 
 - **Диаграмма компонентов (Component Diagram)**  
   Отображает компоненты системы и зависимости между ними.  
@@ -153,14 +383,6 @@ UML включает в себя множество типов диаграмм,
 - **Диаграмма профилей (Profile Diagram)**  
   Используется для расширения UML с помощью пользовательских стереотипов.  
   Применяется при создании доменных языков моделирования.
-
-  ```{uml}
-
-     class Class1 service
-     class Class2 repository
-
-     Class1 --> Class2
-  ```
 
 ##### Поведенческие диаграммы
 
@@ -285,14 +507,6 @@ PlantUML использует **простой и интуитивно поня�
 ##### Базовые элементы
 
 #TODO: добавить сюда, что нужно использовать name после startuml
-```{csv-table}
-:header: "Команда", "Описание", "Пример"
-:widths: 20, 40, 40
-
-"``@startuml ... @enduml``", "Обрамляет начало и конец диаграммы", "``@startuml Alice -> Bob: Hello @enduml``"
-"'", "Однострочный комментарий", "``' Это комментарий``"
-"/' ... '/", "Многострочный комментарий", "``/' Комментарий '/``"
-```
 
 ##### Определения и импорт
 

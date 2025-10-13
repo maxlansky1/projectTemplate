@@ -122,6 +122,7 @@ myst_enable_extensions = [
 ]
 
 # Автоматическое создание якорей на любой заголовок (7 уровней)
+# TODO: продумать систему автоматической нумерации глав, разделов, диаграмм, таблиц, графиков итд
 myst_heading_anchors = 7
 
 # Список замен для myst parser
@@ -187,9 +188,9 @@ html_theme_options = {
         "repo": "fontawesome/brands/github",
         "edit": "material/file-edit-outline",
     },
-    "site_url": "https://jbms.github.io/sphinx-immaterial/",
-    "repo_url": "https://github.com/jbms/sphinx-immaterial/",
-    "repo_name": "Sphinx-Immaterial",
+    "site_url": "https://maxlansky1.github.io/projectTemplate",
+    "repo_url": "https://github.com/maxlansky1/projectTemplate",
+    "repo_name": "projectTemplate",
     "edit_uri": "blob/main/docs",
     "globaltoc_collapse": True,
     "features": [
