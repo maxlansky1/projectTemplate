@@ -13,14 +13,18 @@
 - Отображение уведомлений о результате действия.
 - Возможность копирования дерева структуры проекта.
 - Возможность копирования дерева + содержимого выбранных файлов.
+- Возможность выбора промпта из папки notes (если есть).
+- Возможность включения/исключения дерева в копирование.
 - Кнопка "Сбросить все галочки" для очистки выбора файлов.
 - Кнопка "Обновить дерево" для пересборки дерева при изменении файлов.
 
 Использование
 1. Откройте консоль Git Bash в виртуальном окружении вашего проекта в VS Code
 2. Запустите приложение командой `python tools/collect_code.py &`
-3. Выберите нужные файлы для объединения и нажмите кнопку "Скопировать файлы"
+3. Выберите нужные файлы для объединения и нажмите кнопку "Скопировать в буфер обмена"
 """
+
+# TODO: сделать кнопки красивее и удобнее расположить
 
 import os
 import tkinter as tk
@@ -32,10 +36,11 @@ IGNORE_FOLDERS = {
     "__pycache__",
     ".venv",
     "venv",
-    # "_build",  # папка сборки Sphinx
+    "_build",  # папка сборки Sphinx
     # "_static",  # Стили Sphinx
     # "_templates",  # Шаблоны Sphinx
     ".ruff_cache",
+    "docs/_build",
 }
 
 # Файлы и расширения, которые нужно игнорировать
@@ -132,14 +137,27 @@ class CodeCollectorApp:
         self.project_path = project_path
         self.selected_files = set()  # множество выбранных файлов
         self.tree_items = {}  # словарь: item_id -> {'path', 'type'}
+        self.prompts = {}  # словарь: имя_файла -> путь
+        self.setup_prompts()  # ищем промпты
         self.setup_ui()
+
+    def setup_prompts(self):
+        """
+        Сканирует папку notes и собирает все файлы *_prompt.md в словарь.
+        """
+        notes_path = os.path.join(self.project_path, "notes")
+        if os.path.isdir(notes_path):
+            for file_name in os.listdir(notes_path):
+                if file_name.endswith("_prompt.md"):
+                    file_path = os.path.join(notes_path, file_name)
+                    self.prompts[file_name] = file_path
 
     def setup_ui(self):
         """
         Настройка интерфейса: дерево файлов, кнопки копирования, метка уведомления.
         """
         self.root.title("Сбор кода для отправки")
-        self.root.geometry("700x600")  # Увеличили высоту и ширину под новые кнопки
+        self.root.geometry("800x650")  # Увеличили высоту и ширину
 
         # Основной фрейм
         main_frame = ttk.Frame(self.root)
@@ -159,61 +177,60 @@ class CodeCollectorApp:
         self.tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
-        # Настройка стиля для больших кнопок
-        style = ttk.Style()
-        style.configure("Large.TButton", font=("Arial", 11), width=20, anchor="center")
+        # Нижняя панель
+        bottom_frame = ttk.Frame(self.root)
+        bottom_frame.pack(fill=tk.X, padx=10, pady=5)
 
-        # Кнопки
-        button_frame = ttk.Frame(self.root)
-        button_frame.pack(pady=10)
+        # Слева: выпадающий список промптов
+        left_frame = ttk.Frame(bottom_frame)
+        left_frame.pack(side=tk.LEFT, padx=(0, 20))
 
-        # Левый столбец: копирование
-        left_frame = ttk.Frame(button_frame)
-        left_frame.pack(side=tk.LEFT, padx=(0, 10))
-
-        btn1 = ttk.Button(
+        ttk.Label(left_frame, text="📝 Промпт:").pack(anchor=tk.W)
+        self.prompt_var = tk.StringVar()
+        self.prompt_combo = ttk.Combobox(
             left_frame,
-            text="📋 Скопировать файлы",
-            command=self.collect_and_copy,
-            style="Large.TButton",
+            textvariable=self.prompt_var,
+            values=list(self.prompts.keys()),
+            state="readonly",
+            width=25,
         )
-        btn1.pack(pady=3)
+        if self.prompts:
+            self.prompt_combo.set("Выберите промпт")
+        else:
+            self.prompt_combo.set("Нет промптов")
+            self.prompt_combo.config(state="disabled")
+        self.prompt_combo.pack(pady=2)
 
-        btn2 = ttk.Button(
-            left_frame,
-            text="📁 Скопировать дерево",
-            command=self.copy_tree,
-            style="Large.TButton",
+        # Центр: чекбокс "Дерево" и кнопка "Обновить"
+        center_frame = ttk.Frame(bottom_frame)
+        center_frame.pack(side=tk.LEFT, padx=20)
+
+        self.tree_var = tk.BooleanVar()
+        self.tree_checkbox = ttk.Checkbutton(
+            center_frame, text="Дерево", variable=self.tree_var
         )
-        btn2.pack(pady=3)
+        self.tree_checkbox.pack(pady=2)
 
-        btn3 = ttk.Button(
-            left_frame,
-            text="📄 Дерево + файлы",
-            command=self.copy_tree_and_files,
-            style="Large.TButton",
+        self.refresh_btn = ttk.Button(
+            center_frame, text="🔄 Обновить дерево", command=self.refresh_tree
         )
-        btn3.pack(pady=3)
+        self.refresh_btn.pack(pady=5)
 
-        # Правый столбец: управление
-        right_frame = ttk.Frame(button_frame)
-        right_frame.pack(side=tk.RIGHT, padx=(10, 0))
+        # Справа: кнопки "Сбросить" и "Скопировать"
+        right_frame = ttk.Frame(bottom_frame)
+        right_frame.pack(side=tk.RIGHT, padx=(20, 0))
 
-        btn4 = ttk.Button(
+        self.clear_btn = ttk.Button(
+            right_frame, text="🧹 Сбросить чекбоксы", command=self.clear_all_selections
+        )
+        self.clear_btn.pack(pady=3)
+
+        self.copy_btn = ttk.Button(
             right_frame,
-            text="🧹 Сбросить чекбоксы",
-            command=self.clear_all_selections,
-            style="Large.TButton",
+            text="📋 Скопировать в буфер обмена",
+            command=self.copy_selected_to_clipboard,
         )
-        btn4.pack(pady=3)
-
-        btn5 = ttk.Button(
-            right_frame,
-            text="🔄 Обновить дерево",
-            command=self.refresh_tree,
-            style="Large.TButton",
-        )
-        btn5.pack(pady=3)
+        self.copy_btn.pack(pady=3)
 
         # Метка для уведомления (изначально скрыта)
         self.status_label = tk.Label(self.root, text="", fg="green", font=("Arial", 10))
@@ -291,7 +308,6 @@ class CodeCollectorApp:
         """
         Обработчик клика по элементу дерева.
         Если клик по файлу — переключает выбор.
-        Если клик по папке — копирует дерево этой папки.
         """
         item_id = self.tree.identify_row(event.y)
         if item_id not in self.tree_items:
@@ -310,21 +326,6 @@ class CodeCollectorApp:
                 self.selected_files.add(item_id)
                 self.tree.item(item_id, text=f"{self.tree.item(item_id, 'text')} [✓]")
 
-        elif item["type"] == "dir":
-            # Копируем дерево папки
-            self.copy_single_dir_tree(item["path"])
-
-    def copy_single_dir_tree(self, dir_path):
-        """
-        Копирует дерево структуры указанной директории в буфер обмена.
-        """
-        dir_name = os.path.basename(dir_path) + "/"
-        tree_output = f"{dir_name}\n{get_tree_structure(dir_path).rstrip()}\n"
-        self.root.clipboard_clear()
-        self.root.clipboard_append(tree_output)
-        self.root.update()
-        self.show_status(f"Дерево папки '{dir_name}' скопировано в буфер.", "green")
-
     def clear_all_selections(self):
         """
         Снимает выбор со всех файлов.
@@ -337,54 +338,39 @@ class CodeCollectorApp:
         self.selected_files.clear()
         self.show_status("Все галочки сняты.", "green")
 
-    def collect_and_copy(self):
+    def copy_selected_to_clipboard(self):
         """
-        Собирает содержимое выбранных файлов и копирует в буфер обмена.
-        Показывает уведомление под кнопкой.
+        Собирает: промпт (если выбран), дерево (если чекбокс включен), файлы (если выбраны).
+        Копирует всё в буфер обмена.
         """
-        if not self.selected_files:
-            self.show_status("Нет выбранных файлов.", "red")
-            return
+        output_parts = []
 
-        collected = []
-        for item_id in self.selected_files:
-            data = self.tree_items[item_id]
-            try:
-                with open(data["path"], encoding="utf-8") as f:
-                    content = f.read()
-                collected.append(f"=== {data['path']} ===\n{content}\n")
-            except Exception as e:
-                print(f"Ошибка при чтении {data['path']}: {e}")
+        # Добавляем промпт, если выбран
+        prompt_name = self.prompt_var.get()
+        if (
+            prompt_name
+            and prompt_name != "Выберите промпт"
+            and prompt_name != "Нет промптов"
+        ):
+            prompt_path = self.prompts.get(prompt_name)
+            if prompt_path:
+                try:
+                    with open(prompt_path, encoding="utf-8") as f:
+                        prompt_content = f.read()
+                    output_parts.append(
+                        f"=== Промпт: {prompt_name} ===\n{prompt_content}\n"
+                    )
+                except Exception as e:
+                    print(f"Ошибка при чтении промпта {prompt_path}: {e}")
 
-        full_text = "\n".join(collected)
+        # Добавляем дерево, если чекбокс включен
+        if self.tree_var.get():
+            root_name = os.path.basename(self.project_path) + "/"
+            tree_output = f"=== Дерево проекта ===\n{root_name}\n{get_tree_structure(self.project_path).rstrip()}\n"
+            output_parts.append(tree_output)
 
-        # Копируем в буфер обмена
-        self.root.clipboard_clear()
-        self.root.clipboard_append(full_text)
-        self.root.update()
-
-        self.show_status(
-            f"Содержимое {len(self.selected_files)} файла(ов) скопировано в буфер обмена.",
-            "green",
-        )
-
-    def copy_tree(self):
-        """Копирует структуру дерева проекта в буфер обмена."""
-        root_name = os.path.basename(self.project_path) + "/"
-        tree_output = f"{root_name}\n{get_tree_structure(self.project_path).rstrip()}\n"
-        self.root.clipboard_clear()
-        self.root.clipboard_append(tree_output)
-        self.root.update()
-        self.show_status("Структура проекта скопирована в буфер обмена.", "green")
-
-    def copy_tree_and_files(self):
-        """Копирует дерево проекта + содержимое выбранных файлов."""
-        root_name = os.path.basename(self.project_path) + "/"
-        tree_output = f"{root_name}\n{get_tree_structure(self.project_path).rstrip()}\n"
-
-        if not self.selected_files:
-            full_output = tree_output
-        else:
+        # Добавляем содержимое файлов, если есть выбранные
+        if self.selected_files:
             files_content = []
             for item_id in self.selected_files:
                 data = self.tree_items[item_id]
@@ -394,16 +380,30 @@ class CodeCollectorApp:
                     files_content.append(f"=== {data['path']} ===\n{content}\n")
                 except Exception as e:
                     print(f"Ошибка при чтении {data['path']}: {e}")
-            files_text = "\n".join(files_content)
-            full_output = tree_output + "\n" + files_text
+            output_parts.append("\n".join(files_content))
 
+        if not output_parts:
+            self.show_status("Нечего копировать.", "red")
+            return
+
+        full_output = "\n".join(output_parts)
+
+        # Копируем в буфер обмена
         self.root.clipboard_clear()
         self.root.clipboard_append(full_output)
         self.root.update()
-        self.show_status(
-            f"Структура проекта + {len(self.selected_files)} файл(ов) скопированы в буфер обмена.",
-            "green",
-        )
+
+        # Формируем сообщение
+        parts_info = []
+        if prompt_name and prompt_name not in ["Выберите промпт", "Нет промптов"]:
+            parts_info.append("промпт")
+        if self.tree_var.get():
+            parts_info.append("дерево")
+        if self.selected_files:
+            parts_info.append(f"{len(self.selected_files)} файл(ов)")
+
+        if parts_info:
+            self.show_status(f"Скопировано: {', '.join(parts_info)}.", "green")
 
     def show_status(self, message, color):
         """
