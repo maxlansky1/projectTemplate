@@ -1898,6 +1898,20 @@ Rel(app, ext_db, &quot;Syncs data&quot;, &quot;Custom Protocol&quot;)
 <li><p><strong>Диаграмма классов (Class Diagram)</strong><br />
 Описывает структуру системы, показывая классы, их атрибуты, методы и связи.<br />
 Используется для проектирования архитектуры объектно-ориентированного ПО.</p>
+<p class="plantuml">
+<img src="../_images/plantuml-3d3ab91c4513d8b94387589582bc5e8914e8ef3e.svg" alt="   class User {
+     - name: String
+     - email: String
+     + login(): void
+   }
+
+   class Order {
+     - id: int
+     - date: Date
+     + calculateTotal(): double
+   }
+
+   User --&gt; Order : places"/></p>
 </li>
 <li><p><strong>Диаграмма объектов (Object Diagram)</strong><br />
 Показывает экземпляры классов и их связи в определённый момент времени.<br />
@@ -1905,14 +1919,46 @@ Rel(app, ext_db, &quot;Syncs data&quot;, &quot;Custom Protocol&quot;)
 <li><p><strong>Диаграмма компонентов (Component Diagram)</strong><br />
 Отображает компоненты системы и зависимости между ними.<br />
 Помогает понять, как организована архитектура на уровне модулей и библиотек.</p>
+<p class="plantuml">
+<img src="../_images/plantuml-5bc42e5f307833de7865df152ed8abe5cd3f71cb.svg" alt="   component &quot;User Service&quot; as US
+   component &quot;Order Service&quot; as OS
+   component &quot;Database&quot; as DB
+
+   US --&gt; OS
+   OS --&gt; DB"/></p>
 </li>
 <li><p><strong>Диаграмма развёртывания (Deployment Diagram)</strong><br />
 Показывает, как компоненты системы размещены на физических узлах (серверах, компьютерах).<br />
 Используется при проектировании инфраструктуры.</p>
+<p class="plantuml">
+<img src="../_images/plantuml-50c6e6e93c0494e763481910abacb9bb5579d306.svg" alt="   node &quot;Web Server&quot; {
+     component &quot;Frontend&quot;
+   }
+
+   node &quot;App Server&quot; {
+     component &quot;Backend&quot;
+   }
+
+   node &quot;DB Server&quot; {
+     component &quot;Database&quot;
+   }
+
+   Frontend --&gt; Backend
+   Backend --&gt; Database"/></p>
 </li>
 <li><p><strong>Диаграмма пакетов (Package Diagram)</strong><br />
 Представляет структуру системы в виде иерархии пакетов.<br />
 Полезна при логическом разделении кода.</p>
+<p class="plantuml">
+<img src="../_images/plantuml-d806778cc0166618cdd019a9c977a2a2b46c4e42.svg" alt="   package &quot;User Management&quot; {
+     class User
+   }
+
+   package &quot;Order Management&quot; {
+     class Order
+   }
+
+   User --&gt; Order"/></p>
 </li>
 <li><p><strong>Диаграмма профилей (Profile Diagram)</strong><br />
 Используется для расширения UML с помощью пользовательских стереотипов.<br />
@@ -1924,26 +1970,74 @@ Rel(app, ext_db, &quot;Syncs data&quot;, &quot;Custom Protocol&quot;)
 <li><p><strong>Диаграмма последовательности (Sequence Diagram)</strong><br />
 Показывает, как объекты взаимодействуют друг с другом в определённой временной последовательности.<br />
 Используется для моделирования сценариев использования.</p>
+<p class="plantuml">
+<img src="../_images/plantuml-81ab6cbefe2eaee4085b088b67b5810b61829c2b.svg" alt="   User -&gt; Browser : open page
+   Browser -&gt; Server : request data
+   Server -&gt; Database : query
+   Database --&gt; Server : result
+   Server --&gt; Browser : response
+   Browser --&gt; User : show page"/></p>
 </li>
 <li><p><strong>Диаграмма деятельности (Activity Diagram)</strong><br />
 Описывает поток выполнения процесса, включая параллельные и условные ветвления.<br />
 Аналогична блок-схеме, но более мощная и гибкая.</p>
+<p class="plantuml">
+<img src="../_images/plantuml-93b0a97dce16886f911c624a1cd8b8dd44fb2555.svg" alt="   start
+   :User enters login credentials;
+   if (Valid credentials?) then (yes)
+     :Grant access;
+     :Show dashboard;
+   else (no)
+     :Show error message;
+   endif
+   stop"/></p>
 </li>
 <li><p><strong>Диаграмма состояний (State Machine Diagram / State Diagram)</strong><br />
 Показывает, как объект изменяет своё состояние в ответ на события.<br />
 Полезна при моделировании жизненного цикла объекта или системы.</p>
+<p class="plantuml">
+<img src="../_images/plantuml-fd277fb23d7344ec1b5e042a5a01200b49ea4870.svg" alt="   [*] --&gt; Draft
+   Draft --&gt; Published : publish
+   Published --&gt; Archived : archive
+   Archived --&gt; [*]"/></p>
 </li>
 <li><p><strong>Диаграмма вариантов использования (Use Case Diagram)</strong><br />
 Описывает, как пользователи (акторы) взаимодействуют с системой.<br />
 Помогает определить функциональные требования к системе.</p>
+<p class="plantuml">
+<img src="../_images/plantuml-84c47a4368aa60d20ddcf613afede6ab25c942e1.svg" alt="   actor User
+   usecase &quot;Login&quot; as UC1
+   usecase &quot;View Profile&quot; as UC2
+   usecase &quot;Edit Profile&quot; as UC3
+
+   User --&gt; UC1
+   User --&gt; UC2
+   User --&gt; UC3"/></p>
 </li>
 <li><p><strong>Диаграмма коммуникации (Communication Diagram)</strong><br />
 Показывает взаимодействие между объектами с акцентом на связи.<br />
 Аналог диаграммы последовательности, но с другим акцентом.</p>
+<p class="plantuml">
+<img src="../_images/plantuml-453fbbc70b3564d9b7e2bdcb7fb79b92e8d4177c.svg" alt="   User : User
+   Browser : Browser
+   Server : Server
+
+   User -&gt; Browser : open page (1)
+   Browser -&gt; Server : request data (2)
+   Server -&gt; User : response (3)"/></p>
 </li>
 <li><p><strong>Диаграмма взаимодействия (Interaction Overview Diagram)</strong><br />
 Комбинирует элементы диаграмм деятельности и последовательности.<br />
 Подходит для описания сложных сценариев взаимодействия.</p>
+<p class="plantuml">
+<img src="../_images/plantuml-e24259a3cddefa2bca3f2c096ada1f0f236b59c2.svg" alt="   start
+   :User authentication;
+   if (Success?) then (yes)
+     :Show dashboard;
+   else (no)
+     :Show error;
+   endif
+   stop"/></p>
 </li>
 </ul>
 <h3 id="id8"><span class="section-number">4.2.2. </span>Недостатки UML<a class="headerlink" href="#id8" title="Ссылка на этот заголовок">¶</a></h3>
