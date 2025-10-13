@@ -1616,121 +1616,30 @@
 <h1 id="id1"><span class="section-number">3. </span>📝 Диаграммы в документации и проектировании<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
 <figure class="align-center">
 <p class="plantuml">
-<img src="../_images/plantuml-6a5f6cd69de4de64497462226b5de5134b0c08d9.svg" alt="&#64;startuml name projectTemplate
-!include template/C4_Container.puml
-
-!include template/tags.puml
-!include template/icons.puml
-!include template/relations.puml
-!include template/boundaries.puml
-
-skinparam defaultFontName &quot;Source Code Pro&quot;
-
-LAYOUT_TOP_DOWN()
-'LAYOUT_LEFT_RIGHT()
-
-' --- VPS ---
-Container_Boundary(VPS, &quot;VPS&quot;, $tags=&quot;infrastructure&quot;) {
-  Container_Ext(app_1, &quot;app&quot;, &quot;Контейнер&quot;, &quot;Приложение, развернутое в Docker на сервере&quot;, $tags=&quot;docker&quot;, $sprite=&quot;docker&quot;)
+<img src="../_images/plantuml-48c9e99ced877471b1d53ff1c2f44df53b66ed9d.svg" alt="&#64;startuml template
+class User {
+  +String name
+  +String email
+  +login()
+  +logout()
 }
 
-' --- GitHub ---
-Container_Boundary(GitHub, &quot;GitHub&quot;, $tags=&quot;external&quot;) {
-  Container_Ext(github_pages, &quot;GitHub Pages&quot;, &quot;Сервис&quot;, &quot;Для хостинга статической документации и сайта&quot;, $tags=&quot;docs&quot;, $sprite=&quot;github_badge&quot;)
-  Container_Ext(github_actions, &quot;GitHub Actions&quot;, &quot;CI/CD&quot;, &quot;Для автоматизации процессов сборки, тестирования и деплоя&quot;, $tags=&quot;ci&quot;, $sprite=&quot;github_badge&quot;)
-  Container_Ext(github_secrets, &quot;GitHub Secrets&quot;, &quot;Хранилище&quot;, &quot;Для безопасного хранения и управления секретами&quot;, $tags=&quot;config&quot;, $sprite=&quot;github_badge&quot;)
+class Post {
+  +String title
+  +String content
+  +publish()
 }
 
-' --- projectTemplate ---
-Container_Boundary(projectTemplate, &quot;projectTemplate&quot;, $tags=&quot;project&quot;) {
-
-  ' --- CI/CD ---
-  Container_Boundary(cicd, &quot;.github/&quot;, &quot;Workflows&quot;, $tags=&quot;ci-cd&quot;) {
-    Container(deploy_app, &quot;deploy_app.yml&quot;, &quot;YAML&quot;, &quot;Воркфлоу для автоматического деплоя&quot;, $tags=&quot;ci&quot;, $sprite=&quot;github_badge&quot;)
-    Container(deploy_docs, &quot;deploy_docs.yml&quot;, &quot;YAML&quot;, &quot;Воркфлоу для сборки документации&quot;, $tags=&quot;ci&quot;, $sprite=&quot;github_badge&quot;)
-    Container(makefile, &quot;Makefile&quot;, &quot;Автоматизация&quot;, &quot;&quot;, $tags=&quot;utils&quot;, $sprite=&quot;tools&quot;)
-  }
-
-  ' --- vscode ---
-  Container_Boundary(vscode, &quot;.vscode&quot;, &quot;VSCode&quot;, $tags=&quot;utility&quot;) {
-    Container(extensions_json, &quot;extensions.json&quot;, &quot;JSON&quot;, &quot;Расширения для VS Code&quot;, $tags=&quot;misc&quot;, $sprite=&quot;file&quot;)
-    Container(settings_json, &quot;settings.json&quot;, &quot;JSON&quot;, &quot;Настройки для VS Code&quot;, $tags=&quot;misc&quot;, $sprite=&quot;file&quot;)
-  }
-
-  ' --- docker ---
-  Container_Boundary(docker, &quot;Docker&quot;, &quot;Docker&quot;, $tags=&quot;utility&quot;) {
-    Container(dockerfile, &quot;Dockerfile&quot;, &quot;Файл&quot;, &quot;Инструкции для создания нового образа Docker&quot;, $tags=&quot;docker&quot;, $sprite=&quot;docker&quot;)
-    Container(docker_compose_yaml, &quot;docker-compose.yaml&quot;, &quot;Файл&quot;, &quot;Система сборки, запуска, управления контейнерами Docker&quot;, $tags=&quot;docker&quot;, $sprite=&quot;docker&quot;)
-    Container(dockerignore, &quot;.dockerignore&quot;, &quot;&quot;, &quot;Файлы и папки для игнора docker&quot;, $tags=&quot;misc&quot;, $sprite=&quot;file&quot;)
-  }
-
-  ' --- git ---
-  Container_Boundary(Git, &quot;.git&quot;, &quot;Git&quot;, $tags=&quot;utility&quot;) {
-    Container(gitignore, &quot;.gitignore&quot;, &quot;&quot;, &quot;Файлы и папки для игнора git&quot;, $tags=&quot;misc&quot;, $sprite=&quot;file&quot;)
-    Container(copier_yaml, &quot;copier.yaml&quot;, &quot;Файл&quot;, &quot;Позволяет обновлять проекты на основе шаблона&quot;, $tags=&quot;misc&quot;, $sprite=&quot;file&quot;)
-    Container(pre_commit, &quot;.pre-commit-config.yaml&quot;, &quot;Файл&quot;, &quot;Проверяет коммиты перед пушем&quot;, $tags=&quot;misc&quot;, $sprite=&quot;file&quot;)
-  }
-
-  ' --- env ---
-  Container_Boundary(ENV, &quot;env&quot;, &quot;Окружение&quot;, $tags=&quot;utility&quot;) {
-    Container(env, &quot;.env&quot;, &quot;Переменные окружения&quot;, $tags=&quot;config&quot;, $sprite=&quot;file&quot;)
-    Container(requirements_txt, &quot;requirements.txt&quot;, &quot;Файл&quot;, &quot;&quot;, $tags=&quot;misc&quot;, $sprite=&quot;file&quot;)
-  }
-
-  ' --- configs/ ---
-  Container_Boundary(configs, &quot;configs&quot;, &quot;Configs&quot;, $tags=&quot;utility&quot;) {
-    Container(config_py, &quot;config.py&quot;, &quot;Python&quot;, &quot;Модуль для конфигурации приложения&quot;, $tags=&quot;config&quot;, $sprite=&quot;python&quot;)
-  }
-
-  ' --- docs/ ---
-  Container_Boundary(docs, &quot;docs&quot;, &quot;Docs&quot;, $tags=&quot;project&quot;) {
-    Container(index_rst, &quot;index.rst&quot;, &quot;reST&quot;, &quot;Дерево документации&quot;, $tags=&quot;docs&quot;, $sprite=&quot;file&quot;)
-    Container(all_md, &quot;Файлы Markdown&quot;, &quot;Markdown&quot;, &quot;Файлы с описанием документации&quot;, $tags=&quot;docs&quot;, $sprite=&quot;file&quot;)
-    Container(conf_py, &quot;conf.py&quot;, &quot;Python&quot;, &quot;Настройки Sphinx&quot;, $tags=&quot;docs&quot;, $sprite=&quot;python&quot;)
-  }
-
-  ' --- src/ ---
-  Container_Boundary(src, &quot;src&quot;, &quot;Исходный код&quot;, $tags=&quot;project&quot;) {
-    Container(main_py, &quot;main.py&quot;, &quot;Python&quot;, &quot;Точка входа в приложение&quot;, $tags=&quot;code&quot;, $sprite=&quot;python&quot;)
-  }
-
-  ' --- utils ---
-  Container_Boundary(utils, &quot;utils&quot;, &quot;Утилиты&quot;, $tags=&quot;project&quot;) {
-    Container(logger_py, &quot;logger.py&quot;, &quot;Python&quot;, &quot;Модуль для записи логов приложения&quot;, $tags=&quot;utils&quot;, $sprite=&quot;python&quot;)
-  }
-
-  ' --- aux ---
-  Container_Boundary(aux, &quot;aux&quot;, &quot;Вспомогательные модули&quot;, $tags=&quot;project&quot;) {
-    Container(tests_folder, &quot;tests/&quot;, &quot;Папка&quot;, &quot;Модули для тестирования&quot;, $tags=&quot;tests&quot;, $sprite=&quot;folder_open&quot;)
-    Container(tools_folder, &quot;tools/&quot;, &quot;Папка&quot;, &quot;Вспомогательные модули&quot;, $tags=&quot;misc&quot;, $sprite=&quot;folder_open&quot;)
-  }
+class Comment {
+  +String text
+  +Date date
 }
 
-' ===== CI/CD Поток =====
-Rel(cicd, github_actions, &quot;Выполняет workflow&quot;, &quot;GitHub Runner&quot;, $tags=&quot;infrastructure&quot;)
-Rel(github_actions, app_1, &quot;Разворачивает приложение&quot;, &quot;SSH, Docker&quot;, $tags=&quot;infrastructure&quot;)
-Rel(github_actions, github_pages, &quot;Разворачивает документацию на&quot;, &quot;gh-pages branch&quot;, $tags=&quot;infrastructure&quot;)
-Rel(makefile, deploy_app, &quot;Автоматизация сборки&quot;, &quot;make build&quot;, $tags=&quot;infrastructure&quot;)
+User &quot;1&quot; -- &quot;many&quot; Post : creates &gt;
+Post &quot;1&quot; -- &quot;many&quot; Comment : has &gt;
 
-' ===== Docker и Развертывание =====
-Rel(deploy_app, dockerfile, &quot;Использует&quot;, &quot;&quot;, $tags=&quot;infrastructure&quot;)
-Rel(dockerignore, dockerfile, &quot;Исключает файлы&quot;, &quot;.dockerignore rules&quot;, $tags=&quot;infrastructure&quot;)
-Rel(dockerfile, env, &quot;Читает переменные окружения&quot;, &quot;&quot;, $tags=&quot;utility&quot;)
-Rel(docker_compose_yaml, dockerfile, &quot;Оркестрирует запуск&quot;, &quot;docker-compose up&quot;, $tags=&quot;infrastructure&quot;)
-Rel(dockerfile, requirements_txt, &quot;Устанавливает зависимости&quot;, &quot;RUN pip install&quot;, $tags=&quot;infrastructure&quot;)
-
-' ===== Разработка =====
-Rel(config_py, src, &quot;Настраивает приложение, управляет путями&quot;, &quot;class Config&quot;, $tags=&quot;calls&quot;)
-Rel(config_py, env, &quot;Читает переменные окружения&quot;, &quot;&quot;, $tags=&quot;utility&quot;)
-Rel(logger_py, src, &quot;Логирует приложение&quot;, &quot;Python import&quot;, $tags=&quot;utility&quot;)
-
-' ===== Документация =====
-Rel(conf_py, index_rst, &quot;Настраивает сборку документации&quot;, &quot;Python config&quot;, $tags=&quot;utility&quot;)
-Rel(index_rst, all_md, &quot;Включает в себя&quot;, &quot;reST includes&quot;, $tags=&quot;calls&quot;)
-
-SHOW_LEGEND()
-
-&#64;enduml"/></p>
+&#64;enduml
+"/></p>
 </figure>
 <ol class="arabic simple">
 <li><p>tags - работает</p></li>
