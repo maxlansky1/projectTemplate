@@ -245,28 +245,25 @@ class CodeCollectorApp:
 
         # Привязываем одинарный клик к переключению выбора файла
         self.tree.bind("<ButtonRelease-1>", self.on_item_click)
+        # Привязываем двойной клик для копирования дерева папки в буфер обмена
+        self.tree.bind("<Double-Button-1>", self.on_item_double_click)
 
+        # Привязываем горячие клавиши В КОНЦЕ, чтобы не перекрывались другими событиями
         # Привязываем горячую клавишу Ctrl+C к функции копирования
         self.root.bind_all(
             "<Control-c>", lambda event: self.copy_selected_to_clipboard()
         )
-
-        # Привязываем клавишу T (или t) для переключения чекбокса "Дерево"
+        # Также ловим Ctrl + физическая клавиша C/С (keycode 67 в русской раскладке)
+        self.root.bind_all("<Control-Key>", self.on_ctrl_key_press)
+        # Привязываем клавишу T (или Е, на той же физической клавише) для переключения чекбокса "Дерево"
         self.root.bind_all("<Key>", self.on_key_press)
 
-        # Отладка: ловим все события Ctrl + что-то
-        self.root.bind_all("<Control-Key>", self.on_ctrl_key_press)
-
     def on_ctrl_key_press(self, event):
-        print(
-            f"Ctrl + keysym: '{event.keysym}', keycode: {event.keycode}, char: '{event.char}'"
-        )
-        # Попробуем копировать, если keysym == 'c' (английская)
+        # Проверяем английскую раскладку
         if event.keysym == "c":
             self.copy_selected_to_clipboard()
-        # Попробуем проверить keycode для физической клавиши "C" (она же "С" в русской раскладке)
-        # Обычно keycode для "C" == 46 (в Windows)
-        elif event.keycode == 67:  # физическая клавиша C/С
+        # Проверяем русскую раскладку (если keycode == 67 — это физическая клавиша C/С)
+        elif event.keycode == 67:
             self.copy_selected_to_clipboard()
 
     def on_key_press(self, event):
@@ -275,7 +272,6 @@ class CodeCollectorApp:
         Переключает чекбокс "Дерево", если нажата T/t или Е/е.
         """
         char = event.char.lower()
-        # Проверяем, была ли нажата клавиша 't' или 'T' (независимо от регистра и раскладки)
         if char == "t" or char == "е":
             # Переключаем состояние чекбокса
             current_value = self.tree_var.get()
@@ -356,9 +352,9 @@ class CodeCollectorApp:
 
     def on_item_click(self, event):
         """
-        Обработчик клика по элементу дерева.
+        Обработчик одинарного клика по элементу дерева.
         Если клик по файлу — переключает выбор.
-        Если клик по папке — копирует дерево этой папки.
+        Если клик по папке — просто раскрывает/сворачивает.
         """
         item_id = self.tree.identify_row(event.y)
         if item_id not in self.tree_items:
@@ -377,7 +373,18 @@ class CodeCollectorApp:
                 self.selected_files.add(item_id)
                 self.tree.item(item_id, text=f"{self.tree.item(item_id, 'text')} [✓]")
 
-        elif item["type"] == "dir":
+    def on_item_double_click(self, event):
+        """
+        Обработчик двойного клика по элементу дерева.
+        Если клик по папке — копирует дерево этой папки в буфер обмена.
+        """
+        item_id = self.tree.identify_row(event.y)
+        if item_id not in self.tree_items:
+            return
+
+        item = self.tree_items[item_id]
+
+        if item["type"] == "dir":
             # Копируем дерево папки
             self.copy_single_dir_tree(item["path"])
 
