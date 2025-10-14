@@ -187,17 +187,21 @@ class CodeCollectorApp:
 
         ttk.Label(left_frame, text="📝 Промпт:").pack(anchor=tk.W)
         self.prompt_var = tk.StringVar()
+
+        # Создаём список значений: "Без промпта" + имена промптов
+        prompt_options = ["Без промпта"] + list(self.prompts.keys())
         self.prompt_combo = ttk.Combobox(
             left_frame,
             textvariable=self.prompt_var,
-            values=list(self.prompts.keys()),
+            values=prompt_options,
             state="readonly",
             width=25,
         )
-        if self.prompts:
-            self.prompt_combo.set("Выберите промпт")
-        else:
-            self.prompt_combo.set("Нет промптов")
+        # Устанавливаем "Без промпта" как значение по умолчанию
+        self.prompt_combo.set("Без промпта")
+
+        # Если промптов нет, всё равно показываем "Без промпта"
+        if not self.prompts:
             self.prompt_combo.config(state="disabled")
         self.prompt_combo.pack(pady=2)
 
@@ -242,6 +246,41 @@ class CodeCollectorApp:
         # Привязываем одинарный клик к переключению выбора файла
         self.tree.bind("<ButtonRelease-1>", self.on_item_click)
 
+        # Привязываем горячую клавишу Ctrl+C к функции копирования
+        self.root.bind_all(
+            "<Control-c>", lambda event: self.copy_selected_to_clipboard()
+        )
+
+        # Привязываем клавишу T (или t) для переключения чекбокса "Дерево"
+        self.root.bind_all("<Key>", self.on_key_press)
+
+        # Отладка: ловим все события Ctrl + что-то
+        self.root.bind_all("<Control-Key>", self.on_ctrl_key_press)
+
+    def on_ctrl_key_press(self, event):
+        print(
+            f"Ctrl + keysym: '{event.keysym}', keycode: {event.keycode}, char: '{event.char}'"
+        )
+        # Попробуем копировать, если keysym == 'c' (английская)
+        if event.keysym == "c":
+            self.copy_selected_to_clipboard()
+        # Попробуем проверить keycode для физической клавиши "C" (она же "С" в русской раскладке)
+        # Обычно keycode для "C" == 46 (в Windows)
+        elif event.keycode == 67:  # физическая клавиша C/С
+            self.copy_selected_to_clipboard()
+
+    def on_key_press(self, event):
+        """
+        Обработчик нажатия клавиш.
+        Переключает чекбокс "Дерево", если нажата T/t или Е/е.
+        """
+        char = event.char.lower()
+        # Проверяем, была ли нажата клавиша 't' или 'T' (независимо от регистра и раскладки)
+        if char == "t" or char == "е":
+            # Переключаем состояние чекбокса
+            current_value = self.tree_var.get()
+            self.tree_var.set(not current_value)
+
     def populate_tree(self):
         """
         Заполняет дерево файлами и папками из проекта.
@@ -274,6 +313,17 @@ class CodeCollectorApp:
                 self.tree.item(item_id, text=f"{self.tree.item(item_id, 'text')} [✓]")
 
         self.show_status("Дерево обновлено.", "green")
+
+    def copy_single_dir_tree(self, dir_path):
+        """
+        Копирует дерево структуры указанной директории в буфер обмена.
+        """
+        dir_name = os.path.basename(dir_path) + "/"
+        tree_output = f"{dir_name}\n{get_tree_structure(dir_path).rstrip()}\n"
+        self.root.clipboard_clear()
+        self.root.clipboard_append(tree_output)
+        self.root.update()
+        self.show_status(f"Дерево папки '{dir_name}' скопировано в буфер.", "green")
 
     def _add_directory_contents(self, parent, path):
         """
@@ -308,6 +358,7 @@ class CodeCollectorApp:
         """
         Обработчик клика по элементу дерева.
         Если клик по файлу — переключает выбор.
+        Если клик по папке — копирует дерево этой папки.
         """
         item_id = self.tree.identify_row(event.y)
         if item_id not in self.tree_items:
@@ -325,6 +376,10 @@ class CodeCollectorApp:
             else:
                 self.selected_files.add(item_id)
                 self.tree.item(item_id, text=f"{self.tree.item(item_id, 'text')} [✓]")
+
+        elif item["type"] == "dir":
+            # Копируем дерево папки
+            self.copy_single_dir_tree(item["path"])
 
     def clear_all_selections(self):
         """
@@ -345,13 +400,9 @@ class CodeCollectorApp:
         """
         output_parts = []
 
-        # Добавляем промпт, если выбран
+        # Добавляем промпт, если выбран и не равен "Без промпта"
         prompt_name = self.prompt_var.get()
-        if (
-            prompt_name
-            and prompt_name != "Выберите промпт"
-            and prompt_name != "Нет промптов"
-        ):
+        if prompt_name and prompt_name != "Без промпта":
             prompt_path = self.prompts.get(prompt_name)
             if prompt_path:
                 try:
@@ -395,7 +446,7 @@ class CodeCollectorApp:
 
         # Формируем сообщение
         parts_info = []
-        if prompt_name and prompt_name not in ["Выберите промпт", "Нет промптов"]:
+        if prompt_name and prompt_name != "Без промпта":
             parts_info.append("промпт")
         if self.tree_var.get():
             parts_info.append("дерево")
