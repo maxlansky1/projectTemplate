@@ -15,6 +15,7 @@ sphinx-intl
 sphinxcontrib-plantuml
 sphinx-immaterial
 sphinx-togglebutton
+autodoc_pydantic
 myst-parser
 
 # Управление шаблоном проекта
