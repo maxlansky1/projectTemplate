@@ -2,6 +2,7 @@
 Основная конфигурация приложения с использованием Pydantic 2.
 """
 
+import os
 from typing import ClassVar, Optional
 
 from configs.schemas.ai import (
@@ -99,5 +100,10 @@ class AppSettings(BaseConfig):
         return sanitize_dict(dump)
 
 
-# Создаем экземпляр для импорта
-settings = AppSettings.get_instance()
+# НЕ инстанцируем при сборке Sphinx
+if os.environ.get("SPHINX_BUILD") is None:
+    # нормальное поведение в runtime
+    settings = AppSettings.get_instance()
+else:
+    # во время сборки документации — либо None, либо ленивый мок / пустой объект
+    settings = None

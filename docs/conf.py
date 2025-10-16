@@ -19,6 +19,9 @@ sys.path.insert(0, project_root)
 # Отладка для системного пути
 # print(f"[DEBUG] Adding to sys.path: {project_root}")
 
+# Переменная окружения: флаг сборки документации
+os.environ["SPHINX_BUILD"] = "1"
+
 # Информация о проекте для документации
 project = "projectTemplate"
 copyright = "2025, maxlansky"
@@ -58,6 +61,7 @@ extensions = [
     "sphinx.ext.autodoc",  # автодока из docstring'ов
     "sphinx.ext.viewcode",  # ссылки на исходники
     "sphinx.ext.napoleon",  # Google/NumPy стиль docstring'ов
+    "sphinxcontrib.autodoc_pydantic",  # Улучшенная работа с Pydantic
     # === Утилиты и вспомогательные расширения ===
     "sphinx.ext.coverage",  # проверяет покрытие документации
     "sphinx_copybutton",  # добавляет кнопку скопировать код в документацию
@@ -94,9 +98,24 @@ autodoc_member_order = "bysource"
 # Включать docstring класса + __init__ метода
 autoclass_content = "both"
 # Формат типов - короткий (чище выглядит)
-autodoc_typehints_format = "short"
+# autodoc_typehints_format = "short"
 # Отображение типов в описании (удобнее для чтения)
-autodoc_typehints = "description"
+# autodoc_typehints = "description"
+
+# === Настройки autodoc-pydantic ===
+autodoc_pydantic_model_show_json = True
+autodoc_pydantic_model_show_config_summary = False
+autodoc_pydantic_model_members = False  # <-- КРИТИЧЕСКИ ВАЖНО
+autodoc_pydantic_model_undoc_members = False
+autodoc_pydantic_model_show_validator_members = False
+autodoc_pydantic_model_show_field_summary = False
+autodoc_pydantic_model_show_validator_summary = False
+autodoc_pydantic_model_show_json_error_strategy = "coerce"  # Или "warn", но не "raise"
+autodoc_pydantic_field_list_validators = False
+autodoc_pydantic_config_members = False
+autodoc_pydantic_model_hide_paramlist = True  # <-- КРИТИЧЕСКИ ВАЖНО
+autodoc_pydantic_model_hide_reused_validator = True
+# autodoc_pydantic_model_member_order = "groupwise"
 
 # === Настройки sphinx.ext.napoleon ===
 napoleon_google_docstring = True
