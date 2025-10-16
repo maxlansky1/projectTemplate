@@ -6,6 +6,11 @@
    :align: center
 ```
 
+```{uml} ../../diagrams/template_diagram.puml
+   :scale: 50 %
+   :align: center
+```
+
 
 1. tags - работает
 2. icons - работает
