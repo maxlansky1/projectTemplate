@@ -307,7 +307,7 @@ docs/
 ```
 
 ```{eval-rst}
-.. uml:: ../../projectTemplate/diagrams/doc_schema.puml
+.. uml:: ../../diagrams/doc_schema.puml
    :scale: 50 %
    :align: center
 ```
@@ -323,9 +323,9 @@ docs/
 ```{eval-rst}
 .. toggle:: Показать
 
-   .. literalinclude:: ../docs/index.rst
+   .. literalinclude:: ../../docs/index.rst
       :language: rst
-      :caption: docs/index.rst
+      :caption: index.rst
 ```
 
 ### `conf.py`
@@ -335,7 +335,7 @@ docs/
 ```{eval-rst}
 .. toggle:: Показать
 
-   .. literalinclude:: ../docs/conf.py
+   .. literalinclude:: ../../docs/conf.py
       :language: python
 
 ```
@@ -374,11 +374,11 @@ docs/
 ```{eval-rst}
 .. toggle:: Показать структуру
 
-   .. literalinclude:: ../docs/_static/custom.css
+   .. literalinclude:: ../../docs/_static/custom.css
       :language: css
       :caption: docs/_static/custom.css
 
-   .. literalinclude:: ../docs/_static/custom.js
+   .. literalinclude:: ../../docs/_static/custom.js
       :language: javascript
       :caption: docs/_static/custom.js
 ```
@@ -394,11 +394,11 @@ docs/
 ```{eval-rst}
 .. toggle:: Показать
 
-   .. literalinclude:: ../docs/Makefile
+   .. literalinclude:: ../../docs/Makefile
       :language: make
       :caption: docs/Makefile
 
-   .. literalinclude:: ../docs/make.bat
+   .. literalinclude:: ../../docs/make.bat
       :language: batch
       :caption: docs/make.bat
 ```

@@ -51,7 +51,7 @@ SQLite — это **встраиваемая** реляционная база �
 ```
 
 ```{eval-rst}
-.. uml:: ../../projectTemplate/diagrams/database_schema.puml
+.. uml:: ../../diagrams/database_schema.puml
    :scale: 50 %
    :align: center
 ```
@@ -73,7 +73,7 @@ SQLite — это **встраиваемая** реляционная база �
 ```{eval-rst}
 .. toggle:: Показать
 
-   .. literalinclude:: ../configs/schemas/database.py
+   .. literalinclude:: ../../configs/schemas/database.py
       :language: python
       :caption: configs/schemas/database.py
 ```
@@ -83,7 +83,7 @@ SQLite — это **встраиваемая** реляционная база �
 ```{eval-rst}
 .. toggle:: Показать
 
-   .. literalinclude:: ../configs/settings.py
+   .. literalinclude:: ../../configs/settings.py
       :language: python
       :caption: configs/settings.py
 ```
@@ -134,7 +134,7 @@ SQLAlchemy — это мощная **ORM-библиотека** для Python. �
 В шаблоне используются следующие ключевые компоненты SQLAlchemy, определённые в `src/databases/sqlite/core.py`:
 
 ```{eval-rst}
-.. uml:: ../../projectTemplate/diagrams/sqlite_core.puml
+.. uml:: ../../diagrams/sqlite_core.puml
    :scale: 10%
    :align: center
 ```
@@ -142,7 +142,7 @@ SQLAlchemy — это мощная **ORM-библиотека** для Python. �
 ```{eval-rst}
 .. toggle:: Показать
 
-   .. literalinclude:: ../src/databases/sqlite/core.py
+   .. literalinclude:: ../../src/databases/sqlite/core.py
       :language: python
       :caption: src/databases/sqlite/core.py
 ```
@@ -234,7 +234,7 @@ SQLAlchemy — это мощная **ORM-библиотека** для Python. �
 ORM (Object-Relational Mapping) — это **способ описания таблиц базы данных** как **Python-классов**, а **строк в таблице** — как **объектов этих классов**.  
 
 ```{eval-rst}
-.. uml:: ../../projectTemplate/diagrams/orm.puml
+.. uml:: ../../diagrams/orm.puml
    :scale: 10%
    :align: center
 ```
@@ -259,7 +259,7 @@ ORM (Object-Relational Mapping) — это **способ описания та�
 ```{eval-rst}
 .. toggle:: Показать
 
-   .. literalinclude:: ../src/databases/sqlite/models/base.py
+   .. literalinclude:: ../../src/databases/sqlite/models/base.py
       :language: python
       :caption: src/databases/sqlite/models/base.py
 ```
@@ -275,7 +275,7 @@ ORM (Object-Relational Mapping) — это **способ описания та�
 ```{eval-rst}
 .. toggle:: Показать
 
-   .. literalinclude:: ../src/databases/sqlite/models/user.py
+   .. literalinclude:: ../../src/databases/sqlite/models/user.py
       :language: python
       :caption: src/databases/sqlite/models/user.py
 ```
@@ -646,7 +646,7 @@ Pydantic — это мощная **библиотека валидации да�
 В шаблоне все Pydantic-схемы, связанные с SQLite, определены в папке `src/databases/sqlite/schemas/`. Каждая сущность (например, `User`) имеет свой файл схем (например, `user.py`), содержащий разные схемы для разных целей (валидация создания, обновления, сериализация ответа).
 
 ```{eval-rst}
-.. uml:: ../../projectTemplate/diagrams/pydantic_orm.puml
+.. uml:: ../../diagrams/pydantic_orm.puml
    :scale: 10%
    :align: center
 ```
@@ -654,7 +654,7 @@ Pydantic — это мощная **библиотека валидации да�
 ```{eval-rst}
 .. toggle:: Показать
 
-   .. literalinclude:: ../src/databases/sqlite/schemas/user.py
+   .. literalinclude:: ../../src/databases/sqlite/schemas/user.py
       :language: python
       :caption: src/databases/sqlite/schemas/user.py
 ```
@@ -700,7 +700,7 @@ Pydantic — это мощная **библиотека валидации да�
 DAO (Data Access Object) — это **архитектурный паттерн**, который **абстрагирует** работу с базой данных от **бизнес-логики** приложения.
 
 ```{eval-rst}
-.. uml:: ../../projectTemplate/diagrams/dao.puml
+.. uml:: ../../diagrams/dao.puml
    :scale: 10%
    :align: center
 ```
@@ -749,7 +749,7 @@ DAO (Data Access Object) — это **архитектурный паттерн*
 ```{eval-rst}
 .. toggle:: Показать
 
-   .. literalinclude:: ../src/databases/dao/user_dao.py
+   .. literalinclude:: ../../src/databases/dao/user_dao.py
       :language: python
       :caption: src/databases/dao/user_dao.py
 ```
@@ -1668,7 +1668,7 @@ Alembic — это **инструмент управления схемой ба
 ```{eval-rst}
 .. toggle:: Показать
 
-   .. literalinclude:: ../alembic/env.py
+   .. literalinclude:: ../../alembic/env.py
       :language: python
       :caption: alembic/env.py
 ```

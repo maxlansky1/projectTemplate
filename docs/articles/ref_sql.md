@@ -4,20 +4,16 @@
 
 ## Конфигурация
 
-### Схемы БД
-
-```{eval-rst}
-.. literalinclude:: ../../configs/schemas/database.py
-   :language: python
-   :caption: Настройки баз данных
-```
-
 ### Основные настройки
 
 ```{eval-rst}
-.. literalinclude:: ../../configs/settings.py
-   :language: python
-   :caption: Основные настройки приложения
+.. autopydantic_model:: configs.settings.AppSettings
+```
+
+### Схемы БД
+
+```{eval-rst}
+.. autopydantic_model:: configs.schemas.database.SQLiteSettings
 ```
 
 ## SQLAlchemy (Core/Models)
@@ -25,9 +21,7 @@
 ### Core (Движок, Сессия, Декоратор)
 
 ```{eval-rst}
-.. literalinclude:: ../../src/databases/sqlite/core.py
-   :language: python
-   :caption: Core (Движок и сессия)
+.. automodule:: src.databases.sqlite.core
 ```
 
 ### Базовая модель
@@ -94,7 +88,7 @@ alembic.ini         # основная конфигурация Alembic
 Файл `.\alembic.ini` находится в **корне проекта** и содержит основную конфигурацию для Alembic, включая расположение скриптов, настройки пути Python и логирования. URL базы данных задаётся в `env.py`, но может быть определён и здесь.
 
 ```{eval-rst}
-.. literalinclude:: alembic.ini
+.. literalinclude:: ../../alembic.ini
    :language: text
    :caption: alembic.ini
 ```

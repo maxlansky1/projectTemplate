@@ -8,6 +8,9 @@
 import os
 import sys
 
+# Переменная окружения: флаг сборки документации
+os.environ["SPHINX_BUILD"] = "1"
+
 # Добавляет родительскую директорию в системный путь, чтобы Sphinx мог найти исходные модули
 # Получаем путь к корню проекта и
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -18,9 +21,6 @@ sys.path.insert(0, project_root)
 
 # Отладка для системного пути
 # print(f"[DEBUG] Adding to sys.path: {project_root}")
-
-# Переменная окружения: флаг сборки документации
-os.environ["SPHINX_BUILD"] = "1"
 
 # Информация о проекте для документации
 project = "projectTemplate"
@@ -81,17 +81,12 @@ extensions = [
 autodoc_default_options = {
     "members": True,  # Показывать публичные элементы
     "undoc-members": True,  # Показывать недокументированные члены (а не скрывать!)
-    "private-members": True,  # Показывать приватные методы (_method) (а не скрывать!)
-    "special-members": True,  # Показывать специальные методы (__init__, __str__) (а не скрывать!)
-    "inherited-members": True,  # Показывать унаследованные методы
+    "private-members": False,  # Показывать приватные методы (_method) (а не скрывать!)
+    "special-members": False,  # Показывать специальные методы (__init__, __str__) (а не скрывать!)
+    "inherited-members": False,  # Показывать унаследованные методы
     "show-inheritance": True,  # Показывать иерархию наследования
     "exclude-members": "__weakref__",  # Исключить конкретные элементы
 }
-
-# Настройка mock для autodoc - рекурсивно мокает все подмодули и классы (временно отключено)
-# autodoc_mock_imports = [
-#     'configs',
-# ]
 
 # Порядок элементов по исходному коду (естественнее для чтения)
 autodoc_member_order = "bysource"
@@ -105,17 +100,11 @@ autoclass_content = "both"
 # === Настройки autodoc-pydantic ===
 autodoc_pydantic_model_show_json = True
 autodoc_pydantic_model_show_config_summary = False
-autodoc_pydantic_model_members = False  # <-- КРИТИЧЕСКИ ВАЖНО
-autodoc_pydantic_model_undoc_members = False
-autodoc_pydantic_model_show_validator_members = False
-autodoc_pydantic_model_show_field_summary = False
 autodoc_pydantic_model_show_validator_summary = False
-autodoc_pydantic_model_show_json_error_strategy = "coerce"  # Или "warn", но не "raise"
+# autodoc_pydantic_model_erdantic_figure = True
+# autodoc_pydantic_model_erdantic_figure_collapsed = True
 autodoc_pydantic_field_list_validators = False
-autodoc_pydantic_config_members = False
-autodoc_pydantic_model_hide_paramlist = True  # <-- КРИТИЧЕСКИ ВАЖНО
-autodoc_pydantic_model_hide_reused_validator = True
-# autodoc_pydantic_model_member_order = "groupwise"
+
 
 # === Настройки sphinx.ext.napoleon ===
 napoleon_google_docstring = True
