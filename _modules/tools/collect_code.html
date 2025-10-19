@@ -39,6 +39,7 @@
       
     
         <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.acf80fe7f4d9ef9e2.min.css?v=9e56d0d2" />
+        <link rel="stylesheet" type="text/css" href="../../_static/autodoc_pydantic.css" />
         <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
         <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
@@ -1413,8 +1414,6 @@
 <span class="sd">    Использует Tkinter для отображения дерева файлов.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="CodeCollectorApp.__init__">
-<a class="viewcode-back" href="../../articles/ref_tools.html#tools.collect_code.CodeCollectorApp.__init__">[документация]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">project_path</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Инициализация главного окна приложения.</span>
@@ -1428,8 +1427,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">tree_items</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># словарь: item_id -&gt; {&#39;path&#39;, &#39;type&#39;}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">prompts</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># словарь: имя_файла -&gt; путь</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setup_prompts</span><span class="p">()</span>  <span class="c1"># ищем промпты</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setup_ui</span><span class="p">()</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">setup_ui</span><span class="p">()</span>
 
 <div class="viewcode-block" id="CodeCollectorApp.setup_prompts">
 <a class="viewcode-back" href="../../articles/ref_tools.html#tools.collect_code.CodeCollectorApp.setup_prompts">[документация]</a>
@@ -1632,8 +1630,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">show_status</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Дерево папки &#39;</span><span class="si">{</span><span class="n">dir_name</span><span class="si">}</span><span class="s2">&#39; скопировано в буфер.&quot;</span><span class="p">,</span> <span class="s2">&quot;green&quot;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="CodeCollectorApp._add_directory_contents">
-<a class="viewcode-back" href="../../articles/ref_tools.html#tools.collect_code.CodeCollectorApp._add_directory_contents">[документация]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">_add_directory_contents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Рекурсивно добавляет содержимое директории в дерево.</span>
@@ -1661,8 +1657,7 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">tree_items</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">entry_path</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;file&quot;</span><span class="p">}</span>
 
         <span class="k">except</span> <span class="ne">PermissionError</span><span class="p">:</span>
-            <span class="k">pass</span>  <span class="c1"># Игнорируем папки, к которым нет доступа</span></div>
-
+            <span class="k">pass</span>  <span class="c1"># Игнорируем папки, к которым нет доступа</span>
 
 <div class="viewcode-block" id="CodeCollectorApp.on_item_click">
 <a class="viewcode-back" href="../../articles/ref_tools.html#tools.collect_code.CodeCollectorApp.on_item_click">[документация]</a>

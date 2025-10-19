@@ -43,6 +43,7 @@
       
     
         <link rel="stylesheet" type="text/css" href="../_static/sphinx_immaterial_theme.acf80fe7f4d9ef9e2.min.css?v=9e56d0d2" />
+        <link rel="stylesheet" type="text/css" href="../_static/autodoc_pydantic.css" />
         <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
         <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
@@ -1808,7 +1809,6 @@
    articles/ref_tools
    articles/ref_logger
    articles/ref_sql
-   articles/glossary
    articles/c4_plantuml
    articles/recommendations
 </code></pre></div>
@@ -1961,6 +1961,9 @@ popd
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 
+<span class="c1"># Переменная окружения: флаг сборки документации</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;SPHINX_BUILD&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+
 <span class="c1"># Добавляет родительскую директорию в системный путь, чтобы Sphinx мог найти исходные модули</span>
 <span class="c1"># Получаем путь к корню проекта и</span>
 <span class="n">project_root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;..&quot;</span><span class="p">))</span>
@@ -2011,6 +2014,7 @@ popd
     <span class="s2">&quot;sphinx.ext.autodoc&quot;</span><span class="p">,</span>  <span class="c1"># автодока из docstring&#39;ов</span>
     <span class="s2">&quot;sphinx.ext.viewcode&quot;</span><span class="p">,</span>  <span class="c1"># ссылки на исходники</span>
     <span class="s2">&quot;sphinx.ext.napoleon&quot;</span><span class="p">,</span>  <span class="c1"># Google/NumPy стиль docstring&#39;ов</span>
+    <span class="s2">&quot;sphinxcontrib.autodoc_pydantic&quot;</span><span class="p">,</span>  <span class="c1"># Улучшенная работа с Pydantic</span>
     <span class="c1"># === Утилиты и вспомогательные расширения ===</span>
     <span class="s2">&quot;sphinx.ext.coverage&quot;</span><span class="p">,</span>  <span class="c1"># проверяет покрытие документации</span>
     <span class="s2">&quot;sphinx_copybutton&quot;</span><span class="p">,</span>  <span class="c1"># добавляет кнопку скопировать код в документацию</span>
@@ -2030,26 +2034,30 @@ popd
 <span class="n">autodoc_default_options</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;members&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># Показывать публичные элементы</span>
     <span class="s2">&quot;undoc-members&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># Показывать недокументированные члены (а не скрывать!)</span>
-    <span class="s2">&quot;private-members&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># Показывать приватные методы (_method) (а не скрывать!)</span>
-    <span class="s2">&quot;special-members&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># Показывать специальные методы (__init__, __str__) (а не скрывать!)</span>
-    <span class="s2">&quot;inherited-members&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># Показывать унаследованные методы</span>
+    <span class="s2">&quot;private-members&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>  <span class="c1"># Показывать приватные методы (_method) (а не скрывать!)</span>
+    <span class="s2">&quot;special-members&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>  <span class="c1"># Показывать специальные методы (__init__, __str__) (а не скрывать!)</span>
+    <span class="s2">&quot;inherited-members&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>  <span class="c1"># Показывать унаследованные методы</span>
     <span class="s2">&quot;show-inheritance&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># Показывать иерархию наследования</span>
     <span class="s2">&quot;exclude-members&quot;</span><span class="p">:</span> <span class="s2">&quot;__weakref__&quot;</span><span class="p">,</span>  <span class="c1"># Исключить конкретные элементы</span>
 <span class="p">}</span>
-
-<span class="c1"># Настройка mock для autodoc - рекурсивно мокает все подмодули и классы (временно отключено)</span>
-<span class="c1"># autodoc_mock_imports = [</span>
-<span class="c1">#     &#39;configs&#39;,</span>
-<span class="c1"># ]</span>
 
 <span class="c1"># Порядок элементов по исходному коду (естественнее для чтения)</span>
 <span class="n">autodoc_member_order</span> <span class="o">=</span> <span class="s2">&quot;bysource&quot;</span>
 <span class="c1"># Включать docstring класса + __init__ метода</span>
 <span class="n">autoclass_content</span> <span class="o">=</span> <span class="s2">&quot;both&quot;</span>
 <span class="c1"># Формат типов - короткий (чище выглядит)</span>
-<span class="n">autodoc_typehints_format</span> <span class="o">=</span> <span class="s2">&quot;short&quot;</span>
+<span class="c1"># autodoc_typehints_format = &quot;short&quot;</span>
 <span class="c1"># Отображение типов в описании (удобнее для чтения)</span>
-<span class="n">autodoc_typehints</span> <span class="o">=</span> <span class="s2">&quot;description&quot;</span>
+<span class="c1"># autodoc_typehints = &quot;description&quot;</span>
+
+<span class="c1"># === Настройки autodoc-pydantic ===</span>
+<span class="n">autodoc_pydantic_model_show_json</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">autodoc_pydantic_model_show_config_summary</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">autodoc_pydantic_model_show_validator_summary</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="c1"># autodoc_pydantic_model_erdantic_figure = True</span>
+<span class="c1"># autodoc_pydantic_model_erdantic_figure_collapsed = True</span>
+<span class="n">autodoc_pydantic_field_list_validators</span> <span class="o">=</span> <span class="kc">False</span>
+
 
 <span class="c1"># === Настройки sphinx.ext.napoleon ===</span>
 <span class="n">napoleon_google_docstring</span> <span class="o">=</span> <span class="kc">True</span>

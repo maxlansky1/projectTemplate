@@ -43,6 +43,7 @@
       
     
         <link rel="stylesheet" type="text/css" href="../_static/sphinx_immaterial_theme.acf80fe7f4d9ef9e2.min.css?v=9e56d0d2" />
+        <link rel="stylesheet" type="text/css" href="../_static/autodoc_pydantic.css" />
         <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
         <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
@@ -3352,6 +3353,124 @@
 └── ...               # Другие файлы документации
 </code></pre></div>
 </div>
+<figure class="align-center">
+<p class="plantuml">
+<img src="../_images/plantuml-7171a680cdc0d413f184a8899572939c76a65214.svg" alt="&#64;startuml sphinx_workflow_explained_with_chapter_and_extensions_group_and_build_script
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml 
+
+' --- Дополнительные определения и стили ---
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/main/icons/devicons
+!define ICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+
+!include DEVICONS/python.puml
+!include DEVICONS/terminal.puml
+!include DEVICONS/javascript.puml
+!include DEVICONS/css3.puml
+!include DEVICONS/html5.puml
+
+!include ICONS/file.puml
+!include ICONS/folder.puml
+!include ICONS/markdown.puml
+
+skinparam defaultFontName &quot;Source Code Pro&quot;
+skinparam defaultFontSize 12
+skinparam defaultTextAlignment center
+skinparam rectangle {
+    FontStyle bold
+    FontColor black
+}
+skinparam arrow {
+    FontColor black
+}
+
+' Яркие стили для тегов
+AddElementTag(&quot;source&quot;, $bgColor=&quot;#FFD43B&quot;, $fontColor=&quot;black&quot;, $borderColor=&quot;#d4a72c&quot;)
+AddElementTag(&quot;config&quot;, $bgColor=&quot;#FF6B6B&quot;, $fontColor=&quot;white&quot;, $borderColor=&quot;#ff2e2e&quot;)
+AddElementTag(&quot;build_artifact&quot;, $bgColor=&quot;#69db7c&quot;, $fontColor=&quot;black&quot;, $borderColor=&quot;#2b8a3e&quot;)
+AddElementTag(&quot;tool&quot;, $bgColor=&quot;#ff922b&quot;, $fontColor=&quot;black&quot;, $borderColor=&quot;#e8590c&quot;)
+AddElementTag(&quot;theme&quot;, $bgColor=&quot;#E599F7&quot;, $fontColor=&quot;black&quot;, $borderColor=&quot;#c16eaf&quot;)
+AddElementTag(&quot;extension&quot;, $bgColor=&quot;#845EF7&quot;, $fontColor=&quot;white&quot;, $borderColor=&quot;#5c3bb7&quot;)
+AddElementTag(&quot;static&quot;, $bgColor=&quot;#adb5bd&quot;, $fontColor=&quot;black&quot;, $borderColor=&quot;#495057&quot;)
+AddElementTag(&quot;script&quot;, $bgColor=&quot;#74C0FC&quot;, $fontColor=&quot;black&quot;, $borderColor=&quot;#339af0&quot;)
+
+LAYOUT_TOP_DOWN()
+hide stereotype
+
+' --- Основной контейнер проекта ---
+System_Boundary(docs_project, &quot;Директория docs/&quot;, $tags=&quot;folder&quot;) {
+
+  ' --- Главы ---
+  Container_Boundary(chapter_example, &quot;Разделы документации&quot;, &quot;Условный файл главы&quot;, $tags=&quot;source&quot;) {
+    Container(chapter_md, &quot;chapter.md&quot;, &quot;Markdown&quot;, &quot;Раздел документации&quot;, $tags=&quot;source&quot;, $sprite=&quot;markdown&quot;)
+    Container(index_rst, &quot;index.rst&quot;, &quot;reStructuredText&quot;, &quot;Содержит разделы (rst дерево)&quot;, $tags=&quot;source&quot;, $sprite=&quot;file&quot;)
+  }
+
+  ' --- Конфигурация Sphinx ---
+  Container(conf_py, &quot;conf.py&quot;, &quot;Python&quot;, &quot;Конфигурация Sphinx&quot;, $tags=&quot;config&quot;, $sprite=&quot;python&quot;)
+
+  ' --- Статические файлы ---
+  Container_Boundary(static, &quot;_static/&quot;, &quot;Статические файлы&quot;, $tags=&quot;static&quot;) {
+    Container(custom_css, &quot;custom.css&quot;, &quot;CSS&quot;, &quot;Кастомные стили&quot;, $tags=&quot;static&quot;, $sprite=&quot;css3&quot;)
+    Container(custom_js, &quot;custom.js&quot;, &quot;JavaScript&quot;, &quot;Кастомная логика&quot;, $tags=&quot;static&quot;, $sprite=&quot;javascript&quot;)
+  }
+
+  ' --- Шаблоны (редко используется) ---
+  Container(templates, &quot;_templates/&quot;, &quot;Папка&quot;, &quot;Шаблоны Sphinx&quot;, $tags=&quot;folder&quot;, $sprite=&quot;folder&quot;)
+
+  ' --- Единый контейнер для скриптов сборки ---
+  Container(build_script, &quot;Build Script&quot;, &quot;Makefile / make.bat&quot;, &quot;Скрипты сборки&quot;, $tags=&quot;script&quot;, $sprite=&quot;terminal&quot;)
+
+  ' --- Промежуточные и финальные артефакты ---
+  Container_Boundary(build, &quot;_build/&quot;, &quot;Артефакты сборки&quot;, $tags=&quot;build_artifact&quot;) {
+    Container_Boundary(doctrees, &quot;doctrees/&quot;, &quot;Промежуточные файлы&quot;, $tags=&quot;build_artifact&quot;) {
+      Container(index_doctree, &quot;index.doctree&quot;, &quot;Sphinx Internal&quot;, &quot;AST для index.rst&quot;, $tags=&quot;build_artifact&quot;, $sprite=&quot;file&quot;)
+      Container(chapter_doctree, &quot;chapter.doctree&quot;, &quot;Sphinx Internal&quot;, &quot;AST для chapter.md&quot;, $tags=&quot;build_artifact&quot;, $sprite=&quot;file&quot;)
+    }
+
+    Container_Boundary(html_output, &quot;html/&quot;, &quot;Сгенерированный HTML&quot;, $tags=&quot;build_artifact&quot;) {
+      Container(index_html, &quot;index.html&quot;, &quot;HTML&quot;, &quot;Главная страница&quot;, $tags=&quot;build_artifact&quot;, $sprite=&quot;html5&quot;)
+      Container(chapter_html, &quot;chapter.html&quot;, &quot;HTML&quot;, &quot;Страница главы&quot;, $tags=&quot;build_artifact&quot;, $sprite=&quot;html5&quot;)
+      Container(css_output, &quot;custom.css&quot;, &quot;CSS&quot;, &quot;Копия из _static&quot;, $tags=&quot;build_artifact&quot;, $sprite=&quot;css3&quot;)
+      Container(js_output, &quot;custom.js&quot;, &quot;JavaScript&quot;, &quot;Копия из _static&quot;, $tags=&quot;build_artifact&quot;, $sprite=&quot;javascript&quot;)
+    }
+  }
+}
+
+' --- Группа расширений ---
+Container_Boundary(extensions_group, &quot;Sphinx&quot;, $tags=&quot;extension&quot;) {
+  Container(sphinx_tool, &quot;Sphinx&quot;, &quot;Инструмент генерации&quot;, $tags=&quot;tool&quot;)
+  Container(other_ext, &quot;Расширения&quot;, &quot;autodoc, plantuml, ...&quot;, $tags=&quot;extension&quot;, $sprite=&quot;doctrine&quot;)
+}
+
+' ===== Отношения =====
+
+' Скрипт сборки вызывает sphinx_tool и sphinx_autobuild
+Rel(sphinx_tool, build_script, &quot;Вызывает&quot;, &quot;make html/livehtml&quot;)
+
+' Sphinx читает конфигурацию
+Rel(sphinx_tool, conf_py, &quot;Читает&quot;)
+
+' Sphinx обрабатывает исходные файлы (включая условную главу)
+Rel(sphinx_tool, chapter_example, &quot;Рендерит&quot;)
+
+' Sphinx читает статические файлы
+Rel(conf_py, static, &quot;Использует&quot;)
+
+' Sphinx генерирует промежуточные файлы (doctrees)
+Rel(index_rst, index_doctree, &quot;Конвертируется в&quot;, &quot;Внутреннее представление&quot;)
+Rel(chapter_md, chapter_doctree, &quot;Конвертируется в&quot;, &quot;Внутреннее представление&quot;)
+
+' Sphinx генерирует финальные HTML файлы
+Rel(index_doctree, index_html, &quot;Рендерится в&quot;, &quot;HTML&quot;)
+Rel(chapter_doctree, chapter_html, &quot;Рендерится в&quot;, &quot;HTML&quot;)
+
+' Копирование статических файлов в output
+Rel(custom_css, css_output, &quot;Копируется в&quot;, &quot;_build/html/&quot;)
+Rel(custom_js, js_output, &quot;Копируется в&quot;, &quot;_build/html/&quot;)
+
+&#64;enduml"/></p>
+</figure>
 <h3 id="index-rst"><code class="docutils literal notranslate"><span class="pre">index.rst</span></code><a class="headerlink" href="#index-rst" title="Ссылка на этот заголовок">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">index.rst</span></code> — это <strong>входная точка</strong> всей документации, созданной с помощью <strong>Sphinx</strong>. Он служит <strong>главной страницей</strong> и <strong>картой навигации</strong>, определяющей, какие документы входят в проект и как они связаны между собой. Как правило, именно с этого файла начинается сборка документации, в нем определяется</p>
 <ul class="simple">
@@ -3360,10 +3479,396 @@
 <li><p><strong>Входная точка</strong>: при открытии документации пользователь обычно попадает на страницу, сгенерированную из <code class="docutils literal notranslate"><span class="pre">index.rst</span></code>.</p></li>
 </ul>
 <div class="toggle docutils container">
+<div class="literal-block-wrapper docutils container" id="id36">
+<div class="code-block-caption highlight"><span class="filename"><span class="caption-text">
+</span>index.rst<a class="headerlink" href="#id36" title="Permalink to this code">¶</a></span></div>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><code><span class="c">.. projectTemplate documentation master file, created by</span>
+<span class="c">   sphinx-quickstart on Tue Jul  8 21:57:49 2025.</span>
+<span class="c">   You can adapt this file completely to your liking, but it should at least</span>
+<span class="c">   contain the root `toctree` directive.</span>
+
+<span class="gh">projectTemplate</span>
+<span class="gh">=============================</span>
+
+<span class="p">..</span> <span class="ow">toctree</span><span class="p">::</span>
+   <span class="nc">:maxdepth:</span> 6
+   <span class="nc">:caption:</span> 🚀 Начало работы (Tutorials)
+
+   articles/introduction
+   articles/getting_started
+   articles/how_to_install_python
+   articles/how_to_install_vscode
+   articles/how_to_install_git
+   articles/how_to_install_copier
+
+<span class="p">..</span> <span class="ow">toctree</span><span class="p">::</span>
+   <span class="nc">:maxdepth:</span> 6
+   <span class="nc">:caption:</span> Руководства (Topic Guides)
+
+   articles/architecture
+   articles/project_structure
+   articles/databases
+   articles/configs
+   articles/documentation
+   articles/diagrams
+
+<span class="p">..</span> <span class="ow">toctree</span><span class="p">::</span>
+   <span class="nc">:maxdepth:</span> 6
+   <span class="nc">:caption:</span> Практические руководства (How-to Guides)
+
+   articles/how_to_venv
+   articles/how_to_precommit
+   
+   articles/how_to_make_docs.md
+   articles/how_to_deploy_app.md
+
+<span class="p">..</span> <span class="ow">toctree</span><span class="p">::</span>
+   <span class="nc">:maxdepth:</span> 6
+   <span class="nc">:caption:</span> Справочные материалы (Reference Guides)
+
+   articles/ref_vscode
+   articles/ref_venv
+   articles/ref_git
+   articles/ref_copier
+   articles/ref_precommit
+   articles/ref_configs
+   articles/ref_docker
+   articles/ref_cicd
+   articles/ref_docs
+   articles/ref_tools
+   articles/ref_logger
+   articles/ref_sql
+   articles/c4_plantuml
+   articles/recommendations
+</code></pre></div>
+</div>
+</div>
 </div>
 <h3 id="conf-py"><code class="docutils literal notranslate"><span class="pre">conf.py</span></code><a class="headerlink" href="#conf-py" title="Ссылка на этот заголовок">¶</a></h3>
 <p>Файл <code class="docutils literal notranslate"><span class="pre">docs/conf.py</span></code> содержит все настройки Sphinx. Ниже приведен его текущий вид с подробными комментариями к основным блокам.</p>
 <div class="toggle docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Конфигурационный файл для сборщика документации Sphinx.</span>
+
+<span class="sd">Этот файл содержит все настройки, необходимые для кастомизации входных и выходных данных Sphinx.</span>
+<span class="sd">Он выполняется как код на Python во время сборки, при этом текущая директория устанавливается как директория конфигурации.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+<span class="c1"># Переменная окружения: флаг сборки документации</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;SPHINX_BUILD&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+
+<span class="c1"># Добавляет родительскую директорию в системный путь, чтобы Sphinx мог найти исходные модули</span>
+<span class="c1"># Получаем путь к корню проекта и</span>
+<span class="n">project_root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;..&quot;</span><span class="p">))</span>
+<span class="n">template_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">project_root</span><span class="p">,</span> <span class="s2">&quot;diagrams&quot;</span><span class="p">,</span> <span class="s2">&quot;template&quot;</span><span class="p">)</span>
+<span class="n">icons_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">project_root</span><span class="p">,</span> <span class="s2">&quot;diagrams&quot;</span><span class="p">,</span> <span class="s2">&quot;icons&quot;</span><span class="p">)</span>
+
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">project_root</span><span class="p">)</span>
+
+<span class="c1"># Отладка для системного пути</span>
+<span class="c1"># print(f&quot;[DEBUG] Adding to sys.path: {project_root}&quot;)</span>
+
+<span class="c1"># Информация о проекте для документации</span>
+<span class="n">project</span> <span class="o">=</span> <span class="s2">&quot;projectTemplate&quot;</span>
+<span class="n">copyright</span> <span class="o">=</span> <span class="s2">&quot;2025, maxlansky&quot;</span>
+<span class="n">author</span> <span class="o">=</span> <span class="s2">&quot;maxlansky&quot;</span>
+<span class="n">release</span> <span class="o">=</span> <span class="s2">&quot;0.1&quot;</span>
+
+<span class="c1"># ============================================================================</span>
+<span class="c1"># НАСТРОЙКИ ГЕНЕРАЦИИ UML-ДИАГРАММ (PlantUML)</span>
+<span class="c1"># ============================================================================</span>
+
+<span class="c1"># Настройки для работы с PlantUML и рендеринга UML-диаграмм.</span>
+<span class="c1"># В GitHub Actions используется путь /usr/local/bin/plantuml/plantuml.jar, а для Windows — C:\\plantuml\\plantuml.jar.</span>
+<span class="k">if</span> <span class="s2">&quot;GITHUB_ACTIONS&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+    <span class="c1"># Собираем полную команду: добавляем относительный путь, указываем относительные пути ко всем нужным файлам</span>
+    <span class="n">plantuml</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;java -jar &quot;/usr/local/bin/plantuml/plantuml.jar&quot; &quot;</span><span class="si">{</span><span class="n">template_path</span><span class="si">}</span><span class="s1">&quot; &quot;</span><span class="si">{</span><span class="n">icons_path</span><span class="si">}</span><span class="s1">&quot;&#39;</span>
+<span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;nt&quot;</span><span class="p">:</span>  <span class="c1"># Для Windows</span>
+    <span class="n">plantuml</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="sa">f</span><span class="s1">&#39;java -jar &quot;C:</span><span class="se">\\</span><span class="s1">plantuml</span><span class="se">\\</span><span class="s1">plantuml.jar&quot; -I&quot;</span><span class="si">{</span><span class="n">template_path</span><span class="si">}</span><span class="s1">&quot; -I&quot;</span><span class="si">{</span><span class="n">icons_path</span><span class="si">}</span><span class="s1">&quot;&#39;</span>
+    <span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span><span class="s2">&quot;Unsupported OS&quot;</span><span class="p">)</span>
+
+<span class="c1"># Формат рендера диаграммы</span>
+<span class="n">plantuml_output_format</span> <span class="o">=</span> <span class="s2">&quot;svg_img&quot;</span>
+<span class="n">plantuml_latex_output_format</span> <span class="o">=</span> <span class="s2">&quot;svg&quot;</span>
+
+
+<span class="c1"># ============================================================================</span>
+<span class="c1"># РАСШИРЕНИЯ SPHINX</span>
+<span class="c1"># ============================================================================</span>
+
+<span class="c1"># Список расширений Sphinx</span>
+<span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># === Поддержка форматов ===</span>
+    <span class="s2">&quot;myst_parser&quot;</span><span class="p">,</span>  <span class="c1"># поддержка Markdown (.md)</span>
+    <span class="c1"># === Автодокументация ===</span>
+    <span class="s2">&quot;sphinx.ext.autodoc&quot;</span><span class="p">,</span>  <span class="c1"># автодока из docstring&#39;ов</span>
+    <span class="s2">&quot;sphinx.ext.viewcode&quot;</span><span class="p">,</span>  <span class="c1"># ссылки на исходники</span>
+    <span class="s2">&quot;sphinx.ext.napoleon&quot;</span><span class="p">,</span>  <span class="c1"># Google/NumPy стиль docstring&#39;ов</span>
+    <span class="s2">&quot;sphinxcontrib.autodoc_pydantic&quot;</span><span class="p">,</span>  <span class="c1"># Улучшенная работа с Pydantic</span>
+    <span class="c1"># === Утилиты и вспомогательные расширения ===</span>
+    <span class="s2">&quot;sphinx.ext.coverage&quot;</span><span class="p">,</span>  <span class="c1"># проверяет покрытие документации</span>
+    <span class="s2">&quot;sphinx_copybutton&quot;</span><span class="p">,</span>  <span class="c1"># добавляет кнопку скопировать код в документацию</span>
+    <span class="s2">&quot;sphinx_togglebutton&quot;</span><span class="p">,</span>  <span class="c1"># позволяет создавать разворачиваемые списки</span>
+    <span class="c1"># === Визуализация и темы ===</span>
+    <span class="s2">&quot;sphinxcontrib.plantuml&quot;</span><span class="p">,</span>  <span class="c1"># добавляет поддержку plantuml</span>
+    <span class="s2">&quot;sphinx_immaterial&quot;</span><span class="p">,</span>  <span class="c1"># использовать тему mk docs</span>
+    <span class="c1"># === GitHub Pages ===</span>
+    <span class="s2">&quot;sphinx.ext.githubpages&quot;</span><span class="p">,</span>  <span class="c1"># позволяет использовать стили sphinx при хостинге доков на github pages</span>
+<span class="p">]</span>
+
+<span class="c1"># ============================================================================</span>
+<span class="c1"># НАСТРОЙКИ АВТОДОКУМЕНТАЦИИ</span>
+<span class="c1"># ============================================================================</span>
+
+<span class="c1"># === Настройки autodoc ===</span>
+<span class="n">autodoc_default_options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;members&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># Показывать публичные элементы</span>
+    <span class="s2">&quot;undoc-members&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># Показывать недокументированные члены (а не скрывать!)</span>
+    <span class="s2">&quot;private-members&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>  <span class="c1"># Показывать приватные методы (_method) (а не скрывать!)</span>
+    <span class="s2">&quot;special-members&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>  <span class="c1"># Показывать специальные методы (__init__, __str__) (а не скрывать!)</span>
+    <span class="s2">&quot;inherited-members&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>  <span class="c1"># Показывать унаследованные методы</span>
+    <span class="s2">&quot;show-inheritance&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># Показывать иерархию наследования</span>
+    <span class="s2">&quot;exclude-members&quot;</span><span class="p">:</span> <span class="s2">&quot;__weakref__&quot;</span><span class="p">,</span>  <span class="c1"># Исключить конкретные элементы</span>
+<span class="p">}</span>
+
+<span class="c1"># Порядок элементов по исходному коду (естественнее для чтения)</span>
+<span class="n">autodoc_member_order</span> <span class="o">=</span> <span class="s2">&quot;bysource&quot;</span>
+<span class="c1"># Включать docstring класса + __init__ метода</span>
+<span class="n">autoclass_content</span> <span class="o">=</span> <span class="s2">&quot;both&quot;</span>
+<span class="c1"># Формат типов - короткий (чище выглядит)</span>
+<span class="c1"># autodoc_typehints_format = &quot;short&quot;</span>
+<span class="c1"># Отображение типов в описании (удобнее для чтения)</span>
+<span class="c1"># autodoc_typehints = &quot;description&quot;</span>
+
+<span class="c1"># === Настройки autodoc-pydantic ===</span>
+<span class="n">autodoc_pydantic_model_show_json</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">autodoc_pydantic_model_show_config_summary</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">autodoc_pydantic_model_show_validator_summary</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="c1"># autodoc_pydantic_model_erdantic_figure = True</span>
+<span class="c1"># autodoc_pydantic_model_erdantic_figure_collapsed = True</span>
+<span class="n">autodoc_pydantic_field_list_validators</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<span class="c1"># === Настройки sphinx.ext.napoleon ===</span>
+<span class="n">napoleon_google_docstring</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">napoleon_numpy_docstring</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># если используете только Google стиль</span>
+<span class="n">napoleon_include_init_with_doc</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">napoleon_include_private_with_doc</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">napoleon_use_param</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="c1"># === Настройки для myst_parser ===</span>
+<span class="n">myst_enable_extensions</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;amsmath&quot;</span><span class="p">,</span>  <span class="c1"># математика</span>
+    <span class="s2">&quot;colon_fence&quot;</span><span class="p">,</span>  <span class="c1"># ::: для блоков кода</span>
+    <span class="s2">&quot;deflist&quot;</span><span class="p">,</span>  <span class="c1"># определения</span>
+    <span class="s2">&quot;dollarmath&quot;</span><span class="p">,</span>  <span class="c1"># $...$ для математики</span>
+    <span class="s2">&quot;fieldlist&quot;</span><span class="p">,</span>  <span class="c1"># списки полей</span>
+    <span class="s2">&quot;html_admonition&quot;</span><span class="p">,</span>  <span class="c1"># HTML admonitions</span>
+    <span class="s2">&quot;html_image&quot;</span><span class="p">,</span>  <span class="c1"># HTML изображения</span>
+    <span class="s2">&quot;replacements&quot;</span><span class="p">,</span>  <span class="c1"># замены (c/o -&gt; ©/®)</span>
+    <span class="s2">&quot;smartquotes&quot;</span><span class="p">,</span>  <span class="c1"># красивые кавычки</span>
+    <span class="s2">&quot;strikethrough&quot;</span><span class="p">,</span>  <span class="c1"># зачеркнутый текст</span>
+    <span class="s2">&quot;substitution&quot;</span><span class="p">,</span>  <span class="c1"># подстановки</span>
+    <span class="s2">&quot;tasklist&quot;</span><span class="p">,</span>  <span class="c1"># чекбоксы</span>
+<span class="p">]</span>
+
+<span class="c1"># Автоматическое создание якорей на любой заголовок (7 уровней)</span>
+<span class="c1"># TODO: продумать систему автоматической нумерации глав, разделов, диаграмм, таблиц, графиков итд</span>
+<span class="n">myst_heading_anchors</span> <span class="o">=</span> <span class="mi">7</span>
+
+<span class="c1"># ============================================================================</span>
+<span class="c1"># ОБРАБОТКА ИСХОДНЫХ ФАЙЛОВ</span>
+<span class="c1"># ============================================================================</span>
+
+<span class="c1"># Настройки для обработки исходных файлов, шаблонов, исключений и вывода HTML</span>
+<span class="n">source_suffix</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;.rst&quot;</span><span class="p">:</span> <span class="s2">&quot;restructuredtext&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.md&quot;</span><span class="p">:</span> <span class="s2">&quot;markdown&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">templates_path</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;_templates&quot;</span><span class="p">]</span>
+<span class="n">exclude_patterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;_build&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Thumbs.db&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.DS_Store&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.git&quot;</span><span class="p">,</span>  <span class="c1"># игнорировать .git</span>
+    <span class="s2">&quot;.venv&quot;</span><span class="p">,</span>  <span class="c1"># виртуальное окружение</span>
+    <span class="s2">&quot;venv&quot;</span><span class="p">,</span>  <span class="c1"># альтернативный вариант</span>
+    <span class="s2">&quot;.env&quot;</span><span class="p">,</span>  <span class="c1"># файлы env</span>
+    <span class="s2">&quot;*.pyc&quot;</span><span class="p">,</span>  <span class="c1"># скомпилированные Python файлы</span>
+    <span class="s2">&quot;*~&quot;</span><span class="p">,</span>  <span class="c1"># временные файлы</span>
+<span class="p">]</span>
+
+<span class="n">language</span> <span class="o">=</span> <span class="s2">&quot;ru&quot;</span>
+
+
+<span class="c1"># ============================================================================</span>
+<span class="c1"># НАСТРОЙКИ HTML-ТЕМЫ</span>
+<span class="c1"># ============================================================================</span>
+<span class="c1"># TODO: доделать кастомные настройки темы</span>
+<span class="c1"># Настройки темы Mk Docs</span>
+<span class="n">html_theme</span> <span class="o">=</span> <span class="s2">&quot;sphinx_immaterial&quot;</span>
+<span class="c1"># material theme options (see theme.conf for more information)</span>
+<span class="n">html_theme_options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;repo&quot;</span><span class="p">:</span> <span class="s2">&quot;fontawesome/brands/github&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;edit&quot;</span><span class="p">:</span> <span class="s2">&quot;material/file-edit-outline&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;site_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://maxlansky1.github.io/projectTemplate&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;repo_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/maxlansky1/projectTemplate&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;repo_name&quot;</span><span class="p">:</span> <span class="s2">&quot;projectTemplate&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;edit_uri&quot;</span><span class="p">:</span> <span class="s2">&quot;blob/main/docs&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;globaltoc_collapse&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;navigation.expand&quot;</span><span class="p">,</span>
+        <span class="c1"># &quot;navigation.tabs&quot;,</span>
+        <span class="c1"># &quot;navigation.tabs.sticky&quot;,</span>
+        <span class="c1"># &quot;toc.integrate&quot;,</span>
+        <span class="s2">&quot;navigation.sections&quot;</span><span class="p">,</span>
+        <span class="c1"># &quot;navigation.instant&quot;,</span>
+        <span class="c1"># &quot;header.autohide&quot;,</span>
+        <span class="s2">&quot;navigation.top&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;navigation.footer&quot;</span><span class="p">,</span>
+        <span class="c1"># &quot;navigation.tracking&quot;,</span>
+        <span class="c1"># &quot;search.highlight&quot;,</span>
+        <span class="s2">&quot;search.share&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;search.suggest&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;toc.follow&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;toc.sticky&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;content.tabs.link&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;content.code.copy&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;content.action.edit&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;content.action.view&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;content.tooltips&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;announce.dismiss&quot;</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;palette&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;media&quot;</span><span class="p">:</span> <span class="s2">&quot;(prefers-color-scheme)&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;toggle&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="s2">&quot;material/brightness-auto&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Switch to light mode&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;media&quot;</span><span class="p">:</span> <span class="s2">&quot;(prefers-color-scheme: light)&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;scheme&quot;</span><span class="p">:</span> <span class="s2">&quot;default&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;primary&quot;</span><span class="p">:</span> <span class="s2">&quot;light-green&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;accent&quot;</span><span class="p">:</span> <span class="s2">&quot;light-blue&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;toggle&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="s2">&quot;material/lightbulb&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Switch to dark mode&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;media&quot;</span><span class="p">:</span> <span class="s2">&quot;(prefers-color-scheme: dark)&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;scheme&quot;</span><span class="p">:</span> <span class="s2">&quot;slate&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;primary&quot;</span><span class="p">:</span> <span class="s2">&quot;deep-orange&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;accent&quot;</span><span class="p">:</span> <span class="s2">&quot;lime&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;toggle&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="s2">&quot;material/lightbulb-outline&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Switch to system preference&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+    <span class="p">],</span>
+    <span class="c1"># BEGIN: version_dropdown</span>
+    <span class="s2">&quot;version_dropdown&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;version_info&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;https://sphinx-immaterial.rtfd.io&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;ReadTheDocs&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;aliases&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;https://jbms.github.io/sphinx-immaterial&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Github Pages&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;aliases&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="p">},</span>
+    <span class="p">],</span>
+    <span class="c1"># END: version_dropdown</span>
+    <span class="s2">&quot;toc_title_is_page_title&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="c1"># BEGIN: social icons</span>
+    <span class="s2">&quot;social&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="s2">&quot;fontawesome/brands/github&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;link&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/jbms/sphinx-immaterial&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Source on github.com&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="s2">&quot;fontawesome/brands/python&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;link&quot;</span><span class="p">:</span> <span class="s2">&quot;https://pypi.org/project/sphinx-immaterial/&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">],</span>
+    <span class="c1"># END: social icons</span>
+<span class="p">}</span>
+
+<span class="c1"># Настройки для истории изменений документации</span>
+<span class="n">html_context</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># === GitHub ===</span>
+    <span class="s2">&quot;github_user&quot;</span><span class="p">:</span> <span class="s2">&quot;maxlansky&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;github_repo&quot;</span><span class="p">:</span> <span class="s2">&quot;projectTemplate&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;github_version&quot;</span><span class="p">:</span> <span class="s2">&quot;main&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;display_github&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="c1"># === Версии (только если реально планируешь версионирование) ===</span>
+    <span class="c1"># &#39;current_version&#39;: release,  # автоматически из release</span>
+    <span class="c1"># &#39;versions&#39;: {</span>
+    <span class="c1">#     &#39;latest&#39;: &#39;/&#39;,  # текущая версия</span>
+    <span class="c1">#     &#39;0.1&#39;: &#39;/0.1/&#39;,  # предыдущие версии</span>
+    <span class="c1"># },</span>
+    <span class="c1"># === Дополнительно (для Read the Docs и других хостингов) ===</span>
+    <span class="s2">&quot;source_type&quot;</span><span class="p">:</span> <span class="s2">&quot;github&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;source_user&quot;</span><span class="p">:</span> <span class="s2">&quot;maxlansky&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;source_repo&quot;</span><span class="p">:</span> <span class="s2">&quot;projectTemplate&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;source_version&quot;</span><span class="p">:</span> <span class="s2">&quot;main&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;source_suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;.rst&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="c1"># ============================================================================</span>
+<span class="c1"># СТАТИЧЕСКИЕ ФАЙЛЫ (CSS, JS)</span>
+<span class="c1"># ============================================================================</span>
+
+<span class="c1"># Подключаем кастомные CSS и JS файлы</span>
+<span class="n">html_static_path</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;_static&quot;</span><span class="p">]</span>
+
+<span class="n">html_js_files</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;custom.js&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">html_css_files</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;custom.css&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<span class="c1"># ============================================================================</span>
+<span class="c1"># ДОПОЛНИТЕЛЬНЫЕ НАСТРОЙКИ</span>
+<span class="c1"># ============================================================================</span>
+
+<span class="c1"># Дополнительная конфигурация sphinx-git (опционально)</span>
+<span class="n">git_untracked_check</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">git_remote_name</span> <span class="o">=</span> <span class="s2">&quot;origin&quot;</span>
+<span class="n">git_branch</span> <span class="o">=</span> <span class="s2">&quot;main&quot;</span>  <span class="c1"># или &#39;master&#39;, в зависимости от твоей ветки</span>
+
+<span class="c1"># === Настройки sphinx-togglebutton ===</span>
+
+<span class="c1"># Настройка CSS-селектора для элементов</span>
+<span class="n">togglebutton_selector</span> <span class="o">=</span> <span class="s2">&quot;.toggle, .admonition.dropdown&quot;</span>
+
+<span class="c1"># Настройка текста подсказки</span>
+<span class="n">togglebutton_hint</span> <span class="o">=</span> <span class="s2">&quot;Развернуть&quot;</span>
+<span class="n">togglebutton_hint_hide</span> <span class="o">=</span> <span class="s2">&quot;Свернуть&quot;</span>
+
+<span class="c1"># Поведение при печати. По умолчанию True (разворачивает все элементы)</span>
+<span class="n">togglebutton_open_on_print</span> <span class="o">=</span> <span class="kc">True</span>
+</code></pre></div>
+</div>
 </div>
 <p>Основные найстройки</p>
 <ol class="arabic simple">
@@ -3401,12 +3906,115 @@
 <h3 id="static"><code class="docutils literal notranslate"><span class="pre">_static/</span></code><a class="headerlink" href="#static" title="Ссылка на этот заголовок">¶</a></h3>
 <p>Директория <code class="docutils literal notranslate"><span class="pre">_static/</span></code> содержит <strong>статические файлы</strong>, такие как CSS-стили, JavaScript-скрипты и изображения, которые используются для кастомизации внешнего вида документации. Эти файлы копируются в выходную директорию без изменений и могут быть использованы для настройки стиля документации.</p>
 <div class="toggle docutils container">
+<div class="literal-block-wrapper docutils container" id="id37">
+<div class="code-block-caption highlight"><span class="filename"><span class="caption-text">
+</span>docs/_static/custom.css<a class="headerlink" href="#id37" title="Permalink to this code">¶</a></span></div>
+<div class="highlight-css notranslate"><div class="highlight"><pre><span></span><code>
+</code></pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id38">
+<div class="code-block-caption highlight"><span class="filename"><span class="caption-text">
+</span>docs/_static/custom.js<a class="headerlink" href="#id38" title="Permalink to this code">¶</a></span></div>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><code>
+</code></pre></div>
+</div>
+</div>
 </div>
 <h3 id="templates"><code class="docutils literal notranslate"><span class="pre">_templates/</span></code><a class="headerlink" href="#templates" title="Ссылка на этот заголовок">¶</a></h3>
 <p>Директория <code class="docutils literal notranslate"><span class="pre">_templates/</span></code> содержит <strong>шаблоны Sphinx</strong>, которые могут быть использованы для кастомизации HTML-вывода. Хотя используется редко, эта директория позволяет изменять структуру и содержание генерируемых страниц документации.</p>
 <h3 id="makefile-make-bat"><code class="docutils literal notranslate"><span class="pre">Makefile</span></code>, <code class="docutils literal notranslate"><span class="pre">make.bat</span></code><a class="headerlink" href="#makefile-make-bat" title="Ссылка на этот заголовок">¶</a></h3>
 <p>Файлы <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> (для Linux/macOS) и <code class="docutils literal notranslate"><span class="pre">make.bat</span></code> (для Windows) содержат <strong>команды для сборки документации</strong>. Они определяют, как запускать различные команды Sphinx, такие как <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">html</span></code>, <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">clean</span></code> и другие. Эти файлы автоматически генерируются при создании проекта Sphinx.</p>
 <div class="toggle docutils container">
+<div class="literal-block-wrapper docutils container" id="id39">
+<div class="code-block-caption highlight"><span class="filename"><span class="caption-text">
+</span>docs/Makefile<a class="headerlink" href="#id39" title="Permalink to this code">¶</a></span></div>
+<div class="highlight-make notranslate"><div class="highlight"><pre><span></span><code><span class="c"># Minimal makefile for Sphinx documentation</span>
+<span class="c">#</span>
+
+<span class="c"># Variables</span>
+<span class="nv">SPHINXOPTS</span><span class="w">    </span><span class="o">?=</span><span class="w"> </span>
+<span class="nv">SPHINXBUILD</span><span class="w">   </span><span class="o">?=</span><span class="w"> </span>sphinx-build
+<span class="nv">SOURCEDIR</span><span class="w">     </span><span class="o">=</span><span class="w"> </span>.
+<span class="nv">BUILDDIR</span><span class="w">      </span><span class="o">=</span><span class="w"> </span>_build
+
+<span class="c"># Uncomment these two lines if you want to use a specific Python interpreter</span>
+<span class="c"># PYTHON        ?= python3</span>
+<span class="c"># SPHINXBUILD   ?= $(PYTHON) -m sphinx</span>
+
+<span class="c"># Targets</span>
+<span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">help</span> <span class="n">clean</span> <span class="n">livehtml</span> <span class="n">html</span>
+
+<span class="nf">help</span><span class="o">:</span>
+<span class="w">	</span>@<span class="k">$(</span>SPHINXBUILD<span class="k">)</span><span class="w"> </span>-M<span class="w"> </span><span class="nb">help</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>SOURCEDIR<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>BUILDDIR<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="k">$(</span>SPHINXOPTS<span class="k">)</span>
+
+<span class="nf">clean</span><span class="o">:</span>
+<span class="w">	</span>@<span class="k">$(</span>SPHINXBUILD<span class="k">)</span><span class="w"> </span>-M<span class="w"> </span>clean<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>SOURCEDIR<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>BUILDDIR<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="k">$(</span>SPHINXOPTS<span class="k">)</span>
+
+<span class="nf">html</span><span class="o">:</span>
+<span class="w">	</span>@<span class="k">$(</span>SPHINXBUILD<span class="k">)</span><span class="w"> </span>-M<span class="w"> </span>html<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>SOURCEDIR<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>BUILDDIR<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="k">$(</span>SPHINXOPTS<span class="k">)</span>
+<span class="w">	</span>@echo
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Build finished. The HTML pages are in </span><span class="k">$(</span>BUILDDIR<span class="k">)</span><span class="s2">/html.&quot;</span>
+
+<span class="nf">livehtml</span><span class="o">:</span>
+<span class="w">	</span>sphinx-autobuild<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>SOURCEDIR<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>BUILDDIR<span class="k">)</span><span class="s2">/html&quot;</span><span class="w"> </span>--open-browser<span class="w"> </span>--port<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="k">$(</span>SPHINXOPTS<span class="k">)</span><span class="w"> </span><span class="k">$(</span>O<span class="k">)</span>
+
+<span class="c">#TODO: забиндить постоянный порт для livehtml</span>
+</code></pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id40">
+<div class="code-block-caption highlight"><span class="filename"><span class="caption-text">
+</span>docs/make.bat<a class="headerlink" href="#id40" title="Permalink to this code">¶</a></span></div>
+<div class="highlight-batch notranslate"><div class="highlight"><pre><span></span><code><span class="p">@</span><span class="k">ECHO</span> OFF
+
+<span class="k">pushd</span> <span class="nv">%~dp0</span>
+
+<span class="c1">REM Command file for Sphinx documentation</span>
+
+<span class="k">if</span> <span class="s2">&quot;</span><span class="nv">%SPHINXBUILD%</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="p">(</span>
+	<span class="k">set</span> <span class="nv">SPHINXBUILD</span><span class="p">=</span>sphinx-build
+<span class="p">)</span>
+<span class="k">set</span> <span class="nv">SOURCEDIR</span><span class="p">=</span>.
+<span class="k">set</span> <span class="nv">BUILDDIR</span><span class="p">=</span>_build
+
+<span class="nv">%SPHINXBUILD%</span> <span class="p">&gt;</span>NUL <span class="mi">2</span><span class="p">&gt;</span>NUL
+<span class="k">if</span> <span class="k">errorlevel</span> <span class="mi">9009</span> <span class="p">(</span>
+	<span class="k">echo</span>.
+	<span class="k">echo</span>.The &#39;sphinx-build&#39; command was not found. Make sure you have Sphinx
+	<span class="k">echo</span>.installed, then set the SPHINXBUILD environment variable to point
+	<span class="k">echo</span>.to the full path of the &#39;sphinx-build&#39; executable. Alternatively you
+	<span class="k">echo</span>.may add the Sphinx directory to PATH.
+	<span class="k">echo</span>.
+	<span class="k">echo</span>.If you don&#39;t have Sphinx installed, grab it from
+	<span class="k">echo</span>.https://www.sphinx-doc.org/
+	<span class="k">exit</span> /b 1
+<span class="p">)</span>
+
+<span class="c1">REM Check if sphinx-autobuild is available</span>
+<span class="k">if</span> <span class="s2">&quot;</span><span class="nv">%1</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;livehtml&quot;</span> <span class="p">(</span>
+    where sphinx-autobuild <span class="p">&gt;</span>nul <span class="mi">2</span><span class="p">&gt;</span>nul
+    <span class="k">if</span> <span class="k">errorlevel</span> <span class="mi">1</span> <span class="p">(</span>
+        <span class="k">echo</span>.sphinx-autobuild is not installed. Run &#39;pip install sphinx-autobuild&#39; first.
+        <span class="k">exit</span> /b 1
+    <span class="p">)</span>
+    sphinx-autobuild <span class="nv">%SOURCEDIR%</span> <span class="nv">%BUILDDIR%</span>/html --open-browser --port=0
+    <span class="k">goto</span> <span class="nl">end</span>
+<span class="p">)</span>
+
+<span class="k">if</span> <span class="s2">&quot;</span><span class="nv">%1</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="k">goto</span> <span class="nl">help</span>
+
+<span class="nv">%SPHINXBUILD%</span> -M <span class="nv">%1</span> <span class="nv">%SOURCEDIR%</span> <span class="nv">%BUILDDIR%</span> <span class="nv">%SPHINXOPTS%</span> <span class="nv">%O%</span>
+<span class="k">goto</span> <span class="nl">end</span>
+
+<span class="p">:</span><span class="nl">help</span>
+<span class="nv">%SPHINXBUILD%</span> -M help <span class="nv">%SOURCEDIR%</span> <span class="nv">%BUILDDIR%</span> <span class="nv">%SPHINXOPTS%</span> <span class="nv">%O%</span>
+
+<span class="p">:</span><span class="nl">end</span>
+<span class="k">popd</span>
+</code></pre></div>
+</div>
+</div>
 </div>
 <h3 id="build"><code class="docutils literal notranslate"><span class="pre">_build/</span></code><a class="headerlink" href="#build" title="Ссылка на этот заголовок">¶</a></h3>
 <p>Директория <code class="docutils literal notranslate"><span class="pre">_build/</span></code> содержит <strong>сгенерированные файлы документации</strong>. Она делится на поддиректории:</p>

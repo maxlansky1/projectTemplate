@@ -54,6 +54,5 @@ projectTemplate
    articles/ref_tools
    articles/ref_logger
    articles/ref_sql
-   articles/glossary
    articles/c4_plantuml
    articles/recommendations
