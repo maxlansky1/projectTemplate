@@ -58,6 +58,16 @@ class TelegramSettings(BaseConfig):
         examples=[[123456789, 987654321]],
     )
 
+    moderator_ids: List[int] = Field(
+        default_factory=list,
+        alias="TELEGRAM_MODERATOR_IDS",
+        description=(
+            "Список ID модераторов бота с ограниченными правами. "
+            "Модераторы могут использовать команды, недоступные обычным пользователям."
+        ),
+        examples=[[111111111, 222222222]],
+    )
+
     @field_validator("admin_ids", mode="before")
     @classmethod
     def parse_admin_ids(cls, v) -> List[int]:
@@ -78,16 +88,6 @@ class TelegramSettings(BaseConfig):
 
         Raises:
             ValueError: Если строку невозможно преобразовать в числа
-
-        Examples:
-            >>> cls.parse_admin_ids("123456789,987654321")
-            [123456789, 987654321]
-
-            >>> cls.parse_admin_ids(["123456789", "987654321"])
-            [123456789, 987654321]
-
-            >>> cls.parse_admin_ids("")
-            []
         """
         if isinstance(v, str):
             if not v.strip():
@@ -105,6 +105,24 @@ class TelegramSettings(BaseConfig):
             # Преобразуем список в список целых чисел
             return [int(x) for x in v]
         # Для всех остальных случаев возвращаем пустой список
+        return []
+    
+    @field_validator("moderator_ids", mode="before")
+    @classmethod
+    def parse_moderator_ids(cls, v) -> List[int]:
+        if isinstance(v, str):
+            if not v.strip():
+                return []
+            try:
+                return [int(x.strip()) for x in v.split(",") if x.strip()]
+            except ValueError as e:
+                raise ValueError(
+                    f"Неверный формат ID модераторов. "
+                    f"Ожидались целые числа, разделенные запятыми. "
+                    f"Получено: {v}"
+                ) from e
+        elif isinstance(v, list):
+            return [int(x) for x in v]
         return []
 
     @property
