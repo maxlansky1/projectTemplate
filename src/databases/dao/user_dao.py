@@ -1,14 +1,7 @@
 """
-Объект доступа к данным (DAO) для работы с записями пользователей в базе данных.
+DAO (Data Access Object) для работы с пользователями в базе данных.
 
-В этом модуле определён класс `UserDAO`, который предоставляет асинхронные
-методы для доступа и управления сущностями `User` в SQLite.
-Класс наследует функционал общего `BaseDAO` и может быть расширен
-специфичными методами для пользователей.
-
-Пример использования:
-    async with async_session() as session:
-        users = await UserDAO.get_all_users(session)
+Содержит методы для создания, поиска и обновления пользователей.
 """
 
 from sqlalchemy import select
@@ -19,25 +12,50 @@ from src.databases.sqlite.models import User
 
 
 class UserDAO(BaseDAO):
-    """Объект доступа к данным для модели `User`.
-
-    Класс предоставляет методы для работы с пользователями в базе данных.
-    Наследует общий функционал `BaseDAO` и может быть дополнен
-    специфичными запросами и логикой для пользователей.
-    """
+    """DAO для модели `User`."""
 
     model = User
 
     @classmethod
-    async def get_all_users(cls, session: AsyncSession):
-        """Получить всех пользователей из базы данных.
+    async def create_user(
+        cls,
+        session: AsyncSession,
+        telegram_id: int,
+        first_name: str,
+        username: str | None = None,
+    ) -> User:
+        """
+        Создает нового пользователя.
 
         Args:
-            session (AsyncSession): Активная асинхронная сессия SQLAlchemy.
+            session: Асинхронная сессия SQLAlchemy.
+            telegram_id: Уникальный ID пользователя в Telegram.
+            first_name: Имя пользователя.
+            username: Никнейм пользователя (может быть None).
 
         Returns:
-            list[User]: Список всех пользователей, сохранённых в базе данных.
+            Новый экземпляр модели User.
         """
-        query = select(cls.model)
+        return await cls.add(
+            session, telegram_id=telegram_id, first_name=first_name, username=username
+        )
+
+    @classmethod
+    async def get_user_by_telegram_id(
+        cls, session: AsyncSession, telegram_id: int
+    ) -> User | None:
+        """
+        Находит пользователя по его Telegram ID.
+
+        Args:
+            session: Асинхронная сессия SQLAlchemy.
+            telegram_id: Уникальный ID пользователя в Telegram.
+
+        Returns:
+            Экземпляр модели User или None, если пользователь не найден.
+        """
+        # Используем существующий метод BaseDAO, предполагая, что telegram_id уникален
+        # Или напишем специфичный запрос
+        query = select(cls.model).where(cls.model.telegram_id == telegram_id)
         result = await session.execute(query)
-        return result.scalars().all()
+        return result.scalar_one_or_none()
