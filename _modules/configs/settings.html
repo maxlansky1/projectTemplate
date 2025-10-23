@@ -1391,7 +1391,7 @@
 
 <span class="c1"># НЕ инстанцируем при сборке Sphinx</span>
 <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SPHINX_BUILD&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="c1"># нормальное поведение в runtime</span>
+    <span class="c1"># создаем инстанс настроек</span>
     <span class="n">settings</span> <span class="o">=</span> <span class="n">AppSettings</span><span class="o">.</span><span class="n">get_instance</span><span class="p">()</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="c1"># во время сборки документации — либо None, либо ленивый мок / пустой объект</span>
