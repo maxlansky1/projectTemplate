@@ -4,8 +4,10 @@
 Здесь регистрируются все модели, чтобы Alembic мог их видеть.
 """
 
-from .user import User  # Пример модели
+from .message import Message  # Импортируем новую модель
+from .user import User
 
 __all__ = [
     "User",
+    "Message",  # Добавляем новую модель в экспорт
 ]
