@@ -30,9 +30,29 @@ class SQLiteSettings(BaseConfig):
     )
 
 
+class RedisSettings(BaseConfig):
+    """
+    Настройки Redis.
+    """
+
+    redis_url: str = Field(
+        default="redis://default:password@redis:6379/0",  # pragma: allowlist secret
+        description="URL подключения к Redis. В Docker используйте имя сервиса: redis://user:password@redis:6379/0",  # pragma: allowlist secret
+    )
+    redis_db: int = Field(default=0, description="Номер базы Redis (0-15)")
+    redis_ttl: int = Field(
+        default=3600, description="Время жизни ключей по умолчанию в секундах"
+    )
+    decode_responses: bool = Field(
+        default=True,
+        description="Декодировать ответы Redis в строки (удобно для работы с текстовыми данными)",
+    )
+
+
 class DatabaseSettings(BaseConfig):
     """
     Общие настройки для всех баз данных.
     """
 
     sqlite: SQLiteSettings = SQLiteSettings()
+    redis: RedisSettings = RedisSettings()

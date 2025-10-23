@@ -102,7 +102,7 @@ class AppSettings(BaseConfig):
 
 # НЕ инстанцируем при сборке Sphinx
 if os.environ.get("SPHINX_BUILD") is None:
-    # нормальное поведение в runtime
+    # создаем инстанс настроек
     settings = AppSettings.get_instance()
 else:
     # во время сборки документации — либо None, либо ленивый мок / пустой объект
