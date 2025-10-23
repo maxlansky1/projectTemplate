@@ -1,12 +1,11 @@
-#docker-compose.yaml
-
 version: '3.9'
 
 services:
+  # Основной сервис приложения (чат-бот)
   app:
     container_name: ${DOCKER_CONTAINER_NAME}
     build:
-      context: .             # Dockerfile в текущей директории
+      context: .
       dockerfile: Dockerfile
       args:
         UID: ${UID}
@@ -15,38 +14,80 @@ services:
         APP_NAME: ${APP_NAME}
         APP_PORT: ${APP_PORT}
 
-    command: python src/main.py  # можно переопределить стандартный CMD
+    command: python src/main.py
 
+    # Монтируем исходный код для удобства разработки
     volumes:
-      - .:/${APP_NAME}               # монтируем исходный код в контейнер
+      - .:/${APP_NAME}
 
+    # Загружаем переменные окружения из .env файла
     env_file:
-      - .env                 # переменные окружения (токены, настройки)
+      - .env
 
+    # Открываем порт для доступа к приложению извне (если нужно)
     ports:
-      - "${DOCKER_PORT}:${APP_PORT}"          # проброс портов (используется DOCKER_PORT из .env)
+      - "${DOCKER_PORT}:${APP_PORT}"
 
-    restart: unless-stopped  # автоперезапуск контейнера при сбоях
+    # Перезапускаем контейнер, если он упал или остановлен
+    restart: unless-stopped
 
-    tty: true                # для корректной работы логов и bash-сессии
-    stdin_open: true         # возможность docker attach
+    # Включаем псевдотерминал и stdin для отладки (опционально)
+    tty: true
+    stdin_open: true
 
+    # Явно устанавливаем кодировку
     environment:
       - PYTHONIOENCODING=utf-8
 
-    # depends_on:
-    #   - db                 # зависимости от других сервисов, если будут
+    # Указываем, что приложение зависит от Redis, и запускаем только после его готовности
+    depends_on:
+      redis:
+        condition: service_healthy
 
-# Пример для базы данных PostgreSQL (если понадобится)
-# db:
-#   image: postgres:15
-#   restart: unless-stopped
-#   environment:
-#     POSTGRES_USER: youruser
-#     POSTGRES_PASSWORD: yourpassword
-#     POSTGRES_DB: yourdb
-#   volumes:
-#     - pgdata:/var/lib/postgresql/data
+  # Сервис Redis для кэширования и FSM
+  redis:
+    image: redis:latest
+    container_name: ${DOCKER_CONTAINER_NAME}_redis
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT:-6379}:6379" # Открываем порт Redis (опционально, для отладки)
+    volumes:
+      # Используем именованный volume для сохранения данных Redis между перезапусками
+      - redis_:/data
+    command: >
+      sh -c '
+        # Создаем директорию для конфигурации
+        mkdir -p /usr/local/etc/redis &&
+        # Настраиваем привязку к 0.0.0.0 (для доступа извне контейнера)
+        echo "bind 0.0.0.0" > /usr/local/etc/redis/redis.conf &&
+        # Включаем AOF (Append Only File) для персистентности данных
+        echo "appendonly yes" >> /usr/local/etc/redis/redis.conf &&
+        # Устанавливаем частоту синхронизации AOF
+        echo "appendfsync everysec" >> /usr/local/etc/redis/redis.conf &&
+        # Создаем ACL файл с пользователем и паролем (если переменные заданы)
+        echo "user $${REDIS_USER} on >$${REDIS_USER_PASSWORD} allcommands allkeys" > /usr/local/etc/redis/users.acl &&
+        # Запускаем Redis с указанными конфигурацией и ACL
+        redis-server /usr/local/etc/redis/redis.conf --aclfile /usr/local/etc/redis/users.acl
+      '
+    # Проверяем здоровье сервиса Redis
+    healthcheck:
+      test: ["CMD", "redis-cli", "-u", "redis://${REDIS_USER}:${REDIS_USER_PASSWORD}@127.0.0.1:6379", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
-# volumes:
-#   pgdata:
+    # Ограничиваем ресурсы, потребляемые контейнером Redis
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+
+# Объявление именованных volumes
+volumes:
+  # Volume для хранения данных Redis
+  redis_:
