@@ -168,9 +168,9 @@ To                         Action      From
 ### 1.6. Клонирование репозитория и настройка `.env`
 
 1.  Убедитесь, что вы всё ещё работаете от имени пользователя `deployer`.
-2.  Клонируйте репозиторий вашего проекта (замените `your_github_username` и `your_repository_name` на актуальные):
+2.  Клонируйте репозиторий вашего проекта при помщи настроенных ранее SSH-ключей (замените `your_github_username` и `your_repository_name` на актуальные):
     ```bash
-    git clone https://github.com/your_github_username/your_repository_name.git
+    git clone git@github.com:your_github_username/your_repository_name.git
     ```
     Директория с проектом будет создана (например, `your_repository_name`).
 3.  Перейдите в директорию проекта:

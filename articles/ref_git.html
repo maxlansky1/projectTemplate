@@ -42,10 +42,10 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../_static/sphinx_immaterial_theme.acf80fe7f4d9ef9e2.min.css?v=9e56d0d2" />
+        <link rel="stylesheet" type="text/css" href="../_static/sphinx_immaterial_theme.74c816e3f9967dd6e.min.css?v=6cfe2491" />
         <link rel="stylesheet" type="text/css" href="../_static/autodoc_pydantic.css" />
         <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-        <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+        <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
         <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
@@ -1567,9 +1567,11 @@
 <div class="literal-block-wrapper docutils container" id="id8">
 <div class="code-block-caption highlight"><span class="filename"><span class="caption-text">
 </span>.gitignore<a class="headerlink" href="#id8" title="Permalink to this code">¶</a></span></div>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code># ---------------------------
-# 🧹 Временные файлы Python
-# ---------------------------
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code># Игнорировать все файлы в папке data и её подпапках
+data/**
+# Но не игнорировать .gitkeep файлы
+!data/.gitkeep
+!data/outputs/.gitkeep
 
 # Кэшированные файлы Python (__pycache__, *.pyc и т.д.)
 __pycache__/
@@ -1816,7 +1818,7 @@ logs/
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    8.2.3.
+    9.1.0.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -1865,7 +1867,7 @@ logs/
         <script>let toggleHintShow = 'Развернуть';</script>
         <script>let toggleHintHide = 'Свернуть';</script>
         <script>let toggleOpenOnPrint = 'true';</script>
-        <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+        <script src="../_static/togglebutton.js?v=1ae7504c"></script>
         <script src="../_static/translations.js?v=cd1d70c9"></script>
         <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
         <script src="../_static/custom.js"></script>
