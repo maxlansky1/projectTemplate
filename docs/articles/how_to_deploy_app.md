@@ -222,7 +222,7 @@ sudo chown -R deployer:deployer /home/deployer/your_repository_name/
 *   `SSH_HOST`: IP-адрес вашего VPS (можно узнать командой `ifconfig`)
 *   `SSH_PORT`: Порт SSH (обычно `22`).
 *   `SSH_USER`: Имя пользователя на сервере, от которого будет происходить деплой (в нашем случае `deployer`).
-*   `DEPLOY_PATH`: Полный путь к директории проекта на сервере (например, `/home/deployer/your_repository_name/`).
+*   `DEPLOY_PATH`: Полный путь к домашней директории юзера на сервере (например, `/home/deployer`).
 *   `TELEGRAM_BOT_TOKEN`: API-токен вашего Telegram-бота. Его можно получить у [@BotFather](https://t.me/BotFather) в Telegram.
 *   `TELEGRAM_CHAT_ID`: Числовой идентификатор чата (или пользователя), куда бот будет отправлять уведомления. Его можно получить следующим образом:
 1.  Узнайте `TELEGRAM_BOT_TOKEN` у [@BotFather](https://t.me/BotFather).
